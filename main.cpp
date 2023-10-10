@@ -2,13 +2,7 @@
 #include <string>
 
 #include "Library.h"
-
-int login(std::sring login, std::string password) {
-  // TODO
-  int result = 0;
-  std::cin >> result;
-  return result;
-}
+#include "Patron.h"
 
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
@@ -23,48 +17,81 @@ void displayAdminMainMenu() {
   std::cout << "9. Exit\n";
 }
 
-void adminMainMenu(Library library) {
+void displayPatronMainMenu() {
+  std::cout << "Library Management System\n";
+  std::cout << "1. Search Book\n";
+  std::cout << "2. Check Out Book\n";
+  std::cout << "3. Return Book\n";
+  std::cout << "4. Generate Report\n";
+  std::cout << "5. Update own information\n";
+  std::cout << "6. Exit\n";
+}
+
+void adminMainMenu(Library library, Patron patron) {
   while (true) {
     displayAdminMainMenu();
     std::cin >> choice;
-
     switch (choice) {
       case 1:
-        handleAddBook(library);
+        handleAddBook(library, patron);
         break;
       case 2:
-        handleRemoveBook(library);
+        handleRemoveBook(library, patron);
         break;
       case 3:
-        handleUpdateBook(library);
+        handleUpdateBook(library, patron);
         break;
       case 4:
-        handleSearchBook(library);
+        handleSearchBook(library, patron);
         break;
       case 5:
-        handleGenerateReport(library);
+        handleGenerateReport(library, patron);
         break;
       case 6:
-        handleAddPatron(library);
+        handleAddPatron(library, patron);
         break;
       case 7:
-        handleDeletePatron(library);
+        handleDeletePatron(library, patron);
         break;
       case 8:
-        handleEditPatron(library);
+        handleEditPatron(library, patron);
         break;
       case 9:
         std::cout << "Exiting...\n";
         return;
-
       default:
         std::cout << "Invalid choice. Please try again.\n";
     }
   }
 }
 
-void patronMainMenu(Library library) {
-  // TODO
+void patronMainMenu(Library library, Patron patron) {
+  while (true) {
+    displayPatronMainMenu();
+    std::cin >> choice;
+    switch (choice) {
+      case 1:
+        handleSearchBook(library, patron);
+        break;
+      case 2:
+        handleCheckOutBook(library, patron);
+        break;
+      case 3:
+        handleReturnBook(library, patron);
+        break;
+      case 4:
+        handleGenerateReport(library, patron);
+        break;
+      case 5:
+        handleEditSelfInformation(library, patron);
+        break;
+      case 6:
+        std::cout << "Exiting...\n";
+        return;
+      default:
+        std::cout << "Invalid choice. Please try again.\n";
+    }
+  }
 }
 
 int main() {
@@ -77,18 +104,16 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
-    if (login(login, password) != -1) {
+    Patron patron(login, password);
+    if (patron.ID != "") {
       break;
     }
     std::cout << "Wrong login or password" << std::endl;
   }
-  switch (login(login, password)) {
-    case 0:
-      adminMainMenu(library);
-      break;
-    default:
-      patronMainMenu(library);
-      break;
+  if (patron.isAdmin) {
+    adminMainMenu(library, patron);
+  } else {
+    patronMainMenu(library, patron);
   }
   return 0;
 }
