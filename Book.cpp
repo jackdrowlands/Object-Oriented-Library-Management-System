@@ -26,3 +26,9 @@ std::string Book::getGenre() const {
 int Book::getId() const {
     return id;
 }
+
+// implementation of the isAvailable method
+bool Book::isAvailable() const {
+    return available;
+}
+

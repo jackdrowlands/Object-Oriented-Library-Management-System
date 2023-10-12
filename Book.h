@@ -14,12 +14,15 @@ public:
     std::string getTitle() const;
     std::string getAuthor() const;
     std::string getGenre() const;
+    std::bool isAvailable() const;
     int getId() const;
 private:
     std::string title;
     std::string author;
     std::string genre;
+    bool available;
     int id;
+
 };
 
 #endif // BOOK_H
