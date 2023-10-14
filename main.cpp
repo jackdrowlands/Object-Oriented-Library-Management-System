@@ -4,6 +4,8 @@
 #include "Library.h"
 #include "Patron.h"
 
+Library library;
+
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
   std::cout << "1. Add Book\n";
@@ -28,6 +30,7 @@ void displayPatronMainMenu() {
 }
 
 void adminMainMenu(Library library, Patron patron) {
+  int choice;
   while (true) {
     displayAdminMainMenu();
     std::cin >> choice;
@@ -66,6 +69,7 @@ void adminMainMenu(Library library, Patron patron) {
 }
 
 void patronMainMenu(Library library, Patron patron) {
+  int choice;
   while (true) {
     displayPatronMainMenu();
     std::cin >> choice;
@@ -95,10 +99,8 @@ void patronMainMenu(Library library, Patron patron) {
 }
 
 int main() {
-  Library library;
   std::string login;
   std::string password;
-  int choice;
   while (true) {
     std::cout << "Enter your login: ";
     std::cin >> login;
