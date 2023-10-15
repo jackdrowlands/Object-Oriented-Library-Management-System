@@ -21,12 +21,23 @@ Patron* findPatron(std::vector<Patron>* patrons, std::string name) {
 Patron* userLogin(std::string user, std::string password,
                   std::vector<Patron>* patrons) {
   Patron* patron = findPatron(patrons, user);
-  if (patron != NULL) {
-    if (patron->checkLogin(user, password)) {
-      return patron;
+
+  if (patron->checkLogin(user, password)) {
+    std::cout << "User found: " << std::endl;
+    return patron;
+  }
+
+  return new Patron();
+}
+
+Book getBookByID(int id) {
+  for (std::vector<Book>::size_type i = 0; i < library.get_books().size();
+       i++) {
+    if (library.get_books().at(i).getId() == id) {
+      return library.get_books().at(i);
     }
   }
-  return NULL;
+  return Book();
 }
 
 std::vector<Book> parseBooks(const std::string& booksString) {
@@ -115,28 +126,36 @@ void adminMainMenu(Library library, Patron patron) {
     std::cin >> choice;
     switch (choice) {
       case 1:
-        handleAddBook(library, patron);
+        // handleAddBook(library, patron);
+        std::cout << "Add Book\n";
         break;
       case 2:
-        handleRemoveBook(library, patron);
+        // handleRemoveBook(library, patron);
+        std::cout << "Remove Book\n";
         break;
       case 3:
-        handleUpdateBook(library, patron);
+        // handleUpdateBook(library, patron);
+        std::cout << "Update Book\n";
         break;
       case 4:
-        handleSearchBook(library, patron);
+        // handleSearchBook(library, patron);
+        std::cout << "Search Book\n";
         break;
       case 5:
-        handleGenerateReport(library, patron);
+        // handleGenerateReport(library, patron);
+        std::cout << "Generate Report\n";
         break;
       case 6:
-        handleAddPatron(library, patron);
+        // handleAddPatron(library, patron);
+        std::cout << "Add Patron\n";
         break;
       case 7:
-        handleDeletePatron(library, patron);
+        // handleDeletePatron(library, patron);
+        std::cout << "Delete Patron\n";
         break;
       case 8:
-        handleEditPatron(library, patron);
+        // handleEditPatron(library, patron);
+        std::cout << "Edit Patron\n";
         break;
       case 9:
         std::cout << "Exiting...\n";
@@ -154,19 +173,24 @@ void patronMainMenu(Library library, Patron patron) {
     std::cin >> choice;
     switch (choice) {
       case 1:
-        handleSearchBook(library, patron);
+        // handleSearchBook(library, patron);
+        std::cout << "Search Book\n";
         break;
       case 2:
-        handleCheckOutBook(library, patron);
+        // handleCheckOutBook(library, patron);
+        std::cout << "Check Out Book\n";
         break;
       case 3:
-        handleReturnBook(library, patron);
+        // handleReturnBook(library, patron);
+        std::cout << "Return Book\n";
         break;
       case 4:
-        handleGenerateReport(library, patron);
+        // handleGenerateReport(library, patron);
+        std::cout << "Generate Report\n";
         break;
       case 5:
-        handleEditSelfInformation(library, patron);
+        // handleEditSelfInformation(library, patron);
+        std::cout << "Update own information\n";
         break;
       case 6:
         std::cout << "Exiting...\n";
@@ -183,19 +207,18 @@ int main() {
   std::vector<Genre> genres;
   std::vector<Author> authors;
 
-  std::ifstream userFile("user.csv");
+  std::ifstream userFile("users.csv");
   if (!userFile.is_open()) {
     std::cout << "Generating users.csv...\n";
-    std::ofstream userFile("users.csv");
-    userFile << "0,admin,admin,admin,99,1,\0\n";
-    userFile.close();
+    std::ofstream userFileOut("users.csv");
+    userFileOut << "0,admin,admin,admin,99,1,\0\n";
+    userFileOut.close();
     userFile.open("users.csv");  // Re-open the file for reading
   } else {
     std::cout << "users.csv found.\n";
     // read from file
   }
   std::string line;
-  std::getline(userFile, line);
   while (std::getline(userFile, line)) {
     std::stringstream ss(line);
     std::string idString, login, password, name, ageString, isAdminString,
@@ -233,7 +256,6 @@ int main() {
     std::cout << "book.csv found.\n";
     // read from file
   }
-  std::getline(bookFile, line);
   while (std::getline(bookFile, line)) {
     std::stringstream ss(line);
     std::string title, author, genre, idString, isAvailableString;
@@ -263,7 +285,6 @@ int main() {
     std::cout << "genre.csv found.\n";
     // read from file
   }
-  std::getline(genreFile, line);
   while (std::getline(genreFile, line)) {
     std::stringstream ss(line);
     std::string idString, name, booksString, isRestrictedString,
@@ -336,6 +357,7 @@ int main() {
       authors.push_back(author);
     }
   }
+  library = Library(books, genres, authors);
   std::string login;
   std::string password;
   while (true) {
@@ -343,8 +365,9 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
+    std::cout << "debug";
     user = *userLogin(login, password, &patrons);
-    if (user.getId() != 0) {
+    if (user.getId() != -1) {
       break;
     }
     std::cout << "Wrong login or password" << std::endl;

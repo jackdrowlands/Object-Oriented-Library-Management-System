@@ -33,6 +33,12 @@ class Library {
   // General report for the library
   void generate_report() const;
 
+  Library(std::vector<Book> books, std::vector<Genre> genres,
+          std::vector<Author> authors);
+  std::vector<Book> get_books() const;
+
+  Library();
+
  private:
   std::vector<Book> books;
   std::vector<Genre> genres;

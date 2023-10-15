@@ -16,7 +16,7 @@ Patron::Patron(int id, std::string name, std::string details,
 }
 
 Patron::Patron() {
-  this->id = 0;
+  this->id = -1;
   this->name = "";
   this->details = "";
   this->password = "";

@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "Book.h"
-#include "Entity.cpp"
+#include "Entity.h"
 
 class Author : public Entity {
  protected:

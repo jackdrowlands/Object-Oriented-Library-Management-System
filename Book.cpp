@@ -10,6 +10,15 @@ Book::Book(const std::string& title, const std::string& author,
   this->available = available;
 }
 
+// implementation of the default constructor
+Book::Book() {
+  this->title = "";
+  this->author = "";
+  this->genre = "";
+  this->id = 0;
+  this->available = false;
+}
+
 // implementation of the getTitle method
 std::string Book::getTitle() const { return title; }
 

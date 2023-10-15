@@ -77,3 +77,11 @@ void Library::remove_author(const std::string& name) {
 }
 
 std::vector<Author> Library::get_authors() const { return authors; }
+
+Library::Library(std::vector<Book> books, std::vector<Genre> genres,
+                 std::vector<Author> authors)
+    : books(books), genres(genres), authors(authors) {}
+
+Library::Library() {}
+
+std::vector<Book> Library::get_books() const { return books; }

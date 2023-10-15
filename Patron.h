@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "Book.cpp"
-#include "Entity.cpp"
+#include "Book.h"
+#include "Entity.h"
 
 struct BorrowedBook {
   int bookID;

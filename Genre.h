@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "Entity.cpp"
+#include "Entity.h"
 
 class Genre : public Entity {
  protected:

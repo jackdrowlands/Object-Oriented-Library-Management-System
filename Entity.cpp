@@ -1,39 +1,19 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#include "Entity.h"
 
-#include <iostream>
-#include <string>
-#include <vector>
+// Constructor
+Entity::Entity() {
+  this->id = "0";
+  this->name = "";
+}
 
-#include "Book.h"
+Entity::Entity(std::string id, std::string name) {
+  this->id = id;
+  this->name = name;
+}
 
-// Yet to add the add_book function?
+// Getter functions
+std::string Entity::get_id() { return id; }
 
-class Entity {
- protected:
-  // These private data members refer to a group of books
-  // The id and name strings refer to the entity of books
-  std::string id;
-  std::string name;
-  std::vector<Book> books;
+std::string Entity::get_name() { return name; }
 
- public:
-  // Constructor
-  Entity() {
-    this->id = "0";
-    this->name = "";
-  }
-  Entity(std::string id, std::string name) {
-    this->id = id;
-    this->name = name;
-  }
-
-  // Getter functions
-  std::string get_id() { return id; }
-
-  std::string get_name() { return name; }
-
-  std::vector<Book> get_books() { return books; }
-};
-
-#endif  // ENTITY_H
+std::vector<Book> Entity::get_books() { return books; }

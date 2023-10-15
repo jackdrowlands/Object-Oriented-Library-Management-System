@@ -15,6 +15,7 @@ class Book {
   std::string getGenre() const;
   bool isAvailable() const;
   int getId() const;
+  Book();
 
  private:
   std::string title;
