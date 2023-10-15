@@ -22,8 +22,6 @@ class Patron : public Entity {
   std::string password;
 
  protected:
-  int id;
-  std::string name;
   std::string details;
   std::vector<BorrowedBook> history;
   int age;
@@ -34,8 +32,6 @@ class Patron : public Entity {
   Patron(int id, std::string name, std::string details, std::string password,
          int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
-  int getId() const;
-  std::string getName() const;
   std::string getDetails() const;
   std::vector<BorrowedBook> getHistory() const;
   Patron();

@@ -4,20 +4,16 @@
 #include <string>
 #include <vector>
 
-#include "Book.h"
-
 class Entity {
  protected:
-  std::string id;
+  int id;
   std::string name;
-  std::vector<Book> books;
 
  public:
   Entity();
-  Entity(std::string id, std::string name);
-  std::string get_id();
-  std::string get_name();
-  std::vector<Book> get_books();
+  Entity(int id, std::string name);
+  int get_id() const;
+  std::string get_name() const;
 };
 
 #endif  // ENTITY_H

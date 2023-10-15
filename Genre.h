@@ -6,12 +6,11 @@
 #include <string>
 #include <vector>
 
+#include "Book.h"
 #include "Entity.h"
 
 class Genre : public Entity {
  protected:
-  int id;
-  std::string name;
   std::vector<Book> books;
   bool restricted;
   bool fictional;

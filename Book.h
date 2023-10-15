@@ -5,24 +5,22 @@
 #include <string>
 #include <vector>
 
+#include "Entity.h"
+
 // define the Book class
-class Book {
+class Book : public Entity {
  public:
-  Book(const std::string& title, const std::string& author,
-       const std::string& genre, const int& id, bool available);
-  std::string getTitle() const;
+  Book(int id, std::string name, const std::string& author,
+       const std::string& genre, bool available);
   std::string getAuthor() const;
   std::string getGenre() const;
   bool isAvailable() const;
-  int getId() const;
   Book();
 
  private:
-  std::string title;
   std::string author;
   std::string genre;
   bool available;
-  int id;
 };
 
 #endif  // BOOK_H

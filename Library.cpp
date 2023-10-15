@@ -6,7 +6,7 @@ void Library::add_book(const Book& book) { books.push_back(book); }
 
 void Library::remove_book(const Book& book) {
   for (auto it = books.begin(); it != books.end(); ++it) {
-    if (it->getTitle() == book.getTitle()) {
+    if (it->get_name() == book.get_name()) {
       books.erase(it);
       return;
     }
@@ -15,7 +15,7 @@ void Library::remove_book(const Book& book) {
 
 void Library::update_book(const Book& book) {
   for (auto& b : books) {
-    if (b.getTitle() == book.getTitle()) {
+    if (b.get_name() == book.get_name()) {
       b = book;  // assumes Book has an assignment operator
       return;
     }
@@ -24,7 +24,7 @@ void Library::update_book(const Book& book) {
 
 Book* Library::search_book(const std::string& title) const {
   for (const auto& book : books) {
-    if (book.getTitle() == title) {
+    if (book.get_name() == title) {
       return const_cast<Book*>(&book);
     }
   }
@@ -33,7 +33,7 @@ Book* Library::search_book(const std::string& title) const {
 
 const Book* Library::search_book(const int& id) const {
   for (const auto& book : books) {
-    if (book.getId() == id) {
+    if (book.get_id() == id) {
       return const_cast<const Book*>(&book);
     }
   }

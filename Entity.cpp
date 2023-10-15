@@ -2,18 +2,16 @@
 
 // Constructor
 Entity::Entity() {
-  this->id = "0";
+  this->id = -1;
   this->name = "";
 }
 
-Entity::Entity(std::string id, std::string name) {
+Entity::Entity(int id, std::string name) {
   this->id = id;
   this->name = name;
 }
 
 // Getter functions
-std::string Entity::get_id() { return id; }
+int Entity::get_id() const { return id; }
 
-std::string Entity::get_name() { return name; }
-
-std::vector<Book> Entity::get_books() { return books; }
+std::string Entity::get_name() const { return name; }

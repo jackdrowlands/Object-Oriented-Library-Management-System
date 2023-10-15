@@ -5,9 +5,8 @@
 
 Patron::Patron(int id, std::string name, std::string details,
                std::string password, int age, bool isAdmin,
-               std::vector<BorrowedBook> history) {
-  this->id = id;
-  this->name = name;
+               std::vector<BorrowedBook> history)
+    : Entity(id, name) {
   this->details = details;
   this->password = password;
   this->age = age;
@@ -15,19 +14,13 @@ Patron::Patron(int id, std::string name, std::string details,
   this->history = history;
 }
 
-Patron::Patron() {
-  this->id = -1;
-  this->name = "";
+Patron::Patron() : Entity() {
   this->details = "";
   this->password = "";
   this->age = 0;
   this->isAdmin = false;
   this->history = {};
 }
-
-int Patron::getId() const { return id; }
-
-std::string Patron::getName() const { return name; }
 
 std::string Patron::getDetails() const { return details; }
 

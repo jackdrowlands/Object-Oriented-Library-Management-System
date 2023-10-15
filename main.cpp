@@ -10,8 +10,12 @@ Library library;
 Patron user;
 
 Patron* findPatron(std::vector<Patron>* patrons, std::string name) {
+  // check if patrons is empty
+  if (patrons->size() == 0) {
+    return NULL;
+  }
   for (std::vector<Patron>::size_type i = 0; i < patrons->size(); i++) {
-    if (patrons->at(i).getName() == name) {
+    if (patrons->at(i).get_name() == name) {
       return &patrons->at(i);
     }
   }
@@ -22,7 +26,7 @@ Patron* userLogin(std::string user, std::string password,
                   std::vector<Patron>* patrons) {
   Patron* patron = findPatron(patrons, user);
 
-  if (patron->checkLogin(user, password)) {
+  if (patron != NULL && patron->checkLogin(user, password)) {
     std::cout << "User found: " << std::endl;
     return patron;
   }
@@ -33,7 +37,7 @@ Patron* userLogin(std::string user, std::string password,
 Book getBookByID(int id) {
   for (std::vector<Book>::size_type i = 0; i < library.get_books().size();
        i++) {
-    if (library.get_books().at(i).getId() == id) {
+    if (library.get_books().at(i).get_id() == id) {
       return library.get_books().at(i);
     }
   }
@@ -211,7 +215,7 @@ int main() {
   if (!userFile.is_open()) {
     std::cout << "Generating users.csv...\n";
     std::ofstream userFileOut("users.csv");
-    userFileOut << "0,admin,admin,admin,99,1,\0\n";
+    userFileOut << "0,admin,admin,admin,admin,99,1,\0\n";
     userFileOut.close();
     userFile.open("users.csv");  // Re-open the file for reading
   } else {
@@ -221,9 +225,10 @@ int main() {
   std::string line;
   while (std::getline(userFile, line)) {
     std::stringstream ss(line);
-    std::string idString, login, password, name, ageString, isAdminString,
-        browsingHistoryString;
+    std::string idString, details, login, password, name, ageString,
+        isAdminString, browsingHistoryString;
     std::getline(ss, idString, ',');
+    std::getline(ss, details, ',');
     std::getline(ss, login, ',');
     std::getline(ss, password, ',');
     std::getline(ss, name, ',');
@@ -239,7 +244,7 @@ int main() {
     // convert browsingHistory from string to vector
     browsingHistory = parseBrowsingHistory(browsingHistoryString);
     // Create Patron object
-    Patron patron(id, login, password, name, age, isAdmin, browsingHistory);
+    Patron patron(id, name, details, password, age, isAdmin, browsingHistory);
     // Append to patrons vector
     patrons.push_back(patron);
   }
@@ -268,7 +273,7 @@ int main() {
     int id = std::stoi(idString);
     bool isAvailable = (isAvailableString == "1");
     // Create Book object
-    Book book(title, author, genre, id, isAvailable);
+    Book book(id, title, author, genre, isAvailable);
     // Append to books vector
     books.push_back(book);
   }
@@ -365,9 +370,8 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
-    std::cout << "debug";
     user = *userLogin(login, password, &patrons);
-    if (user.getId() != -1) {
+    if (user.get_id() != -1) {
       break;
     }
     std::cout << "Wrong login or password" << std::endl;
@@ -377,5 +381,41 @@ int main() {
   } else {
     patronMainMenu(library, user);
   }
+  // write to file
+  std::ofstream userFileOut("users.csv");
+  for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
+    userFileOut << patrons.at(i).get_id() << "," << patrons.at(i).get_details()
+                << "," << patrons.at(i).get_login() << ","
+                << patrons.at(i).get_password() << ","
+                << patrons.at(i).get_name() << "," << patrons.at(i).get_age()
+                << "," << patrons.at(i).getIsAdmin() << ","
+                << patrons.at(i).getBrowsingHistoryString() << ",\n";
+  }
+  userFileOut.close();
+  std::ofstream bookFileOut("book.csv");
+  for (std::vector<Book>::size_type i = 0; i < books.size(); i++) {
+    bookFileOut << books.at(i).get_title() << "," << books.at(i).get_author()
+                << "," << books.at(i).get_genre() << "," << books.at(i).get_id()
+                << "," << books.at(i).getIsAvailable() << ",\n";
+  }
+  bookFileOut.close();
+  std::ofstream genreFileOut("genre.csv");
+  for (std::vector<Genre>::size_type i = 0; i < genres.size(); i++) {
+    genreFileOut << genres.at(i).get_name() << ","
+                 << genres.at(i).get_booksString() << ","
+                 << genres.at(i).get_id() << ","
+                 << genres.at(i).getIsRestricted() << ","
+                 << genres.at(i).getIsFictional() << ",\n";
+  }
+  genreFileOut.close();
+  std::ofstream authorFileOut("author.csv");
+  for (std::vector<Author>::size_type i = 0; i < authors.size(); i++) {
+    authorFileOut << authors.at(i).get_name() << ","
+                  << authors.at(i).get_booksString() << ","
+                  << authors.at(i).get_id() << ","
+                  << authors.at(i).getNationality() << ","
+                  << authors.at(i).getAliasesString() << ",\n";
+  }
+  authorFileOut.close();
   return 0;
 }
