@@ -16,8 +16,8 @@ class Library {
   void add_book(const Book& book);
   void remove_book(const Book& book);
   void update_book(const Book& book);
-  Book search_book(const std::string& title) const;
-  Book search_book(const int& id) const;
+  Book* search_book(const std::string& title) const;
+  const Book* search_book(const int& id) const;
   void generate_book_report() const;
 
   // Methods for managing genres

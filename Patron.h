@@ -22,17 +22,24 @@ class Patron : public Entity {
   std::string password;
 
  protected:
-  std::string id;
+  int id;
   std::string name;
-  std::vector<Book> books;
   std::string details;
   std::vector<BorrowedBook> history;
+  int age;
+  bool isAdmin;
 
  public:
   // Add public member function declarations here, if any
-  Patron(std::string id, std::string name, std::string details);
-  Patron* login(std::string user, std::string password);
+  Patron(int id, std::string name, std::string details, std::string password,
+         int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
+  int getId() const;
+  std::string getName() const;
+  std::string getDetails() const;
+  std::vector<BorrowedBook> getHistory() const;
+  Patron();
+  bool getIsAdmin() const;
 };
 
 #endif  // PATRON_H

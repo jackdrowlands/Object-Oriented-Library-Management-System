@@ -11,15 +11,15 @@
 
 class Author : public Entity {
  protected:
-  std::string id;
+  int id;
   std::string name;
   std::vector<Book> books;
   std::string nationality;
   std::vector<std::string> aliases;
 
  public:
-  Author(std::string id, std::string name, std::string nationality,
-         std::vector<std::string> aliases);
+  Author(int id, std::string name, std::string nationality,
+         std::vector<std::string> aliases, std::vector<Book> books);
   // Add other public member function declarations here, if any
 };
 

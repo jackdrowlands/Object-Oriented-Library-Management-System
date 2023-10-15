@@ -9,6 +9,26 @@
 Library library;
 Patron user;
 
+Patron* findPatron(std::vector<Patron>* patrons, std::string name) {
+  for (std::vector<Patron>::size_type i = 0; i < patrons->size(); i++) {
+    if (patrons->at(i).getName() == name) {
+      return &patrons->at(i);
+    }
+  }
+  return NULL;
+}
+
+Patron* userLogin(std::string user, std::string password,
+                  std::vector<Patron>* patrons) {
+  Patron* patron = findPatron(patrons, user);
+  if (patron != NULL) {
+    if (patron->checkLogin(user, password)) {
+      return patron;
+    }
+  }
+  return NULL;
+}
+
 std::vector<Book> parseBooks(const std::string& booksString) {
   std::vector<Book> books;
   // Assuming booksString is a semicolon-delimited string of book IDs
@@ -24,6 +44,47 @@ std::vector<Book> parseBooks(const std::string& booksString) {
 
   return books;
 }
+
+std::vector<BorrowedBook> parseBrowsingHistory(
+    const std::string& browsingHistoryString) {
+  std::vector<BorrowedBook> browsingHistory;
+  // Assuming browsingHistoryString is a semicolon-delimited string of
+  // BorrowedBook
+  std::stringstream ss(browsingHistoryString);
+  std::string borrowedBookStr;
+
+  while (std::getline(ss, borrowedBookStr, ';')) {
+    // make a new BorrowedBook object
+    BorrowedBook borrowedBook;
+    // Assuming borrowedBookStr is a comma-delimited string of
+    // bookID,dateHired,dateDue,dateReturned,isReturned
+    std::stringstream ssBorrowedBook(borrowedBookStr);
+    std::string bookIDStr, dateHiredStr, dateDueStr, dateReturnedStr,
+        isReturnedStr;
+    std::getline(ssBorrowedBook, bookIDStr, ',');
+    std::getline(ssBorrowedBook, dateHiredStr, ',');
+    std::getline(ssBorrowedBook, dateDueStr, ',');
+    std::getline(ssBorrowedBook, dateReturnedStr, ',');
+    std::getline(ssBorrowedBook, isReturnedStr, ',');
+    // Type conversion
+    int bookID = std::stoi(bookIDStr);
+    int dateHired = std::stoi(dateHiredStr);
+    int dateDue = std::stoi(dateDueStr);
+    int dateReturned = std::stoi(dateReturnedStr);
+    bool isReturned = (isReturnedStr == "1");
+    // Set the fields of the BorrowedBook object
+    borrowedBook.bookID = bookID;
+    borrowedBook.dateHired = dateHired;
+    borrowedBook.dateDue = dateDue;
+    borrowedBook.dateReturned = dateReturned;
+    borrowedBook.isReturned = isReturned;
+    // Append to browsingHistory vector
+    browsingHistory.push_back(borrowedBook);
+  }
+
+  return browsingHistory;
+}
+
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
   std::cout << "1. Add Book\n";
@@ -175,18 +236,17 @@ int main() {
   std::getline(bookFile, line);
   while (std::getline(bookFile, line)) {
     std::stringstream ss(line);
-    std::string title, author, genreString, idString, isAvailableString;
+    std::string title, author, genre, idString, isAvailableString;
     std::getline(ss, title, ',');
     std::getline(ss, author, ',');
-    std::getline(ss, genreString, ',');
+    std::getline(ss, genre, ',');
     std::getline(ss, idString, ',');
     std::getline(ss, isAvailableString, ',');
     // Type conversion
-    int genreID = std::stoi(genreString);
     int id = std::stoi(idString);
     bool isAvailable = (isAvailableString == "1");
     // Create Book object
-    Book book(title, author, genreID, id, isAvailable);
+    Book book(title, author, genre, id, isAvailable);
     // Append to books vector
     books.push_back(book);
   }
@@ -272,7 +332,7 @@ int main() {
         aliases.push_back(alias);
       }
 
-      Author author(id, name, books, nationality, aliases);
+      Author author(id, name, nationality, aliases, books);
       authors.push_back(author);
     }
   }
@@ -283,13 +343,13 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
-    user = login(login, password);
-    if (user.get_id != 0) {
+    user = *userLogin(login, password, &patrons);
+    if (user.getId() != 0) {
       break;
     }
     std::cout << "Wrong login or password" << std::endl;
   }
-  if (user.isAdmin) {
+  if (user.getIsAdmin()) {
     adminMainMenu(library, user);
   } else {
     patronMainMenu(library, user);

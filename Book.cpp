@@ -1,34 +1,26 @@
 #include "Book.h"
 
 // implementation of the constructor
-Book::Book(const std::string& title, const std::string& author, const std::string& genre) {
-    this->title = title;
-    this->author = author;
-    this->genre = genre;
+Book::Book(const std::string& title, const std::string& author,
+           const std::string& genre, const int& id, bool available) {
+  this->title = title;
+  this->author = author;
+  this->genre = genre;
+  this->id = id;
+  this->available = available;
 }
 
 // implementation of the getTitle method
-std::string Book::getTitle() const {
-    return title;
-}
+std::string Book::getTitle() const { return title; }
 
 // implementation of the getAuthor method
-std::string Book::getAuthor() const {
-    return author;
-}
+std::string Book::getAuthor() const { return author; }
 
 // implementation of the getGenre method
-std::string Book::getGenre() const {
-    return genre;
-}
+std::string Book::getGenre() const { return genre; }
 
 // implementation of the getId method
-int Book::getId() const {
-    return id;
-}
+int Book::getId() const { return id; }
 
 // implementation of the isAvailable method
-bool Book::isAvailable() const {
-    return available;
-}
-
+bool Book::isAvailable() const { return available; }

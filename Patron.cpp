@@ -3,38 +3,41 @@
 
 // Add method implementations here, if any
 
-Patron::Patron(std::string id, std::string name, std::string details) {
+Patron::Patron(int id, std::string name, std::string details,
+               std::string password, int age, bool isAdmin,
+               std::vector<BorrowedBook> history) {
   this->id = id;
   this->name = name;
   this->details = details;
+  this->password = password;
+  this->age = age;
+  this->isAdmin = isAdmin;
+  this->history = history;
 }
 
-Patron* Patron::findPatron(std::vector<Patron*> patrons, std::string id) {
-  for (int i = 0; i < patrons.size(); i++) {
-    if (patrons[i]->getId() == id) {
-      return patrons[i];
-    }
-  }
-  return NULL;
+Patron::Patron() {
+  this->id = 0;
+  this->name = "";
+  this->details = "";
+  this->password = "";
+  this->age = 0;
+  this->isAdmin = false;
+  this->history = {};
 }
 
-std::string Patron::getId() const { return id; }
+int Patron::getId() const { return id; }
 
 std::string Patron::getName() const { return name; }
 
 std::string Patron::getDetails() const { return details; }
 
 bool Patron::checkLogin(std::string user, std::string password) {
-  if (user == id && password == this->password) {
+  if (user == this->name && password == this->password) {
     return true;
   }
   return false;
 }
 
-Patron* Patron::login(std::string user, std::string password,
-                      std::vector<Patron*> patrons) {
-  if (checkLogin(findPatron(patrons, user))) {
-    return findPatron(patrons, user);
-  }
-  return NULL;
-}
+std::vector<BorrowedBook> Patron::getHistory() const { return history; }
+
+bool Patron::getIsAdmin() const { return isAdmin; }

@@ -9,7 +9,7 @@
 class Book {
  public:
   Book(const std::string& title, const std::string& author,
-       const std::string& genre);
+       const std::string& genre, const int& id, bool available);
   std::string getTitle() const;
   std::string getAuthor() const;
   std::string getGenre() const;

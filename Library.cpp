@@ -22,24 +22,22 @@ void Library::update_book(const Book& book) {
   }
 }
 
-Book Library::search_book(const std::string& title) const {
+Book* Library::search_book(const std::string& title) const {
   for (const auto& book : books) {
     if (book.getTitle() == title) {
-      return book;
+      return const_cast<Book*>(&book);
     }
   }
-  // assumes that Book has a default constructor
-  return Book("", "", "");
+  return nullptr;
 }
 
-Book Library::search_book(const int& id) const {
+const Book* Library::search_book(const int& id) const {
   for (const auto& book : books) {
     if (book.getId() == id) {
-      return book;
+      return const_cast<const Book*>(&book);
     }
   }
-  // assumes that Book has a default constructor
-  return Book("", "", "");
+  return nullptr;
 }
 
 void Library::generate_report() const {
