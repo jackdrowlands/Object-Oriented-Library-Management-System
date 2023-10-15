@@ -20,9 +20,9 @@ struct BorrowedBook {
 class Patron : public Entity {
  private:
   std::string password;
+  int id;
 
  protected:
-  int id;
   std::string name;
   std::string details;
   std::vector<BorrowedBook> history;
@@ -41,5 +41,6 @@ class Patron : public Entity {
   Patron();
   bool getIsAdmin() const;
 };
+
 
 #endif  // PATRON_H

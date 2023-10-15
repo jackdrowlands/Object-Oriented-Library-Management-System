@@ -8,6 +8,7 @@
 #include "Author.h"
 #include "Book.h"
 #include "Genre.h"
+#include "Patron.h"
 
 // Define the Library class
 class Library {
@@ -30,6 +31,10 @@ class Library {
   void remove_author(const std::string& name);
   std::vector<Author> get_authors() const;
 
+  // Methods for managing patrons
+  void addPatron(Library& library, Patron& patron);
+  void deletePatron(Library& library, Patron& patron);
+
   // General report for the library
   void generate_report() const;
 
@@ -43,6 +48,9 @@ class Library {
   std::vector<Book> books;
   std::vector<Genre> genres;
   std::vector<Author> authors;
+  std::vector<Patron> patrons;
 };
+
+
 
 #endif  // LIBRARY_H

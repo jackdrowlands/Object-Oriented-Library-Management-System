@@ -22,7 +22,6 @@ Patron::Patron() {
   this->password = "";
   this->age = 0;
   this->isAdmin = false;
-  this->history = {};
 }
 
 int Patron::getId() const { return id; }

@@ -45,6 +45,8 @@
     "sstream": "cpp",
     "stdexcept": "cpp",
     "streambuf": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "__split_buffer": "cpp",
+    "ios": "cpp"
   }
 }

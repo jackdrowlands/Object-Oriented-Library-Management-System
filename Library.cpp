@@ -85,3 +85,14 @@ Library::Library(std::vector<Book> books, std::vector<Genre> genres,
 Library::Library() {}
 
 std::vector<Book> Library::get_books() const { return books; }
+
+void Library::addPatron(Library& library, Patron& patron){
+  library.patrons.push_back(patron);
+}
+
+void Library::deletePatron(Library& library, Patron& patron) {
+    auto iter = std::find(library.patrons.begin(), library.patrons.end(), patron);
+    if (iter != library.patrons.end()) {
+        library.patrons.erase(iter);
+    }
+}
