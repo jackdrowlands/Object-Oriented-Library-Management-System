@@ -22,7 +22,7 @@ void Library::update_book( Book& book) {
   }
 }
 
-Book* Library::search_book(const std::string& title)  {
+Book* Library::search_book(std::string& title)  {
   for ( auto& book : books) {
     if (book.get_name() == title) {
       return static_cast<Book*>(&book);
@@ -40,7 +40,7 @@ Book* Library::search_book(int id)  {
   return nullptr;
 }
 
-Book* Library::search_book(const std::string& title)  {
+Book* Library::search_book(std::string& title)  {
   for ( auto& book : books) {
     if (book.get_name() == title) {
       return static_cast<Book*>(&book);
@@ -49,7 +49,17 @@ Book* Library::search_book(const std::string& title)  {
   return nullptr;
 }
 
-Book* Library::search_book(const std::string& title)  {
+
+Book* Library::search_book(std::string& title)  {
+  for ( auto& book : books) {
+    if (book.get_name() == title) {
+      return static_cast<Book*>(&book);
+    }
+  }
+  return nullptr;
+}
+
+Book* Library::search_book(std::string& title)  {
   for ( auto& book : books) {
     if (book.get_name() == title) {
       return static_cast<Book*>(&book);
@@ -314,7 +324,7 @@ void Library::updatePatronAge(Patron *patron, int newAge) {
     
 }
 
-std::vector<Book> Library::parseBooks(const std::string& booksString) {
+std::vector<Book> Library::parseBooks(std::string& booksString) {
 
   std::vector<Book> books;
   // Assuming booksString is a semicolon-delimited string of book IDs

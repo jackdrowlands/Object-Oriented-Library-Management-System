@@ -17,50 +17,45 @@
 class Library {
  public:
   // Methods for managing books
-  void add_book( Book& book);
-  void remove_book( Book& book);
-  void update_book( Book& book);
-  Book* search_book( std::string& title) ;
-   Book* search_book( int& id) ;
-  void generate_book_report() ;
+  void add_book(Book& book);
+  void remove_book(Book& book);
+  void update_book(Book& book);
+  Book* search_book(std::string& title);
+  Book* search_book(int& id);
+  void generate_book_report();
 
   // Methods for managing genres
-  void add_genre( Genre& genre);
-  void remove_genre( std::string& name);
+  void add_genre(Genre& genre);
+  void remove_genre(std::string& name);
   std::vector<Genre>* get_genres();
 
   // Methods for managing authors
-  void add_author( Author& author);
-  void remove_author( std::string& name);
+  void add_author(Author& author);
+  void remove_author(std::string& name);
   std::vector<Author>* get_authors();
 
   // General report for the library
-  void generate_report() ;
+  void generate_report();
 
   Library(std::vector<Book> books, std::vector<Genre> genres,
           std::vector<Author> authors);
   std::vector<Book>* get_books();
-
   Library();
-
   std::vector<Patron>* get_patrons();
 
   Patron* findPatron(std::string name);
-
   Patron* userLogin(std::string user, std::string password);
-
   Book* getBookByID(int id);
 
   // Method for managing patrons
   void addPatron(Library& library, Patron& patron);
   void deletePatron(Library& library, Patron& patron);
-  void Library::updatePatronName(Patron *patron, std::string &newName);
-  void Library::updatePatronDetails(Patron *patron, std::string &newDetails);
-  void Library::updatePatronAge(Patron *patron, int newAge);
+  void updatePatronName(Patron *patron, std::string &newName);
+  void updatePatronDetails(Patron *patron, std::string &newDetails);
+  void updatePatronAge(Patron *patron, int newAge);
 
-  std::vector<Book> parseBooks( std::string& booksString);
-  std::vector<BorrowedBook> Library::parseBrowsingHistory(
-       std::string& browsingHistoryString);
+  std::vector<Book> parseBooks(std::string& booksString);
+  std::vector<BorrowedBook> parseBrowsingHistory(std::string& browsingHistoryString);
 
   ~Library();
 
