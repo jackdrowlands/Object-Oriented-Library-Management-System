@@ -1,8 +1,8 @@
 #include "Book.h"
 
 // implementation of the ructor
-Book::Book(int id, std::string name,  std::string& author,
-            std::string& genre, bool available)
+Book::Book(int id, std::string name, std::string& author, std::string& genre,
+           bool available)
     : Entity(id, name) {
   this->author = author;
   this->genre = genre;
@@ -19,19 +19,26 @@ Book::Book() : Entity() {
 }
 
 // implementation of the getAuthor method
-std::string Book::getAuthor()  { return author; }
+std::string Book::getAuthor() { return author; }
 
 // implementation of the getGenre method
-std::string Book::getGenre()  { return genre; }
+std::string Book::getGenre() { return genre; }
 
 // implementation of the isAvailable method
-bool Book::isAvailable()  { return available; }
-
+bool Book::isAvailable() { return available; }
 
 // Setters and getters
 void Book::setAuthor(std::string author) { this->author = author; }
-std::string Book::getAuthor()  { return author; }
+std::string Book::getAuthor() { return author; }
 void Book::setGenre(std::string genre) { this->genre = genre; }
-std::string Book::getGenre()  { return genre; }
+std::string Book::getGenre() { return genre; }
 void Book::setAvailable(bool available) { this->available = available; }
-bool Book::isAvailable()  { return available; }
+bool Book::isAvailable() { return available; }
+
+// implementation of the displayDetails method
+void Book::displayDetails() {
+  Entity::displayDetails();
+  std::cout << "Author: " << author << std::endl;
+  std::cout << "Genre: " << genre << std::endl;
+  std::cout << "Available: " << available << std::endl;
+}

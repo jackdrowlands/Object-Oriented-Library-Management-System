@@ -33,6 +33,7 @@ void displayPatronMainMenu() {
 
 void adminMainMenu(Library library, Patron user) {
   int choice;
+
   while (true) {
     displayAdminMainMenu();
     std::cin >> choice;

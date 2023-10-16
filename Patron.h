@@ -35,6 +35,7 @@ class Patron : public Entity {
   std::string getDetails();
   std::vector<BorrowedBook> getHistory();
   Patron();
+  std::string getBrowsingHistoryString();
 };
 
 #endif  // PATRON_H

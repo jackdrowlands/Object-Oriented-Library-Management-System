@@ -30,3 +30,15 @@ bool Patron::checkLogin(std::string user, std::string password) {
 }
 
 std::vector<BorrowedBook> Patron::getHistory() { return history; }
+
+std::string Patron::getBrowsingHistoryString() {
+  std::string historyString = "";
+  for (int i = 0; i < history.size(); i++) {
+    historyString += std::to_string(history[i].bookID) + " " +
+                     std::to_string(history[i].dateHired) + " " +
+                     std::to_string(history[i].dateDue) + " " +
+                     std::to_string(history[i].dateReturned) + " " +
+                     std::to_string(history[i].isReturned) + "\n";
+  }
+  return historyString;
+}

@@ -21,3 +21,9 @@ std::string Entity::get_name()  { return name; }
 void Entity::set_id(int id) { this->id = id; }
 
 void Entity::set_name(std::string name) { this->name = name; }
+
+// Display details
+void Entity::displayDetails() {
+  std::cout << "ID: " << id << std::endl;
+  std::cout << "Name: " << name << std::endl;
+}
