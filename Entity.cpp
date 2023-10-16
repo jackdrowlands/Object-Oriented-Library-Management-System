@@ -12,6 +12,6 @@ Entity::Entity(int id, std::string name) {
 }
 
 // Getter functions
-int Entity::get_id() const { return id; }
+int Entity::get_id() { return id; }
 
-std::string Entity::get_name() const { return name; }
+std::string Entity::get_name() { return name; }
