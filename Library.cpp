@@ -374,7 +374,7 @@ Library::~Library() {
   std::ofstream userFileOut("users.csv");
   for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
     userFileOut << patrons.at(i).get_id() << "," << patrons.at(i).get_details()
-                << "," << patrons.at(i).get_login() << ","
+                << "," << patrons.at(i).get_name() << ","
                 << patrons.at(i).get_password() << ","
                 << patrons.at(i).get_name() << "," << patrons.at(i).get_age()
                 << "," << patrons.at(i).getIsAdmin() << ","
