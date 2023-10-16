@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "Book.h"
-#include "Entity.h"
+#include "EntityWithBooks.h"
 
-class Genre : public Entity {
+class Genre : public EntityWithBooks {
  protected:
   std::vector<Book> books;
   bool restricted;

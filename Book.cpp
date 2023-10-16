@@ -18,8 +18,6 @@ Book::Book() : Entity() {
   this->available = false;
 }
 
-
-
 // Setters and getters
 void Book::setAuthor(std::string author) { this->author = author; }
 std::string Book::getAuthor() { return author; }

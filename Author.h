@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "Book.h"
-#include "Entity.h"
+#include "EntityWithBooks.h"
 
-class Author : public Entity {
+class Author : public EntityWithBooks {
  protected:
   int id;
   std::string name;
