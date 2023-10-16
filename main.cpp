@@ -9,7 +9,7 @@
 Library library;
 User user;
 
-std::vector<Book> parseBooks(const std::string& booksString) {
+std::vector<Book> parseBooks( std::string& booksString) {
   std::vector<Book> books;
   // Assuming booksString is a semicolon-delimited string of book IDs
   std::stringstream ss(booksString);
@@ -26,7 +26,7 @@ std::vector<Book> parseBooks(const std::string& booksString) {
 }
 
 std::vector<BorrowedBook> parseBrowsingHistory(
-    const std::string& browsingHistoryString) {
+     std::string& browsingHistoryString) {
   std::vector<BorrowedBook> browsingHistory;
   // Assuming browsingHistoryString is a semicolon-delimited string of
   // BorrowedBook

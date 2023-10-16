@@ -32,10 +32,10 @@ class Patron : public Entity {
   Patron(int id, std::string name, std::string details, std::string password,
          int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
-  std::string getDetails() const;
-  std::vector<BorrowedBook> getHistory() const;
+  std::string getDetails() ;
+  std::vector<BorrowedBook> getHistory() ;
   Patron();
-  bool getIsAdmin() const;
+  bool getIsAdmin() ;
 };
 
 #endif  // PATRON_H
