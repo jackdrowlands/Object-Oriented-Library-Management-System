@@ -7,6 +7,34 @@
 
 Patron user;
 
+void handleAddAuthor(Library library) {
+  int id = library.get_authors()->size() + 1;
+  std::cout << "Enter author name: ";
+  std::string name;
+  std::cin >> name;
+  std::cout << "Enter author nationality: ";
+  std::string nationality;
+  std::cin >> nationality;
+  std::cout << "Enter author aliases (Place a comma between each): ";
+  std::string aliases;
+  std::cin >> aliases;
+  std::vector<std::string> aliasesVector;
+  std::stringstream ss(aliases);
+  std::string alias;
+  while (getline(ss, alias, ',')) {
+    aliasesVector.push_back(alias);
+  }
+  Author author(id, name, nationality, aliasesVector);
+  library.add_author(author);
+}
+
+void handleDeleteAuthor(Library library) {
+  std::cout << "Enter author name: ";
+  std::string name;
+  std::cin >> name;
+  library.remove_author(name);
+}
+
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
   std::cout << "1. Add Book\n";
@@ -17,7 +45,13 @@ void displayAdminMainMenu() {
   std::cout << "6. Add Patron\n";
   std::cout << "7. Remove Patron\n";
   std::cout << "8. Update Patron\n";
-  std::cout << "9. Exit\n";
+  std::cout << "9. Add Author\n";
+  std::cout << "10. Remove Author\n";
+  std::cout << "11. Update Author\n";
+  std::cout << "12. Add Genre\n";
+  std::cout << "13. Remove Genre\n";
+  std::cout << "14. Update Genre\n";
+  std::cout << "15. Exit\n";
 }
 
 void displayPatronMainMenu() {
@@ -70,10 +104,30 @@ void adminMainMenu(Library library, Patron user) {
         std::cout << "Edit Patron\n";
         break;
       case 9:
+        handleAddAuthor(library);
+        break;
+      case 10:
+        handleDeleteAuthor(library);
+        break;
+      case 11:
+        // handleEditAuthor(library, patron);
+        std::cout << "Edit Author\n";
+        break;
+      case 12:
+        // handleAddGenre(library, patron);
+        std::cout << "Add Genre\n";
+        break;
+      case 13:
+        // handleDeleteGenre(library, patron);
+        std::cout << "Delete Genre\n";
+        break;
+      case 14:
+        // handleEditGenre(library, patron);
+        std::cout << "Edit Genre\n";
+        break;
+      case 15:
         std::cout << "Exiting...\n";
         return;
-      default:
-        std::cout << "Invalid choice. Please try again.\n";
     }
   }
 }
@@ -137,5 +191,7 @@ int main() {
   } else {
     patronMainMenu(library, user);
   }
+  // call ~Library() to save changes to the files
+  library.~Library();
   return 0;
 }

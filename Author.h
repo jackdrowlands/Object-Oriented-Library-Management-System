@@ -20,6 +20,8 @@ class Author : public EntityWithBooks {
  public:
   Author(int id, std::string name, std::string nationality,
          std::vector<std::string> aliases, std::vector<Book> books);
+  Author(int id, std::string name, std::string nationality,
+         std::vector<std::string> aliases);
   // Add other public member function declarations here, if any
   // Setters and getters
   int getId();
