@@ -25,11 +25,12 @@ void Library::update_book(Book& book) {
 Book* Library::search_book(std::string& title) {
   for (auto& book : books) {
     if (book.get_name() == title) {
-      return _cast<Book*>(&book);
+      return static_cast<Book*>(&book);
     }
   }
   return nullptr;
 }
+
 
 Book* Library::search_book(int& id) {
   for (auto& book : books) {
@@ -291,7 +292,9 @@ void Library::updatePatronDetails(Patron* patron, std::string& newDetails) {
   (*patron).set_details(newDetails);
 }
 
+
 void Library::updatePatronAge(Patron* patron, int newAge) {}
+
 
 std::vector<Book> Library::parseBooks(std::string& booksString) {
   std::vector<Book> books;

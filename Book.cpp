@@ -18,14 +18,7 @@ Book::Book() : Entity() {
   this->available = false;
 }
 
-// implementation of the getAuthor method
-std::string Book::getAuthor() { return author; }
 
-// implementation of the getGenre method
-std::string Book::getGenre() { return genre; }
-
-// implementation of the isAvailable method
-bool Book::isAvailable() { return available; }
 
 // Setters and getters
 void Book::setAuthor(std::string author) { this->author = author; }

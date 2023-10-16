@@ -42,3 +42,4 @@ std::string Patron::getBrowsingHistoryString() {
   }
   return historyString;
 }
+

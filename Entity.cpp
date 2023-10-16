@@ -11,7 +11,7 @@ Entity::Entity(int id, std::string name) {
   this->name = name;
 }
 
-// Getter functions
+// Getter functions 
 
 int Entity::get_id() { return id; }
 

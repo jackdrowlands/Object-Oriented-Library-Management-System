@@ -1,4 +1,3 @@
-
 #ifndef PATRON_H
 #define PATRON_H
 
@@ -28,7 +27,6 @@ class Patron : public Entity {
   bool isAdmin;
 
  public:
-  // Add public member function declarations here, if any
   Patron(int id, std::string name, std::string details, std::string password,
          int age, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
@@ -36,6 +34,11 @@ class Patron : public Entity {
   std::vector<BorrowedBook> getHistory();
   Patron();
   std::string getBrowsingHistoryString();
+    bool getIsAdmin();
+
+  void set_details(std::string details);
+
+  void set_age(int age);
 };
 
 #endif  // PATRON_H
