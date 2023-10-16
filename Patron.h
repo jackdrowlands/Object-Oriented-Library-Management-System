@@ -30,12 +30,12 @@ class Patron : public Entity {
  public:
   // Add public member function declarations here, if any
   Patron(int id, std::string name, std::string details, std::string password,
-         int age, bool isAdmin, std::vector<BorrowedBook> history);
+         int age, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
-  std::string getDetails() ;
-  std::vector<BorrowedBook> getHistory() ;
+  std::string getDetails();
+  std::vector<BorrowedBook> getHistory();
   Patron();
-  bool getIsAdmin() ;
+  std::string getBrowsingHistoryString();
 };
 
 #endif  // PATRON_H

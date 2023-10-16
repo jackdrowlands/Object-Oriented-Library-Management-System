@@ -10,21 +10,17 @@
 // define the Book class
 class Book : public Entity {
  public:
-  Book(int id, std::string name,  std::string& author,
-        std::string& genre, bool available);
-  std::string getAuthor() ;
-  std::string getGenre() ;
-  bool isAvailable() ;
+  Book(int id, std::string name, std::string& author, std::string& genre,
+       bool available);
   Book();
   // Setters and getters
-     void setAuthor(std::string author);
-     std::string getAuthor() ;
-     void setGenre(std::string genre);
-     std::string getGenre() ;
-     void setAvailable(bool available);
-     bool isAvailable() ;
-
-
+  void setAuthor(std::string author);
+  std::string getAuthor();
+  void setGenre(std::string genre);
+  std::string getGenre();
+  void setAvailable(bool available);
+  bool isAvailable();
+  void displayDetails() override;
 
  private:
   std::string author;
