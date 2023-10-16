@@ -22,19 +22,37 @@ void Library::update_book( Book& book) {
   }
 }
 
-Book* Library::search_book( std::string& title)  {
+Book* Library::search_book(const std::string& title)  {
   for ( auto& book : books) {
     if (book.get_name() == title) {
-      return _cast<Book*>(&book);
+      return static_cast<Book*>(&book);
     }
   }
   return nullptr;
 }
 
- Book* Library::search_book( int& id)  {
+Book* Library::search_book(int id)  {
   for ( auto& book : books) {
     if (book.get_id() == id) {
-      return _cast< Book*>(&book);
+      return static_cast<Book*>(&book);
+    }
+  }
+  return nullptr;
+}
+
+Book* Library::search_book(const std::string& title)  {
+  for ( auto& book : books) {
+    if (book.get_name() == title) {
+      return static_cast<Book*>(&book);
+    }
+  }
+  return nullptr;
+}
+
+Book* Library::search_book(const std::string& title)  {
+  for ( auto& book : books) {
+    if (book.get_name() == title) {
+      return static_cast<Book*>(&book);
     }
   }
   return nullptr;
