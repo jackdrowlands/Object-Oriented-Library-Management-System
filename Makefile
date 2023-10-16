@@ -29,5 +29,6 @@ Book.o: Book.h
 Library.o: Library.h
 
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+# remove csv files aswells
+	rm -f $(OBJECTS) $(EXECUTABLE) *.csv
 

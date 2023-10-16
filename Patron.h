@@ -28,19 +28,20 @@ class Patron : public Entity {
 
  public:
   Patron(int id, std::string name, std::string details, std::string password,
-         int age, std::vector<BorrowedBook> history);
+         int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
   std::string getDetails();
   std::vector<BorrowedBook> getHistory();
   Patron();
   std::string getBrowsingHistoryString();
-    bool getIsAdmin();
+  bool getIsAdmin();
 
   void set_details(std::string details);
 
   void set_age(int age);
   std::string get_details();
   int get_age();
+  std::string get_password();
 };
 
 #endif  // PATRON_H
