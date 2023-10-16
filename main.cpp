@@ -30,6 +30,128 @@ void displayPatronMainMenu() {
   std::cout << "6. Exit\n";
 }
 
+
+
+
+
+
+// code for addbook, removebook, etc
+void handleAddBook(Library& library) {
+  Book book;
+  std::string title, author, genre;
+  bool isRestricted, isFictional;
+
+  std::cout << "Enter the title of the book: ";
+  std::cin >> title;
+  book.set_name(title);
+
+  std::cout << "Enter the author of the book: ";
+  std::cin >> author;
+  bool authorExists = false;
+
+  std::vector<Author>* authors = library.get_authors();
+  for (size_t i = 0; i < authors->size(); ++i) {
+    if (authors->at(i).get_name() == author) {
+      authorExists = true;
+      break;
+    }
+  }
+  if (!authorExists) {
+    handleAddAuthor(library, author);
+  }
+  book.setAuthor(author);
+
+  std::cout << "Enter the genre of the book: ";
+  std::cin >> genre;
+  bool genreExists = false;
+
+  std::vector<Genre>* genres = library.get_genres();
+  for (size_t i = 0; i < genres->size(); ++i) {
+    if (genres->at(i).get_name() == genre) {
+      genreExists = true;
+      break;
+    }
+  }
+  if (!genreExists) {
+    handleAddGenre(library, genre);
+  }
+  book.setGenre(genre);
+
+  std::cout << "Is the book restricted? (1 for yes, 0 for no): ";
+  std::cin >> isRestricted;
+  book.setRestricted(isRestricted);
+
+  std::cout << "Is the book fictional? (1 for yes, 0 for no): ";
+  std::cin >> isFictional;
+  book.setFictional(isFictional);
+
+  library.add_book(book);
+  std::cout << "Book added.\n";
+}
+
+void handleRemoveBook(Library& library) {
+  Book book;
+  std::string title;
+  std::cout << "Enter the title of the book to remove: ";
+  std::cin >> title;
+  book.set_name(title);
+  library.remove_book(book);
+  std::cout << "Book removed.\n";
+}
+
+void handleUpdateBook(Library& library) {
+  Book book;
+  std::string title, newTitle, newAuthor, newGenre;
+  bool newIsRestricted, newIsFictional;
+
+  std::cout << "Enter the title of the book to update: ";
+  std::cin >> title;
+  Book* existingBook = library.search_book(title);
+  if (existingBook == nullptr) {
+    std::cout << "Book not found.\n";
+    return;
+  }
+
+  // Collect new information
+  std::cout << "Enter the new title of the book: ";
+  std::cin >> newTitle;
+  book.set_name(newTitle);
+
+  std::cout << "Enter the new author of the book: ";
+  std::cin >> newAuthor;
+  book.setAuthor(newAuthor);
+
+  std::cout << "Enter the new genre of the book: ";
+  std::cin >> newGenre;
+  book.setGenre(newGenre);
+
+  std::cout << "Is the book restricted? (1 for yes, 0 for no): ";
+  std::cin >> newIsRestricted;
+  book.setRestricted(newIsRestricted);
+
+  std::cout << "Is the book fictional? (1 for yes, 0 for no): ";
+  std::cin >> newIsFictional;
+  book.setFictional(newIsFictional);
+}
+
+void handleSearchBook(Library& library) {
+  std::string title;
+  std::cout << "Enter the title of the book to search: ";
+  std::cin >> title;
+  Book* book = library.search_book(title);
+  if (book != nullptr) {
+    std::cout << "Book found: " << book->get_name() << "\n";
+  } else {
+    std::cout << "Book not found.\n";
+  }
+}
+
+void handleGenerateReport(Library& library) { library.generate_report(); }
+
+
+
+
+
 void adminMainMenu(Library library, Patron user) {
   int choice;
 
@@ -38,24 +160,18 @@ void adminMainMenu(Library library, Patron user) {
     std::cin >> choice;
     switch (choice) {
       case 1:
-        // handleAddBook(library, patron);
-        std::cout << "Add Book\n";
         break;
       case 2:
-        // handleRemoveBook(library, patron);
-        std::cout << "Remove Book\n";
+        handleRemoveBook(library);
         break;
       case 3:
-        // handleUpdateBook(library, patron);
-        std::cout << "Update Book\n";
+        handleUpdateBook(library);
         break;
       case 4:
-        // handleSearchBook(library, patron);
-        std::cout << "Search Book\n";
+        handleSearchBook(library);
         break;
       case 5:
-        // handleGenerateReport(library, patron);
-        std::cout << "Generate Report\n";
+        handleGenerateReport(library);
         break;
       case 6:
         // handleAddPatron(library, patron);
