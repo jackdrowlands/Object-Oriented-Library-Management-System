@@ -53,3 +53,17 @@ std::string Patron::get_password() { return password; }
 bool Patron::getIsAdmin() { return isAdmin; }
 
 void Patron::set_details(std::string details) { this->details = details; }
+
+
+void Patron::addCheckedOutBook(int bookId) {
+  checkedOutBooks.push_back(bookId);
+}
+
+void Patron::removeCheckedOutBook(int bookId) {
+  for (auto it = checkedOutBooks.begin(); it != checkedOutBooks.end(); ++it) {
+    if (*it == bookId) {
+      checkedOutBooks.erase(it);
+      return;
+    }
+  }
+}

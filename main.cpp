@@ -183,10 +183,10 @@ void handleDeletePatron(Library& library) {
 
 void handleEditPatron(Library& library) {
   std::cout << "Enter the new name: ";
-        std::string newName;
-        std::cin >> newName;
-        library.updatePatronName(&user, newName);
-        std::cout << "Name updated successfully.\n";
+  std::string newName;
+  std::cin >> newName;
+  library.updatePatronName(&user, newName);
+  std::cout << "Name updated successfully.\n";
 }
 
 void adminMainMenu(Library library, Patron user) {
@@ -228,6 +228,72 @@ void adminMainMenu(Library library, Patron user) {
   }
 }
 
+// Searches for a book in the library database.
+void handleSearchBook(Library& library) {
+  std::string title;
+  std::cout << "Enter the title of the book to search: ";
+  std::cin >> title;
+  Book* book = library.search_book(title);
+  if (book != nullptr) {
+    std::cout << "Book found: " << book->get_name() << "\n";
+  } else {
+    std::cout << "Book not found.\n";
+  }
+}
+
+// Handles the book checkout process.
+void handleCheckOutBook(Library& library, Patron& user) {
+  std::string title;
+  std::cout << "Enter the title of the book to check out: ";
+  std::cin >> title;
+  if (library.check_out_book(title, user)) {
+    std::cout << "Successfully checked out the book.\n";
+  } else {
+    std::cout << "Failed to check out the book.\n";
+  }
+}
+
+// Handles the book return process.
+void handleReturnBook(Library& library, Patron& user) {
+  std::string title;
+  std::cout << "Enter the title of the book to return: ";
+  std::cin >> title;
+  if (library.return_book(title, user)) {
+    std::cout << "Successfully returned the book.\n";
+  } else {
+    std::cout << "Failed to return the book.\n";
+  }
+}
+
+// Generates some sort of report. (This might be an admin-only feature.)
+void handleGenerateReport(Library& library) {
+  // Placeholder: you might want to restrict this feature to admins only.
+  library.generate_report();
+  std::cout << "Report generated.\n";
+}
+
+// Allows the user to update their own information.
+void handleUpdateSelfInformation(Library& library, Patron& user) {
+  std::string new_name;
+  int new_age;
+
+  // Update name
+  std::cout << "Enter your new name: ";
+  std::cin >> new_name;
+  user.set_name(new_name);
+
+  // Update age
+  std::cout << "Enter your new age: ";
+  std::cin >> new_age;
+  user.set_age(new_age);  // Assuming set_age is a method in your Patron class
+
+  // Update the user information in the library database
+  library.update_patron(user);
+
+  std::cout << "Information updated.\n";
+}
+
+
 void patronMainMenu(Library library, Patron user) {
   int choice;
   while (true) {
@@ -235,24 +301,20 @@ void patronMainMenu(Library library, Patron user) {
     std::cin >> choice;
     switch (choice) {
       case 1:
-        // handleSearchBook(library, patron);
-        std::cout << "Search Book\n";
+        handleSearchBook(library);
         break;
       case 2:
-        // handleCheckOutBook(library, patron);
-        std::cout << "Check Out Book\n";
+        handleCheckOutBook(library, user);
         break;
       case 3:
-        // handleReturnBook(library, patron);
-        std::cout << "Return Book\n";
+        handleReturnBook(library, user);
         break;
       case 4:
-        // handleGenerateReport(library, patron);
-        std::cout << "Generate Report\n";
+        handleGenerateReport(
+            library);  // If patrons are allowed to generate reports
         break;
       case 5:
-        // handleEditSelfInformation(library, patron);
-        std::cout << "Update own information\n";
+        handleUpdateSelfInformation(library, user);
         break;
       case 6:
         std::cout << "Exiting...\n";

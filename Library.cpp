@@ -404,3 +404,57 @@ Library::~Library() {
   }
   authorFileOut.close();
 }
+
+
+
+bool Library::check_out_book(std::string title, Patron& patron) {
+  Book* book = search_book(title);
+  if (book == nullptr) {
+    return false;  // Book does not exist
+  }
+
+  if (!book->isAvailable()) {
+    return false;  // Book is already checked out
+  }
+
+  book->setAvailable(false);
+  
+  // Associate the book with the patron
+  int bookId = book->get_id();  // Assuming get_id() is a method that returns the book's ID
+  patron.addCheckedOutBook(bookId);
+
+  return true;
+}
+
+
+bool Library::return_book(std::string title, Patron& patron) {
+  Book* book = search_book(title);
+  if (book == nullptr) {
+    return false;  // Book does not exist
+  }
+
+  if (book->isAvailable()) {
+    return false;  // Book was not checked out
+  }
+
+  book->setAvailable(true);
+  
+  // Remove the association between the book and the patron
+  int bookId = book->get_id();  // Assuming get_id() is a method that returns the book's ID
+  patron.removeCheckedOutBook(bookId);
+
+  return true;
+}
+
+
+void Library::update_patron(Patron& updatedPatron) {
+  // Assuming patrons is a std::vector<Patron> that holds all patron information
+  for (Patron& patron : patrons) {
+    if (patron.get_id() == updatedPatron.get_id()) {  // Assuming get_id() gets a unique identifier for the Patron
+      patron.set_name(updatedPatron.get_name());  // Update the name
+      patron.set_age(updatedPatron.get_age());  // Update the age, assuming set_age() and get_age() are methods in your Patron class
+      return;  // Exit the function once the patron is found and updated
+    }
+  }
+  std::cout << "Patron not found in library records.\n";
+}

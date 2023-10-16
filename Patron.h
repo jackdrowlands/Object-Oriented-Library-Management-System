@@ -19,6 +19,7 @@ struct BorrowedBook {
 class Patron : public Entity {
  private:
   std::string password;
+  std::vector<int> checkedOutBooks;
 
  protected:
   std::string details;
@@ -42,6 +43,10 @@ class Patron : public Entity {
   std::string get_details();
   int get_age();
   std::string get_password();
+
+  void addCheckedOutBook(int bookId);
+  void removeCheckedOutBook(int bookId);
+
 };
 
 #endif  // PATRON_H

@@ -59,6 +59,12 @@ class Library {
       std::string& browsingHistoryString);
 
   ~Library();
+  // check out and return books
+  bool check_out_book(std::string title, Patron& patron);
+  bool return_book(std::string title, Patron& patron);
+
+  // update patron data
+  void update_patron(Patron& updatedPatron);
 
  private:
   std::vector<Book> books;
