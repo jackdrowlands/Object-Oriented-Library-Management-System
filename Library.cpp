@@ -82,7 +82,159 @@ Library::Library(std::vector<Book> books, std::vector<Genre> genres,
                  std::vector<Author> authors)
     : books(books), genres(genres), authors(authors) {}
 
-Library::Library() {}
+Library::Library() {
+  std::ifstream userFile("users.csv");
+  if (!userFile.is_open()) {
+    std::cout << "Generating users.csv...\n";
+    std::ofstream userFileOut("users.csv");
+    userFileOut << "0,admin,admin,admin,admin,99,1,\0\n";
+    userFileOut.close();
+    userFile.open("users.csv");  // Re-open the file for reading
+  } else {
+    std::cout << "users.csv found.\n";
+    // read from file
+  }
+  std::string line;
+  while (std::getline(userFile, line)) {
+    std::stringstream ss(line);
+    std::string idString, details, login, password, name, ageString,
+        isAdminString, browsingHistoryString;
+    std::getline(ss, idString, ',');
+    std::getline(ss, details, ',');
+    std::getline(ss, login, ',');
+    std::getline(ss, password, ',');
+    std::getline(ss, name, ',');
+    std::getline(ss, ageString, ',');
+    std::getline(ss, isAdminString, ',');
+    std::getline(ss, browsingHistoryString, ',');
+    // Type conversion
+    int id = std::stoi(idString);
+    int age = std::stoi(ageString);
+    bool isAdmin = (isAdminString == "1");
+    // browsingHistory is a vector of BorrowedBook
+    std::vector<BorrowedBook> browsingHistory;
+    // convert browsingHistory from string to vector
+    browsingHistory = parseBrowsingHistory(browsingHistoryString);
+    // Create Patron object
+    Patron patron(id, name, details, password, age, isAdmin, browsingHistory);
+    // Append to patrons vector
+    patrons.push_back(patron);
+  }
+
+  std::ifstream bookFile("book.csv");
+  // book has title, author, genre, ID, and availability
+  if (!bookFile.is_open()) {
+    std::cout << "Generating book.csv...\n";
+    std::ofstream bookFile("book.csv");
+    bookFile << "The Lord of the Rings,J.R.R. Tolkien,1,1,\n";
+    bookFile.close();
+    bookFile.open("book.csv");  // Re-open the file for reading
+  } else {
+    std::cout << "book.csv found.\n";
+    // read from file
+  }
+  while (std::getline(bookFile, line)) {
+    std::stringstream ss(line);
+    std::string title, author, genre, idString, isAvailableString;
+    std::getline(ss, title, ',');
+    std::getline(ss, author, ',');
+    std::getline(ss, genre, ',');
+    std::getline(ss, idString, ',');
+    std::getline(ss, isAvailableString, ',');
+    // Type conversion
+    int id = std::stoi(idString);
+    bool isAvailable = (isAvailableString == "1");
+    // Create Book object
+    Book book(id, title, author, genre, isAvailable);
+    // Append to books vector
+    books.push_back(book);
+  }
+
+  std::ifstream genreFile("genre.csv");
+  // genre has ID, name, vector of books, restricted, and fictional
+  if (!genreFile.is_open()) {
+    std::cout << "Generating genre.csv...\n";
+    std::ofstream genreFile("genre.csv");
+    genreFile << "1,Fantasy,1,0,\n";
+    genreFile.close();
+    genreFile.open("genre.csv");  // Re-open the file for reading
+  } else {
+    std::cout << "genre.csv found.\n";
+    // read from file
+  }
+  while (std::getline(genreFile, line)) {
+    std::stringstream ss(line);
+    std::string idString, name, booksString, isRestrictedString,
+        isFictionalString;
+    std::getline(ss, idString, ',');
+    std::getline(ss, name, ',');
+    std::getline(ss, booksString, ',');
+    std::getline(ss, isRestrictedString, ',');
+    std::getline(ss, isFictionalString, ',');
+    // Type conversion
+    int id = std::stoi(idString);
+    bool isRestricted = (isRestrictedString == "1");
+    bool isFictional = (isFictionalString == "1");
+    // books is a vector of Book
+    std::vector<Book> books;
+    // convert books from string to vector
+    books = parseBooks(booksString);
+    // Create Genre object
+    Genre genre(id, name, books, isRestricted, isFictional);
+    // Append to genres vector
+    genres.push_back(genre);
+  }
+
+  std::ifstream authorFile("author.csv");
+  // author has id, name, vector of books, nationality, and vector of aliases
+  if (!authorFile.is_open()) {
+    std::cout << "Generating author.csv...\n";
+    std::ofstream authorFile("author.csv");
+    authorFile << "1,J.R.R. Tolkien,1,English,\n";
+    authorFile.close();
+    authorFile.open("author.csv");  // Re-open the file for reading
+  } else {
+    std::cout << "author.csv found.\n";
+    // read from file
+  }
+  std::getline(authorFile, line);
+  while (std::getline(authorFile, line)) {
+    std::ifstream authorFile("author.csv");
+    if (!authorFile.is_open()) {
+      std::cout << "Generating author.csv...\n";
+      std::ofstream authorFile("author.csv");
+      authorFile << "1,J.R.R. Tolkien,1,English,\n";
+      authorFile.close();
+      authorFile.open("author.csv");
+    } else {
+      std::cout << "author.csv found.\n";
+    }
+    std::string line;
+    std::getline(authorFile, line);
+    while (std::getline(authorFile, line)) {
+      std::stringstream ss(line);
+      std::string idString, name, booksString, nationality, aliasesString;
+      std::getline(ss, idString, ',');
+      std::getline(ss, name, ',');
+      std::getline(ss, booksString, ',');
+      std::getline(ss, nationality, ',');
+      std::getline(ss, aliasesString, ',');
+
+      int id = std::stoi(idString);
+      std::vector<Book> books = parseBooks(booksString);
+      // Assuming aliases are semicolon-separated
+      std::vector<std::string> aliases;
+      std::stringstream ssAliases(aliasesString);
+      std::string alias;
+      while (std::getline(ssAliases, alias, ';')) {
+        aliases.push_back(alias);
+      }
+
+      Author author(id, name, nationality, aliases, books);
+      authors.push_back(author);
+    }
+  }
+}
 
 std::vector<Book>* Library::get_books() { return &books; }
 
@@ -129,4 +281,60 @@ void Library::deletePatron(Library& library, Patron& patron) {
       return;
     }
   }
+}
+
+std::vector<Book> Library::parseBooks(const std::string& booksString) {
+  std::vector<Book> books;
+  // Assuming booksString is a semicolon-delimited string of book IDs
+  std::stringstream ss(booksString);
+  std::string bookIDStr;
+
+  while (std::getline(ss, bookIDStr, ';')) {
+    int bookID = std::stoi(bookIDStr);
+    // Assuming you have a function getBookByID to fetch a Book by its ID
+    Book book = *(getBookByID(bookID));
+    books.push_back(book);
+  }
+
+  return books;
+}
+
+std::vector<BorrowedBook> Library::parseBrowsingHistory(
+    const std::string& browsingHistoryString) {
+  std::vector<BorrowedBook> browsingHistory;
+  // Assuming browsingHistoryString is a semicolon-delimited string of
+  // BorrowedBook
+  std::stringstream ss(browsingHistoryString);
+  std::string borrowedBookStr;
+
+  while (std::getline(ss, borrowedBookStr, ';')) {
+    // make a new BorrowedBook object
+    BorrowedBook borrowedBook;
+    // Assuming borrowedBookStr is a comma-delimited string of
+    // bookID,dateHired,dateDue,dateReturned,isReturned
+    std::stringstream ssBorrowedBook(borrowedBookStr);
+    std::string bookIDStr, dateHiredStr, dateDueStr, dateReturnedStr,
+        isReturnedStr;
+    std::getline(ssBorrowedBook, bookIDStr, ',');
+    std::getline(ssBorrowedBook, dateHiredStr, ',');
+    std::getline(ssBorrowedBook, dateDueStr, ',');
+    std::getline(ssBorrowedBook, dateReturnedStr, ',');
+    std::getline(ssBorrowedBook, isReturnedStr, ',');
+    // Type conversion
+    int bookID = std::stoi(bookIDStr);
+    int dateHired = std::stoi(dateHiredStr);
+    int dateDue = std::stoi(dateDueStr);
+    int dateReturned = std::stoi(dateReturnedStr);
+    bool isReturned = (isReturnedStr == "1");
+    // Set the fields of the BorrowedBook object
+    borrowedBook.bookID = bookID;
+    borrowedBook.dateHired = dateHired;
+    borrowedBook.dateDue = dateDue;
+    borrowedBook.dateReturned = dateReturned;
+    borrowedBook.isReturned = isReturned;
+    // Append to browsingHistory vector
+    browsingHistory.push_back(borrowedBook);
+  }
+
+  return browsingHistory;
 }

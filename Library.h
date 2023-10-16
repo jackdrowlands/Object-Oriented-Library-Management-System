@@ -2,7 +2,9 @@
 #define LIBRARY_H
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -51,6 +53,10 @@ class Library {
 
   void addPatron(Library& library, Patron& patron);
   void deletePatron(Library& library, Patron& patron);
+
+  std::vector<Book> parseBooks(const std::string& booksString);
+  std::vector<BorrowedBook> Library::parseBrowsingHistory(
+      const std::string& browsingHistoryString);
 
  private:
   std::vector<Book> books;
