@@ -35,7 +35,7 @@ Book* Library::search_book(std::string& title) {
 Book* Library::search_book(int& id) {
   for (auto& book : books) {
     if (book.get_id() == id) {
-      return _cast<Book*>(&book);
+      return static_cast<Book*>(&book);
     }
   }
   return nullptr;

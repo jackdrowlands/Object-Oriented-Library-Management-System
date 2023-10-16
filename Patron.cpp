@@ -43,3 +43,12 @@ std::string Patron::getBrowsingHistoryString() {
   return historyString;
 }
 
+
+std::string Patron::get_details() {
+  return details;
+}
+
+int Patron::get_age() {
+  return age;
+}
+

@@ -39,6 +39,8 @@ class Patron : public Entity {
   void set_details(std::string details);
 
   void set_age(int age);
+  std::string get_details();
+  int get_age();
 };
 
 #endif  // PATRON_H
