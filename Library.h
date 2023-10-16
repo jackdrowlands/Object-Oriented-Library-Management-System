@@ -1,3 +1,4 @@
+#ifndef LIBRARY_H
 #define LIBRARY_H
 
 #include <algorithm>
@@ -49,12 +50,13 @@ class Library {
   // Method for managing patrons
   void addPatron(Library& library, Patron& patron);
   void deletePatron(Library& library, Patron& patron);
-  void updatePatronName(Patron *patron, std::string &newName);
-  void updatePatronDetails(Patron *patron, std::string &newDetails);
-  void updatePatronAge(Patron *patron, int newAge);
+  void updatePatronName(Patron* patron, std::string& newName);
+  void updatePatronDetails(Patron* patron, std::string& newDetails);
+  void updatePatronAge(Patron* patron, int newAge);
 
   std::vector<Book> parseBooks(std::string& booksString);
-  std::vector<BorrowedBook> parseBrowsingHistory(std::string& browsingHistoryString);
+  std::vector<BorrowedBook> parseBrowsingHistory(
+      std::string& browsingHistoryString);
 
   ~Library();
 
