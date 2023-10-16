@@ -30,11 +30,6 @@ void displayPatronMainMenu() {
   std::cout << "6. Exit\n";
 }
 
-
-
-
-
-
 // code for addbook, removebook, etc
 void handleAddBook(Library& library) {
   Book book;
@@ -148,9 +143,51 @@ void handleSearchBook(Library& library) {
 
 void handleGenerateReport(Library& library) { library.generate_report(); }
 
+void handleAddPatron(Library& library) {
+  std::cout << "Enter patron name: ";
+  std::string name;
+  std::cin >> name;
+  std::cout << "Enter patron details: ";
+  std::string details;
+  std::cin >> details;
+  std::cout << "Enter patron password: ";
+  std::string password;
+  std::cin >> password;
+  std::cout << "Enter patron age: ";
+  int age;
+  std::cin >> age;
+  std::cout << "Are you an admin? (Y/N):  ";
+  std::string adminString;
+  std::cin >> adminString;
+  bool isAdmin = (adminString == "Y");
+  Patron newPatron(library.get_patrons()->size() + 1, name, details, password,
+                   age, isAdmin, {});
+  library.addPatron(library, newPatron);
+}
 
+void handleDeletePatron(Library& library) {
+  std::string patronIdentifier;
+  std::cout << "Enter the name or login of the patron to remove: ";
+  std::cin >> patronIdentifier;
 
+  // Locate patron to remove
+  Patron* patronToRemove = library.findPatron(patronIdentifier);
 
+  if (patronToRemove != nullptr) {
+    library.deletePatron(library, *patronToRemove);
+    std::cout << "Patron has been removed.\n";
+  } else {
+    std::cout << "Patron not found. No patron has been removed.\n";
+  }
+}
+
+void handleEditPatron(Library& library) {
+  std::cout << "Enter the new name: ";
+        std::string newName;
+        std::cin >> newName;
+        library.updatePatronName(&user, newName);
+        std::cout << "Name updated successfully.\n";
+}
 
 void adminMainMenu(Library library, Patron user) {
   int choice;
@@ -174,16 +211,13 @@ void adminMainMenu(Library library, Patron user) {
         handleGenerateReport(library);
         break;
       case 6:
-        // handleAddPatron(library, patron);
-        std::cout << "Add Patron\n";
+        handleAddPatron(library);
         break;
       case 7:
-        // handleDeletePatron(library, patron);
-        std::cout << "Delete Patron\n";
+        handleDeletePatron(library);
         break;
       case 8:
-        // handleEditPatron(library, patron);
-        std::cout << "Edit Patron\n";
+        handleEditPatron(library);
         break;
       case 9:
         std::cout << "Exiting...\n";
