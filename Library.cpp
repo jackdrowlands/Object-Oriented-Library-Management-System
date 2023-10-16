@@ -31,7 +31,6 @@ Book* Library::search_book(std::string& title) {
   return nullptr;
 }
 
-
 Book* Library::search_book(int& id) {
   for (auto& book : books) {
     if (book.get_id() == id) {
@@ -292,9 +291,7 @@ void Library::updatePatronDetails(Patron* patron, std::string& newDetails) {
   (*patron).set_details(newDetails);
 }
 
-
 void Library::updatePatronAge(Patron* patron, int newAge) {}
-
 
 std::vector<Book> Library::parseBooks(std::string& booksString) {
   std::vector<Book> books;
@@ -406,15 +403,4 @@ Library::~Library() {
                   << authors.at(i).getAliasesString() << ",\n";
   }
   authorFileOut.close();
-
-  // delete vectors
-  delete &books;
-  delete &genres;
-  delete &authors;
-
-  // delete all patrons
-  for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
-    delete &patrons.at(i);
-  }
-  delete &patrons;
 }

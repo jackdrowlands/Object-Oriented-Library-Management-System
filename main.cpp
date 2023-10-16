@@ -4,7 +4,6 @@
 #include <string>
 
 #include "Library.h"
-#include "User.h"
 
 Patron userPatron;
 
@@ -127,13 +126,13 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
-    Patron userPatron = (*library.userLogin(login, password));
+    userPatron = (*library.userLogin(login, password));
     if (userPatron.get_id() != -1) {
       break;
     }
     std::cout << "Wrong login or password" << std::endl;
   }
-  if (userPatron.get_id() == 0) {
+  if (userPatron.getIsAdmin()) {
     adminMainMenu(library, userPatron);
   } else {
     patronMainMenu(library, userPatron);
