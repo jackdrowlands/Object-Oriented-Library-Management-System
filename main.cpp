@@ -6,7 +6,7 @@
 #include "Library.h"
 #include "User.h"
 
-User user;
+Patron userPatron;
 
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
@@ -127,17 +127,16 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
-    Patron* userPatron = library.userLogin(login, password);
-    User user(userPatron);
-    if (user.get_id() != -1) {
+    Patron userPatron = (*library.userLogin(login, password));
+    if (userPatron.get_id() != -1) {
       break;
     }
     std::cout << "Wrong login or password" << std::endl;
   }
-  if (user.getIsAdmin()) {
-    adminMainMenu(library, user);
+  if (userPatron.get_id() == 0) {
+    adminMainMenu(library, userPatron);
   } else {
-    patronMainMenu(library, user);
+    patronMainMenu(library, userPatron);
   }
   return 0;
 }
