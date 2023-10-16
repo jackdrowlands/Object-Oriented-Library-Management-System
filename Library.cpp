@@ -295,14 +295,31 @@ void Library::updatePatronAge(Patron* patron, int newAge) {}
 
 std::vector<Book> Library::parseBooks(std::string& booksString) {
   std::vector<Book> books;
-  // Assuming booksString is a semicolon-delimited string of book IDs
+  // Assuming booksString is a semicolon-delimited string of book ob
   std::stringstream ss(booksString);
-  std::string bookIDStr;
-
-  while (std::getline(ss, bookIDStr, ';')) {
-    int bookID = std::stoi(bookIDStr);
-    // Assuming you have a function getBookByID to fetch a Book by its ID
-    Book book = *(getBookByID(bookID));
+  std::string bookStr;
+  while (std::getline(ss, bookStr, ';')) {
+    // make a new Book object
+    Book book;
+    // Assuming bookStr is a comma-delimited string of
+    // title,author,genre,ID,isAvailable
+    std::stringstream ssBook(bookStr);
+    std::string title, author, genre, idString, isAvailableString;
+    std::getline(ssBook, title, ',');
+    std::getline(ssBook, author, ',');
+    std::getline(ssBook, genre, ',');
+    std::getline(ssBook, idString, ',');
+    std::getline(ssBook, isAvailableString, ',');
+    // Type conversion
+    int id = std::stoi(idString);
+    bool isAvailable = (isAvailableString == "1");
+    // Set the fields of the Book object
+    book.set_name(title);
+    book.setAuthor(author);
+    book.setGenre(genre);
+    book.set_id(id);
+    book.setAvailable(isAvailable);
+    // Append to books vector
     books.push_back(book);
   }
 
@@ -363,18 +380,18 @@ Library::~Library() {
   userFileOut.close();
   std::ofstream bookFileOut("book.csv");
   for (std::vector<Book>::size_type i = 0; i < books.size(); i++) {
-    bookFileOut << books.at(i).get_title() << "," << books.at(i).get_author()
-                << "," << books.at(i).get_genre() << "," << books.at(i).get_id()
-                << "," << books.at(i).getIsAvailable() << ",\n";
+    bookFileOut << books.at(i).get_name() << "," << books.at(i).getAuthor()
+                << "," << books.at(i).getGenre() << "," << books.at(i).get_id()
+                << "," << books.at(i).isAvailable() << ",\n";
   }
+
   bookFileOut.close();
   std::ofstream genreFileOut("genre.csv");
   for (std::vector<Genre>::size_type i = 0; i < genres.size(); i++) {
     genreFileOut << genres.at(i).get_name() << ","
                  << genres.at(i).get_booksString() << ","
-                 << genres.at(i).get_id() << ","
-                 << genres.at(i).getIsRestricted() << ","
-                 << genres.at(i).getIsFictional() << ",\n";
+                 << genres.at(i).get_id() << "," << genres.at(i).isRestricted()
+                 << "," << genres.at(i).isFictional() << ",\n";
   }
   genreFileOut.close();
   std::ofstream authorFileOut("author.csv");

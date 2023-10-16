@@ -29,5 +29,16 @@ void Author::setAliases(std::vector<std::string> aliases) {
 // implementation of the displayDetails method
 void Author::displayDetails() {
   Entity::displayDetails();
-    std::cout << "Nationality: " << nationality << std::endl;
+  std::cout << "Nationality: " << nationality << std::endl;
+}
+
+std::string Author::getAliasesString() {
+  std::string aliasesString = "";
+  for (int i = 0; i < aliases.size(); i++) {
+    aliasesString += aliases[i];
+    if (i != aliases.size() - 1) {
+      aliasesString += ";";
+    }
+  }
+  return aliasesString;
 }

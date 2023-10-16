@@ -33,6 +33,7 @@ class Author : public Entity {
   std::vector<std::string> getAliases();
   void setAliases(std::vector<std::string> aliases);
   void displayDetails() override;
+  std::string getAliasesString();
 };
 
 #endif  // AUTHOR_H

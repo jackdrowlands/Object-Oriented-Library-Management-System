@@ -12,9 +12,6 @@ class Book : public Entity {
  public:
   Book(int id, std::string name, std::string& author, std::string& genre,
        bool available);
-  std::string getAuthor();
-  std::string getGenre();
-  bool isAvailable();
   Book();
   // Setters and getters
   void setAuthor(std::string author);
