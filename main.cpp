@@ -4,45 +4,10 @@
 #include <string>
 
 #include "Library.h"
-#include "Patron.h"
+#include "User.h"
 
 Library library;
-Patron user;
-
-Patron* findPatron(std::vector<Patron>* patrons, std::string name) {
-  // check if patrons is empty
-  if (patrons->size() == 0) {
-    return NULL;
-  }
-  for (std::vector<Patron>::size_type i = 0; i < patrons->size(); i++) {
-    if (patrons->at(i).get_name() == name) {
-      return &patrons->at(i);
-    }
-  }
-  return NULL;
-}
-
-Patron* userLogin(std::string user, std::string password,
-                  std::vector<Patron>* patrons) {
-  Patron* patron = findPatron(patrons, user);
-
-  if (patron != NULL && patron->checkLogin(user, password)) {
-    std::cout << "User found: " << std::endl;
-    return patron;
-  }
-
-  return new Patron();
-}
-
-Book getBookByID(int id) {
-  for (std::vector<Book>::size_type i = 0; i < library.get_books().size();
-       i++) {
-    if (library.get_books().at(i).get_id() == id) {
-      return library.get_books().at(i);
-    }
-  }
-  return Book();
-}
+User user;
 
 std::vector<Book> parseBooks(const std::string& booksString) {
   std::vector<Book> books;
@@ -53,7 +18,7 @@ std::vector<Book> parseBooks(const std::string& booksString) {
   while (std::getline(ss, bookIDStr, ';')) {
     int bookID = std::stoi(bookIDStr);
     // Assuming you have a function getBookByID to fetch a Book by its ID
-    Book book = getBookByID(bookID);
+    Book book = *(library.getBookByID(bookID));
     books.push_back(book);
   }
 
@@ -123,7 +88,7 @@ void displayPatronMainMenu() {
   std::cout << "6. Exit\n";
 }
 
-void adminMainMenu(Library library, Patron patron) {
+void adminMainMenu(Library library, Patron user) {
   int choice;
   while (true) {
     displayAdminMainMenu();
@@ -170,7 +135,7 @@ void adminMainMenu(Library library, Patron patron) {
   }
 }
 
-void patronMainMenu(Library library, Patron patron) {
+void patronMainMenu(Library library, Patron user) {
   int choice;
   while (true) {
     displayPatronMainMenu();
@@ -206,11 +171,10 @@ void patronMainMenu(Library library, Patron patron) {
 }
 
 int main() {
-  std::vector<Patron> patrons;
-  std::vector<Book> books;
-  std::vector<Genre> genres;
-  std::vector<Author> authors;
-
+  std::vector<Patron> patrons = *library.get_patrons();
+  std::vector<Book> books = *library.get_books();
+  std::vector<Genre> genres = *library.get_genres();
+  std::vector<Author> authors = *library.get_authors();
   std::ifstream userFile("users.csv");
   if (!userFile.is_open()) {
     std::cout << "Generating users.csv...\n";
@@ -370,7 +334,8 @@ int main() {
     std::cin >> login;
     std::cout << "Enter your password: ";
     std::cin >> password;
-    user = *userLogin(login, password, &patrons);
+    Patron* userPatron = library.userLogin(login, password);
+    User user(userPatron);
     if (user.get_id() != -1) {
       break;
     }

@@ -61,7 +61,7 @@ void Library::remove_genre(const std::string& name) {
   }
 }
 
-std::vector<Genre> Library::get_genres() const { return genres; }
+std::vector<Genre>* Library::get_genres() { return &genres; }
 
 // implementing methods for managing authors
 
@@ -76,7 +76,7 @@ void Library::remove_author(const std::string& name) {
   }
 }
 
-std::vector<Author> Library::get_authors() const { return authors; }
+std::vector<Author>* Library::get_authors() { return &authors; }
 
 Library::Library(std::vector<Book> books, std::vector<Genre> genres,
                  std::vector<Author> authors)
@@ -84,4 +84,49 @@ Library::Library(std::vector<Book> books, std::vector<Genre> genres,
 
 Library::Library() {}
 
-std::vector<Book> Library::get_books() const { return books; }
+std::vector<Book>* Library::get_books() { return &books; }
+
+std::vector<Patron>* Library::get_patrons() { return &patrons; }
+
+Patron* Library::findPatron(std::string user) {
+  std::vector<Patron>& patrons = *get_patrons();
+  for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
+    if (patrons[i].get_name() == user) {
+      return &(patrons[i]);
+    }
+  }
+  return nullptr;
+}
+
+Patron* Library::userLogin(std::string user, std::string password) {
+  Patron* patron = findPatron(user);
+  if (patron != NULL && patron->checkLogin(user, password)) {
+    std::cout << "User found: " << std::endl;
+    return patron;
+  }
+
+  return new Patron();
+}
+
+Book* Library::getBookByID(int id) {
+  std::vector<Book>& books = *get_books();
+  for (std::vector<Book>::size_type i = 0; i < books.size(); i++) {
+    if (books[i].get_id() == id) {
+      return &(books[i]);
+    }
+  }
+  return new Book();
+}
+
+void Library::addPatron(Library& library, Patron& patron) {
+  library.patrons.push_back(patron);
+}
+
+void Library::deletePatron(Library& library, Patron& patron) {
+  for (auto it = library.patrons.begin(); it != library.patrons.end(); ++it) {
+    if (it->get_name() == patron.get_name()) {
+      library.patrons.erase(it);
+      return;
+    }
+  }
+}

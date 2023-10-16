@@ -19,7 +19,6 @@ Patron::Patron() : Entity() {
   this->password = "";
   this->age = 0;
   this->isAdmin = false;
-  this->history = {};
 }
 
 std::string Patron::getDetails() const { return details; }

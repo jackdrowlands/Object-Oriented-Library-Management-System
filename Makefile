@@ -8,13 +8,13 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11 -g
 
 # Source Files
-SOURCES = Author.cpp Book.cpp Entity.cpp Genre.cpp Library.cpp Patron.cpp main.cpp
+SOURCES = Author.cpp Book.cpp Entity.cpp Genre.cpp Library.cpp Patron.cpp main.cpp User.cpp
 
 # Object Files
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Executable Name
-EXECUTABLE = my_program
+EXECUTABLE = libraryManagementSystem
 
 all: $(EXECUTABLE)
 
