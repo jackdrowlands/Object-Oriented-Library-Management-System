@@ -18,7 +18,6 @@ class Genre : public Entity {
  public:
   Genre(int id, std::string name, std::vector<Book> books, bool restricted,
         bool fictional);
-  // Add other public member function declarations here, if any
 
   // Setters and getters
   std::vector<Book> getBooks();

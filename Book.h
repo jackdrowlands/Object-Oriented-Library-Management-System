@@ -21,6 +21,7 @@
       std::string getGenre() ;
       void setAvailable(bool available);
       bool isAvailable() ;
+      void displayDetails() override;
 
 
 

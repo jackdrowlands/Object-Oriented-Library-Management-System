@@ -5,7 +5,7 @@
       "name": "Debug my_program",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/my_program",
+      "program": "${workspaceFolder}/libraryManagementSystem",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
