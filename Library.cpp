@@ -2,9 +2,9 @@
 
 // implementing methods for managing books
 
-void Library::add_book(const Book& book) { books.push_back(book); }
+void Library::add_book( Book& book) { books.push_back(book); }
 
-void Library::remove_book(const Book& book) {
+void Library::remove_book( Book& book) {
   for (auto it = books.begin(); it != books.end(); ++it) {
     if (it->get_name() == book.get_name()) {
       books.erase(it);
@@ -13,7 +13,7 @@ void Library::remove_book(const Book& book) {
   }
 }
 
-void Library::update_book(const Book& book) {
+void Library::update_book( Book& book) {
   for (auto& b : books) {
     if (b.get_name() == book.get_name()) {
       b = book;  // assumes Book has an assignment operator
@@ -22,25 +22,25 @@ void Library::update_book(const Book& book) {
   }
 }
 
-Book* Library::search_book(const std::string& title) const {
-  for (const auto& book : books) {
+Book* Library::search_book( std::string& title)  {
+  for ( auto& book : books) {
     if (book.get_name() == title) {
-      return const_cast<Book*>(&book);
+      return _cast<Book*>(&book);
     }
   }
   return nullptr;
 }
 
-const Book* Library::search_book(const int& id) const {
-  for (const auto& book : books) {
+ Book* Library::search_book( int& id)  {
+  for ( auto& book : books) {
     if (book.get_id() == id) {
-      return const_cast<const Book*>(&book);
+      return _cast< Book*>(&book);
     }
   }
   return nullptr;
 }
 
-void Library::generate_report() const {
+void Library::generate_report()  {
   std::cout << "Library Report" << std::endl;
   std::cout << "--------------" << std::endl;
   std::cout << "Total Books: " << books.size() << std::endl;
@@ -50,9 +50,9 @@ void Library::generate_report() const {
 
 // implementing methods for managing genres
 
-void Library::add_genre(const Genre& genre) { genres.push_back(genre); }
+void Library::add_genre( Genre& genre) { genres.push_back(genre); }
 
-void Library::remove_genre(const std::string& name) {
+void Library::remove_genre( std::string& name) {
   for (auto it = genres.begin(); it != genres.end(); ++it) {
     if (it->get_name() == name) {
       genres.erase(it);
@@ -65,9 +65,9 @@ std::vector<Genre>* Library::get_genres() { return &genres; }
 
 // implementing methods for managing authors
 
-void Library::add_author(const Author& author) { authors.push_back(author); }
+void Library::add_author( Author& author) { authors.push_back(author); }
 
-void Library::remove_author(const std::string& name) {
+void Library::remove_author( std::string& name) {
   for (auto it = authors.begin(); it != authors.end(); ++it) {
     if (it->get_name() == name) {
       authors.erase(it);
@@ -283,7 +283,7 @@ void Library::deletePatron(Library& library, Patron& patron) {
   }
 }
 
-std::vector<Book> Library::parseBooks(const std::string& booksString) {
+std::vector<Book> Library::parseBooks( std::string& booksString) {
   std::vector<Book> books;
   // Assuming booksString is a semicolon-delimited string of book IDs
   std::stringstream ss(booksString);
@@ -300,7 +300,7 @@ std::vector<Book> Library::parseBooks(const std::string& booksString) {
 }
 
 std::vector<BorrowedBook> Library::parseBrowsingHistory(
-    const std::string& browsingHistoryString) {
+     std::string& browsingHistoryString) {
   std::vector<BorrowedBook> browsingHistory;
   // Assuming browsingHistoryString is a semicolon-delimited string of
   // BorrowedBook

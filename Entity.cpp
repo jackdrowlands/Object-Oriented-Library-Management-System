@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-// Constructor
+// ructor
 Entity::Entity() {
   this->id = -1;
   this->name = "";
@@ -12,6 +12,11 @@ Entity::Entity(int id, std::string name) {
 }
 
 // Getter functions
-int Entity::get_id() const { return id; }
+int Entity::get_id()  { return id; }
 
-std::string Entity::get_name() const { return name; }
+std::string Entity::get_name()  { return name; }
+
+// Setter functions
+void Entity::set_id(int id) { this->id = id; }
+
+void Entity::set_name(std::string name) { this->name = name; }
