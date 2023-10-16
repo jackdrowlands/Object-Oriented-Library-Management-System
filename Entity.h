@@ -12,8 +12,11 @@ class Entity {
  public:
   Entity();
   Entity(int id, std::string name);
-  int get_id() const;
-  std::string get_name() const;
+  int get_id();
+  std::string get_name();
+  void set_id(int id);
+  void set_name(std::string name);
+
 };
 
 #endif  // ENTITY_H

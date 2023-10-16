@@ -51,8 +51,12 @@ class Library {
 
   Book* getBookByID(int id);
 
+  // Method for managing patrons
   void addPatron(Library& library, Patron& patron);
   void deletePatron(Library& library, Patron& patron);
+  void Library::updatePatronName(Patron *patron, std::string &newName);
+  void Library::updatePatronDetails(Patron *patron, std::string &newDetails);
+  void Library::updatePatronAge(Patron *patron, int newAge);
 
   std::vector<Book> parseBooks(const std::string& booksString);
   std::vector<BorrowedBook> Library::parseBrowsingHistory(
