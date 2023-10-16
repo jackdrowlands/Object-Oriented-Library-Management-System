@@ -58,6 +58,8 @@ class Library {
   std::vector<BorrowedBook> Library::parseBrowsingHistory(
       const std::string& browsingHistoryString);
 
+  ~Library();
+
  private:
   std::vector<Book> books;
   std::vector<Genre> genres;
