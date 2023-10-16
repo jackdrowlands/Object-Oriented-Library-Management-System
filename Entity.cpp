@@ -11,7 +11,7 @@ Entity::Entity(int id, std::string name) {
   this->name = name;
 }
 
-// Getter functions 
+// Getter functions
 
 int Entity::get_id() { return id; }
 
@@ -26,22 +26,4 @@ void Entity::set_name(std::string name) { this->name = name; }
 void Entity::displayDetails() {
   std::cout << "ID: " << id << std::endl;
   std::cout << "Name: " << name << std::endl;
-}
-
-// Get books string
-std::string Entity::get_booksString() {
-  std::string booksString = "";
-  for (int i = 0; i < books.size(); i++) {
-    booksString += books[i].get_name();
-    booksString += ";";
-    booksString += books[i].getAuthor();
-    booksString += ";";
-    booksString += books[i].getGenre();
-    booksString += ";";
-    booksString += std::to_string(books[i].get_id());
-    booksString += ";";
-    booksString += std::to_string(books[i].isAvailable());
-    booksString += ",";
-  }
-  return booksString;
 }

@@ -3,7 +3,7 @@
 
 Author::Author(int id, std::string name, std::string nationality,
                std::vector<std::string> aliases, std::vector<Book> books)
-    : Entity(id, name) {
+    : EntityWithBooks(id, name) {
   this->nationality = nationality;
   this->aliases = aliases;
   this->books = books;

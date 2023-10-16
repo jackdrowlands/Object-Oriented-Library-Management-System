@@ -9,7 +9,6 @@ class Entity {
  protected:
   int id;
   std::string name;
-  std::vector<Book> books;
 
  public:
   Entity();
@@ -21,7 +20,6 @@ class Entity {
   void set_name(std::string name);
 
   virtual void displayDetails();
-  std::string get_booksString();
 };
 
 #endif  // ENTITY_H

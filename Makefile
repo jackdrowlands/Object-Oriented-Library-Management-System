@@ -8,7 +8,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11 -g
 
 # Source Files
-SOURCES = Author.cpp Book.cpp Entity.cpp Genre.cpp Library.cpp Patron.cpp main.cpp User.cpp
+SOURCES = Author.cpp Book.cpp Entity.cpp EntityWithBooks.cpp Genre.cpp Library.cpp Patron.cpp main.cpp 
 
 # Object Files
 OBJECTS = $(SOURCES:.cpp=.o)
