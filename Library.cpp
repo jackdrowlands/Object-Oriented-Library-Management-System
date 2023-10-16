@@ -283,7 +283,6 @@ void Library::deletePatron(Library& library, Patron& patron) {
   }
 }
 
-
 void Library::updatePatronName(Patron *patron, std::string &newName) {
   (*patron).set_name(newName);
   }
@@ -293,7 +292,7 @@ void Library::updatePatronDetails(Patron *patron, std::string &newDetails) {
 }
 
 void Library::updatePatronAge(Patron *patron, int newAge) {
-    
+    (*patron).set_age(newAge);
 }
 
 std::vector<Book> Library::parseBooks(const std::string& booksString) {

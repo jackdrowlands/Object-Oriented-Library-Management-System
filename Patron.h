@@ -36,6 +36,10 @@ class Patron : public Entity {
   std::vector<BorrowedBook> getHistory() ;
   Patron();
   bool getIsAdmin() ;
+
+  // Setter functions
+  void Patron::set_details(std::string details);
+  void Patron::set_age(int age);
 };
 
 #endif  // PATRON_H

@@ -33,3 +33,6 @@ bool Patron::checkLogin(std::string user, std::string password) {
 std::vector<BorrowedBook> Patron::getHistory()  { return history; }
 
 bool Patron::getIsAdmin()  { return isAdmin; }
+
+void Patron::set_details(std::string details) { this->details = details; }
+void Patron::set_age(int age) { this->age = age; }
