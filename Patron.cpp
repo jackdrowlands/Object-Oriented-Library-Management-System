@@ -4,8 +4,7 @@
 // Add method implementations here, if any
 
 Patron::Patron(int id, std::string name, std::string details,
-               std::string password, int age, bool isAdmin,
-               std::vector<BorrowedBook> history)
+               std::string password, int age, std::vector<BorrowedBook> history)
     : Entity(id, name) {
   this->details = details;
   this->password = password;
@@ -21,7 +20,7 @@ Patron::Patron() : Entity() {
   this->isAdmin = false;
 }
 
-std::string Patron::getDetails()  { return details; }
+std::string Patron::getDetails() { return details; }
 
 bool Patron::checkLogin(std::string user, std::string password) {
   if (user == this->name && password == this->password) {
@@ -30,6 +29,4 @@ bool Patron::checkLogin(std::string user, std::string password) {
   return false;
 }
 
-std::vector<BorrowedBook> Patron::getHistory()  { return history; }
-
-bool Patron::getIsAdmin()  { return isAdmin; }
+std::vector<BorrowedBook> Patron::getHistory() { return history; }
