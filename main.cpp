@@ -30,11 +30,11 @@ void handleAddGenre(Library& library) {
   std::cout << "Is the genre fictional? (Y/N)";
   std::string fictionalString;
   std::cin >> fictionalString;
-  bool isFictional = (fictionalString == "Y");
+  bool isFictional = (fictionalString == "Y" || fictionalString == "y");
   std::cout << "Is the genre restricted? (Y/N)";
   std::string restrictedString;
   std::cin >> restrictedString;
-  bool isRestricted = (restrictedString == "Y");
+  bool isRestricted = (restrictedString == "Y" || restrictedString == "y");
   Genre genre(id, name, isRestricted, isFictional);
   library.add_genre(genre);
 }
@@ -144,6 +144,10 @@ void handleRemoveBook(Library& library) {
   std::string title;
   std::cout << "Enter the title of the book to remove: ";
   std::cin >> title;
+  if (library.search_book(title) == nullptr) {
+    std::cout << "Book not found.\n";
+    return;
+  }
   book.set_name(title);
   library.remove_book(book);
   std::cout << "Book removed.\n";
