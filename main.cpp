@@ -46,7 +46,7 @@ void handleAddAuthor(Library& library, std::string name) {
   library.add_author(author);
 }
 
-void handleAddGenre(Library library) {
+void handleAddGenre(Library& library) {
   int id = library.get_genres()->size() + 1;
   std::cout << "Enter genre name: ";
   std::string name;
@@ -63,7 +63,7 @@ void handleAddGenre(Library library) {
   library.add_genre(genre);
 }
 
-void handleAddGenre(Library library, std::string name) {
+void handleAddGenre(Library& library, std::string name) {
   int id = library.get_genres()->size() + 1;
   std::cout << "Is the genre fictional? (Y/N)";
   std::string fictionalString;
@@ -77,7 +77,7 @@ void handleAddGenre(Library library, std::string name) {
   library.add_genre(genre);
 }
 
-void handleDeleteAuthor(Library library) {
+void handleDeleteAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
   std::cin >> name;
@@ -274,6 +274,7 @@ void adminMainMenu(Library* library, Patron user) {
     std::cin >> choice;
     switch (choice) {
       case 1:
+        handleAddBook(*library);
         break;
       case 2:
         handleRemoveBook(*library);
