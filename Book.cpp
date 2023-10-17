@@ -26,6 +26,17 @@ std::string Book::getGenre() { return genre; }
 void Book::setAvailable(bool available) { this->available = available; }
 bool Book::isAvailable() { return available; }
 
+
+bool Book::isRestricted() { return restricted; }
+bool Book::isFictional() { return fictional; }
+
+void Book::setRestricted(bool restricted) { this->restricted = restricted; }
+void Book::setFictional(bool fictional) { this->fictional = fictional; }
+
+bool Book::getIsRestricted() { return restricted; }
+
+bool Book::getIsFictional() { return fictional; }
+
 // implementation of the displayDetails method
 void Book::displayDetails() {
   Entity::displayDetails();

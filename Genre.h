@@ -18,6 +18,7 @@ class Genre : public EntityWithBooks {
  public:
   Genre(int id, std::string name, std::vector<Book> books, bool restricted,
         bool fictional);
+  Genre(int id, std::string name, bool restricted, bool fictional);
 
   // Setters and getters
   std::vector<Book> getBooks();

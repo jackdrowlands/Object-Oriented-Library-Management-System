@@ -8,17 +8,18 @@
 #include "Book.h"
 #include "Entity.h"
 
-struct BorrowedBook {
-  int bookID;
-  int dateHired;
-  int dateDue;
-  int dateReturned;
-  bool isReturned;
-};
+  struct BorrowedBook {
+    int bookID;
+    int dateHired;
+    int dateDue;
+    int dateReturned;
+    bool isReturned;
+  };
 
 class Patron : public Entity {
  private:
   std::string password;
+  std::vector<BorrowedBook> checkedOutBooks;
 
  protected:
   std::string details;
@@ -42,6 +43,11 @@ class Patron : public Entity {
   std::string get_details();
   int get_age();
   std::string get_password();
+
+  void addCheckedOutBook(int bookId);
+
+  void removeCheckedOutBook(int bookId);
+
 };
 
 #endif  // PATRON_H

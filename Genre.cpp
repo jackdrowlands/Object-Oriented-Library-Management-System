@@ -8,6 +8,11 @@ Genre::Genre(int id, std::string name, std::vector<Book> books, bool restricted,
   this->fictional = fictional;
   this->books = books;
 }
+Genre::Genre(int id, std::string name, bool restricted, bool fictional)
+    : EntityWithBooks(id, name) {
+  this->restricted = restricted;
+  this->fictional = fictional;
+}
 // Add other method implementations here, if any
 
 // Setters and getters

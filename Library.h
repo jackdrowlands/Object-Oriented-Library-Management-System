@@ -1,7 +1,6 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -28,11 +27,13 @@ class Library {
   void add_genre(Genre& genre);
   void remove_genre(std::string& name);
   std::vector<Genre>* get_genres();
+  Genre* search_genre(std::string& name);
 
   // Methods for managing authors
   void add_author(Author& author);
   void remove_author(std::string& name);
   std::vector<Author>* get_authors();
+  Author* search_author(std::string& name);
 
   // General report for the library
   void generate_report();
@@ -58,7 +59,28 @@ class Library {
   std::vector<BorrowedBook> parseBrowsingHistory(
       std::string& browsingHistoryString);
 
+  std::vector<Patron*> patrons;
+  Patron* findPatronByName(const std::string& name) {
+    for (Patron* patron : patrons) {
+      if (patron->get_name() == name) {
+        return patron;
+      }
+    }
+    return nullptr;
+  }
+
+
+
+
   ~Library();
+  // check out and return books
+  bool check_out_book(std::string title, Patron& patron);
+  bool return_book(std::string title, Patron& patron);
+
+  // update patron data
+  void update_patron(Patron& updatedPatron);
+
+
 
  private:
   std::vector<Book> books;
