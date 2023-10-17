@@ -34,7 +34,7 @@ std::vector<BorrowedBook> Patron::getHistory() { return history; }
 
 std::string Patron::getBrowsingHistoryString() {
   std::string historyString = "";
-  for (int i = 0; i < history.size(); i++) {
+  for (std::vector<BorrowedBook>::size_type i = 0; i < history.size(); i++) {
     historyString += std::to_string(history[i].bookID) + " " +
                      std::to_string(history[i].dateHired) + " " +
                      std::to_string(history[i].dateDue) + " " +
@@ -71,7 +71,8 @@ void Patron::addCheckedOutBook(int bookId) {
 }
 
 void Patron::removeCheckedOutBook(int bookId) {
-  for (int it = 0; it < getHistory().size(); it++) {
+  for (std::vector<BorrowedBook>::size_type it = 0; it < getHistory().size();
+       it++) {
     if (getHistory()[it].bookID == bookId) {
       getHistory().erase(getHistory().begin() + it);
       return;

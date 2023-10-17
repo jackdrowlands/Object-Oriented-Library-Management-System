@@ -3,7 +3,7 @@
 // Get books string
 std::string EntityWithBooks::get_booksString() {
   std::string booksString = "";
-  for (int i = 0; i < books.size(); i++) {
+  for (std::vector<Book>::size_type i = 0; i < books.size(); i++) {
     booksString += books[i].get_name();
     booksString += "|";
     booksString += books[i].getAuthor();
