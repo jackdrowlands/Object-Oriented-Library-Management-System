@@ -285,12 +285,28 @@ void handleDeletePatron(Library& library) {
 }
 
 void handleEditPatron(Library& library) {
-  std::cout << "Enter the new name: ";
-  std::string newName;
-  std::cin >> newName;
-  library.updatePatronName(&user, newName);
-  std::cout << "Name updated successfully.\n";
+    // Step 1: Ask for the name of the patron to edit
+    std::cout << "Enter the name of the patron to edit: ";
+    std::string patronName;
+    std::cin >> patronName;
+
+    // Step 2: Find the patron with the given name
+    Patron* patronToEdit = library.findPatronByName(patronName);
+    if (patronToEdit == nullptr) {
+        std::cout << "Patron not found.\n";
+        return;
+    }
+
+    // Step 3: Proceed with editing the patron
+    std::cout << "Enter the new name: ";
+    std::string newName;
+    std::cin >> newName;
+
+    library.updatePatronName(patronToEdit, newName);
+
+    std::cout << "Name updated successfully.\n";
 }
+
 
 void adminMainMenu(Library* library, Patron user) {
   int choice;

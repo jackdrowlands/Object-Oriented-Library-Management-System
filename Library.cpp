@@ -403,7 +403,7 @@ bool Library::check_out_book(std::string title, Patron& patron) {
   book->setAvailable(false);
 
   // Associate the book with the patron
-  int bookId = book->get_id();  
+  int bookId = book->get_id();  // Assuming get_id() is a method that returns
                                 // the book's ID
   patron.addCheckedOutBook(bookId);
 
@@ -464,3 +464,5 @@ Author* Library::search_author(std::string& name) {
   }
   return nullptr;
 }
+
+

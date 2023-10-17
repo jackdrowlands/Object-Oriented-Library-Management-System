@@ -59,6 +59,19 @@ class Library {
   std::vector<BorrowedBook> parseBrowsingHistory(
       std::string& browsingHistoryString);
 
+  std::vector<Patron*> patrons;
+  Patron* findPatronByName(const std::string& name) {
+    for (Patron* patron : patrons) {
+      if (patron->get_name() == name) {
+        return patron;
+      }
+    }
+    return nullptr;
+  }
+
+
+
+
   ~Library();
   // check out and return books
   bool check_out_book(std::string title, Patron& patron);
@@ -66,6 +79,8 @@ class Library {
 
   // update patron data
   void update_patron(Patron& updatedPatron);
+
+
 
  private:
   std::vector<Book> books;
