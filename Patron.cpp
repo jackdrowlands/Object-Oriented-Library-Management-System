@@ -56,6 +56,7 @@ void Patron::set_details(std::string details) { this->details = details; }
 
 void Patron::addCheckedOutBook(int bookId) {
   checkedOutBooks.push_back(bookId);
+  // TODO MAKE A BORROWED BOOK
 }
 
 void Patron::removeCheckedOutBook(int bookId) {

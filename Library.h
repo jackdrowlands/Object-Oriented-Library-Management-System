@@ -1,7 +1,6 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -28,11 +27,13 @@ class Library {
   void add_genre(Genre& genre);
   void remove_genre(std::string& name);
   std::vector<Genre>* get_genres();
+  Genre* search_genre(std::string& name);
 
   // Methods for managing authors
   void add_author(Author& author);
   void remove_author(std::string& name);
   std::vector<Author>* get_authors();
+  Author* search_author(std::string& name);
 
   // General report for the library
   void generate_report();

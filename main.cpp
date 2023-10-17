@@ -102,9 +102,11 @@ void displayPatronMainMenu() {
   std::cout << "1. Search Book\n";
   std::cout << "2. Check Out Book\n";
   std::cout << "3. Return Book\n";
-  std::cout << "4. Generate Report\n";
-  std::cout << "5. Update own information\n";
-  std::cout << "6. Exit\n";
+  std::cout << "4. Search Author\n";
+  std::cout << "5. Search Genre\n";
+  std::cout << "6. Generate Report\n";
+  std::cout << "7. Update own information\n";
+  std::cout << "8. Exit\n";
 }
 
 // code for addbook, removebook, etc
@@ -212,9 +214,33 @@ void handleSearchBook(Library& library) {
   std::cin >> title;
   Book* book = library.search_book(title);
   if (book != nullptr) {
-    std::cout << "Book found: " << book->get_name() << "\n";
+    book->displayDetails();
   } else {
     std::cout << "Book not found.\n";
+  }
+}
+
+void handleSearchGenre(Library& library) {
+  std::string name;
+  std::cout << "Enter the name of the genre to search: ";
+  std::cin >> name;
+  Genre* genre = library.search_genre(name);
+  if (genre != nullptr) {
+    genre->displayDetails();
+  } else {
+    std::cout << "Genre not found.\n";
+  }
+}
+
+void handleSearchAuthor(Library& library) {
+  std::string name;
+  std::cout << "Enter the name of the author to search: ";
+  std::cin >> name;
+  Author* author = library.search_author(name);
+  if (author != nullptr) {
+    author->displayDetails();
+  } else {
+    std::cout << "Author not found.\n";
   }
 }
 
@@ -368,13 +394,19 @@ void patronMainMenu(Library* library, Patron user) {
         handleReturnBook(*library, user);
         break;
       case 4:
+        handleSearchAuthor(*library);
+        break;
+      case 5:
+        handleSearchGenre(*library);
+        break;
+      case 6:
         handleGenerateReport(
             *library);  // If patrons are allowed to generate reports
         break;
-      case 5:
+      case 7:
         handleUpdateSelfInformation(*library, user);
         break;
-      case 6:
+      case 8:
         std::cout << "Exiting...\n";
         return;
       default:
