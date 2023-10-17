@@ -1,6 +1,14 @@
 
 #include "Patron.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 // Add method implementations here, if any
 
 Patron::Patron(int id, std::string name, std::string details,

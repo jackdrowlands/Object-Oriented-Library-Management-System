@@ -13,6 +13,11 @@
 #include "Genre.h"
 #include "Patron.h"
 
+// Extra inclusions
+#include "Library.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 // Define the Library class
 class Library {
  public:

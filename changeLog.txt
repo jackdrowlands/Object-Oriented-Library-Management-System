@@ -1,0 +1,28 @@
+The following changes were made to each .h and .cpp file which differ from the plan document
+
+Entity
+Setters were required for name and id
+get_books not required as not a functional requirement of entity
+Included in classes which inherit from it
+
+Author
+Setters were required
+
+Genre
+getters and setters required for restricted, fictional and books
+
+Patron
+Password was added to allow patron to have a password
+checked_out_books vector also stores ids of checked out books
+
+Library
+Changes to include functions to manage authors, allowing authors to be added and removed.
+Generate general report for library also included
+checkout/return_book functions also included to manage movement of books
+
+Book
+Display details function included
+
+EntityWithBook
+Class included to include a vector of books.
+Inherits from entity.

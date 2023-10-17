@@ -1,5 +1,13 @@
 #include "Book.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 // implementation of the ructor
 Book::Book(int id, std::string name, std::string& author, std::string& genre,
            bool available)

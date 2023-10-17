@@ -1,5 +1,13 @@
 #include "EntityWithBooks.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+
 // Get books string
 std::string EntityWithBooks::get_booksString() {
   std::string booksString = "";

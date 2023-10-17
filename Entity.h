@@ -5,6 +5,15 @@
 #include <string>
 #include <vector>
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 class Entity {
  protected:
   int id;

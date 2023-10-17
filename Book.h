@@ -7,6 +7,14 @@
 
 #include "Entity.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "EntityWithBooks.h"
+
 // define the Book class
 class Book : public Entity {
  public:

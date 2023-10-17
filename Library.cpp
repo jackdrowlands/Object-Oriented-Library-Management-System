@@ -1,5 +1,13 @@
 #include "Library.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 // implementing methods for managing books
 
 void Library::add_book(Book& book) { books.push_back(book); }

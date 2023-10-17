@@ -1,5 +1,13 @@
 #include "Entity.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "EntityWithBooks.h"
+
 // ructor
 Entity::Entity() {
   this->id = -1;

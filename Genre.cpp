@@ -1,6 +1,14 @@
 
 #include "Genre.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Book.h"
+#include "Patron.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 Genre::Genre(int id, std::string name, std::vector<Book> books, bool restricted,
              bool fictional)
     : EntityWithBooks(id, name) {

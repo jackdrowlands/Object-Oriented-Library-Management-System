@@ -9,6 +9,13 @@
 #include "Book.h"
 #include "EntityWithBooks.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+
 class Author : public EntityWithBooks {
  protected:
   int id;

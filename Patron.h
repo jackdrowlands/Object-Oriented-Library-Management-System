@@ -8,6 +8,13 @@
 #include "Book.h"
 #include "Entity.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Library.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "EntityWithBooks.h"
+
 struct BorrowedBook {
   int bookID;
   int dateHired;

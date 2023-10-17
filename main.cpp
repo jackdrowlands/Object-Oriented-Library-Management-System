@@ -5,6 +5,14 @@
 
 #include "Library.h"
 
+// Extra inclusions
+#include "Author.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 Patron user;
 
 void displayAdminMainMenu() {
@@ -51,9 +59,11 @@ void handleAddBook(Library& library) {
       break;
     }
   }
-  if (!authorExists) {
+  
+  /*if (!authorExists) {
     handleAddAuthor(library, author);
-  }
+  }*/
+
   book.setAuthor(author);
 
   std::cout << "Enter the genre of the book: ";
@@ -67,9 +77,11 @@ void handleAddBook(Library& library) {
       break;
     }
   }
-  if (!genreExists) {
+  
+  /*if (!genreExists) {
     handleAddGenre(library, genre);
-  }
+  }*/
+
   book.setGenre(genre);
 
   std::cout << "Is the book restricted? (1 for yes, 0 for no): ";
@@ -92,6 +104,19 @@ void handleRemoveBook(Library& library) {
   book.set_name(title);
   library.remove_book(book);
   std::cout << "Book removed.\n";
+}
+
+// Searches for a book in the library database.
+void handleSearchBook(Library& library) {
+  std::string title;
+  std::cout << "Enter the title of the book to search: ";
+  std::cin >> title;
+  Book* book = library.search_book(title);
+  if (book != nullptr) {
+    std::cout << "Book found: " << book->get_name() << "\n";
+  } else {
+    std::cout << "Book not found.\n";
+  }
 }
 
 void handleUpdateBook(Library& library) {
@@ -129,19 +154,10 @@ void handleUpdateBook(Library& library) {
   book.setFictional(newIsFictional);
 }
 
-void handleSearchBook(Library& library) {
-  std::string title;
-  std::cout << "Enter the title of the book to search: ";
-  std::cin >> title;
-  Book* book = library.search_book(title);
-  if (book != nullptr) {
-    std::cout << "Book found: " << book->get_name() << "\n";
-  } else {
-    std::cout << "Book not found.\n";
+void handleGenerateReport(Library& library) { 
+  library.generate_report(); 
+  std::cout << "Report generated.\n";
   }
-}
-
-void handleGenerateReport(Library& library) { library.generate_report(); }
 
 void handleAddPatron(Library& library) {
   std::cout << "Enter patron name: ";
@@ -160,8 +176,9 @@ void handleAddPatron(Library& library) {
   std::string adminString;
   std::cin >> adminString;
   bool isAdmin = (adminString == "Y");
+  std::vector<BorrowedBook> history;
   Patron newPatron(library.get_patrons()->size() + 1, name, details, password,
-                   age, isAdmin, {});
+                   age, isAdmin, history);
   library.addPatron(library, newPatron);
 }
 
@@ -228,19 +245,6 @@ void adminMainMenu(Library library, Patron user) {
   }
 }
 
-// Searches for a book in the library database.
-void handleSearchBook(Library& library) {
-  std::string title;
-  std::cout << "Enter the title of the book to search: ";
-  std::cin >> title;
-  Book* book = library.search_book(title);
-  if (book != nullptr) {
-    std::cout << "Book found: " << book->get_name() << "\n";
-  } else {
-    std::cout << "Book not found.\n";
-  }
-}
-
 // Handles the book checkout process.
 void handleCheckOutBook(Library& library, Patron& user) {
   std::string title;
@@ -263,13 +267,6 @@ void handleReturnBook(Library& library, Patron& user) {
   } else {
     std::cout << "Failed to return the book.\n";
   }
-}
-
-// Generates some sort of report. (This might be an admin-only feature.)
-void handleGenerateReport(Library& library) {
-  // Placeholder: you might want to restrict this feature to admins only.
-  library.generate_report();
-  std::cout << "Report generated.\n";
 }
 
 // Allows the user to update their own information.

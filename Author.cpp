@@ -1,6 +1,14 @@
 
 #include "Author.h"
 
+// Extra inclusions
+#include "Library.h"
+#include "Book.h"
+#include "Genre.h"
+#include "Patron.h"
+#include "Entity.h"
+#include "EntityWithBooks.h"
+
 Author::Author(int id, std::string name, std::string nationality,
                std::vector<std::string> aliases, std::vector<Book> books)
     : EntityWithBooks(id, name) {
