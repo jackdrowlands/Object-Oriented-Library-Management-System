@@ -1,5 +1,6 @@
 
 #include "Patron.h"
+#include <ctime>
 
 // Add method implementations here, if any
 
@@ -53,15 +54,34 @@ std::string Patron::get_password() { return password; }
 bool Patron::getIsAdmin() { return isAdmin; }
 
 void Patron::set_details(std::string details) { this->details = details; }
-
+/*
 void Patron::addCheckedOutBook(int bookId) {
   checkedOutBooks.push_back(bookId);
   // TODO MAKE A BORROWED BOOK
 }
+*/
+
+
+void Patron::addCheckedOutBook(int bookId) {
+  // Get the current date
+  BorrowedBook book;
+  std::time_t now = std::time(0);
+  std::time_t dueInDays = 14;
+  
+  // Assign the various fields
+  book.bookID = bookId;
+  book.dateHired = static_cast<int>(now);
+  book.dateDue = static_cast<int>(now + dueInDays);
+  book.isReturned = false;
+
+  // Add the book to the list of checked-out books
+  checkedOutBooks.push_back(book);
+}
+
 
 void Patron::removeCheckedOutBook(int bookId) {
   for (auto it = checkedOutBooks.begin(); it != checkedOutBooks.end(); ++it) {
-    if (*it == bookId) {
+    if (it->bookID == bookId) {
       checkedOutBooks.erase(it);
       return;
     }

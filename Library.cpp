@@ -403,7 +403,7 @@ bool Library::check_out_book(std::string title, Patron& patron) {
   book->setAvailable(false);
 
   // Associate the book with the patron
-  int bookId = book->get_id();  // Assuming get_id() is a method that returns
+  int bookId = book->get_id();  
                                 // the book's ID
   patron.addCheckedOutBook(bookId);
 
