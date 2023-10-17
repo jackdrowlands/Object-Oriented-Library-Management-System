@@ -4,8 +4,85 @@
 #include <string>
 
 #include "Library.h"
+#include "Patron.h"
 
 Patron user;
+
+void handleAddAuthor(Library& library) {
+  int id = library.get_authors()->size() + 1;
+  std::cout << "Enter author name: ";
+  std::string name;
+  std::cin >> name;
+  std::cout << "Enter author nationality: ";
+  std::string nationality;
+  std::cin >> nationality;
+  std::cout << "Enter author aliases (Place a comma between each): ";
+  std::string aliases;
+  std::cin >> aliases;
+  std::vector<std::string> aliasesVector;
+  std::stringstream ss(aliases);
+  std::string alias;
+  while (getline(ss, alias, ',')) {
+    aliasesVector.push_back(alias);
+  }
+  Author author(id, name, nationality, aliasesVector);
+  library.add_author(author);
+}
+void handleAddAuthor(Library& library, std::string name) {
+  int id = library.get_authors()->size() + 1;
+  std::cout << "Enter author nationality: ";
+  std::string nationality;
+  std::cin >> nationality;
+  std::cout << "Enter author aliases (Place a comma between each): ";
+  std::string aliases;
+  std::cin >> aliases;
+  std::vector<std::string> aliasesVector;
+  std::stringstream ss(aliases);
+  std::string alias;
+  while (getline(ss, alias, ',')) {
+    aliasesVector.push_back(alias);
+  }
+  Author author(id, name, nationality, aliasesVector);
+  library.add_author(author);
+}
+
+void handleAddGenre(Library library) {
+  int id = library.get_genres()->size() + 1;
+  std::cout << "Enter genre name: ";
+  std::string name;
+  std::cin >> name;
+  std::cout << "Is the genre fictional? (Y/N)";
+  std::string fictionalString;
+  std::cin >> fictionalString;
+  bool isFictional = (fictionalString == "Y");
+  std::cout << "Is the genre restricted? (Y/N)";
+  std::string restrictedString;
+  std::cin >> restrictedString;
+  bool isRestricted = (restrictedString == "Y");
+  Genre genre(id, name, isRestricted, isFictional);
+  library.add_genre(genre);
+}
+
+void handleAddGenre(Library library, std::string name) {
+  int id = library.get_genres()->size() + 1;
+  std::cout << "Is the genre fictional? (Y/N)";
+  std::string fictionalString;
+  std::cin >> fictionalString;
+  bool isFictional = (fictionalString == "Y");
+  std::cout << "Is the genre restricted? (Y/N)";
+  std::string restrictedString;
+  std::cin >> restrictedString;
+  bool isRestricted = (restrictedString == "Y");
+  Genre genre(id, name, isRestricted, isFictional);
+  library.add_genre(genre);
+}
+
+void handleDeleteAuthor(Library library) {
+  std::cout << "Enter author name: ";
+  std::string name;
+  std::cin >> name;
+  library.remove_author(name);
+}
 
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
@@ -189,7 +266,7 @@ void handleEditPatron(Library& library) {
   std::cout << "Name updated successfully.\n";
 }
 
-void adminMainMenu(Library library, Patron user) {
+void adminMainMenu(Library* library, Patron user) {
   int choice;
 
   while (true) {
@@ -199,25 +276,25 @@ void adminMainMenu(Library library, Patron user) {
       case 1:
         break;
       case 2:
-        handleRemoveBook(library);
+        handleRemoveBook(*library);
         break;
       case 3:
-        handleUpdateBook(library);
+        handleUpdateBook(*library);
         break;
       case 4:
-        handleSearchBook(library);
+        handleSearchBook(*library);
         break;
       case 5:
-        handleGenerateReport(library);
+        handleGenerateReport(*library);
         break;
       case 6:
-        handleAddPatron(library);
+        handleAddPatron(*library);
         break;
       case 7:
-        handleDeletePatron(library);
+        handleDeletePatron(*library);
         break;
       case 8:
-        handleEditPatron(library);
+        handleEditPatron(*library);
         break;
       case 9:
         std::cout << "Exiting...\n";
@@ -225,19 +302,6 @@ void adminMainMenu(Library library, Patron user) {
       default:
         std::cout << "Invalid choice. Please try again.\n";
     }
-  }
-}
-
-// Searches for a book in the library database.
-void handleSearchBook(Library& library) {
-  std::string title;
-  std::cout << "Enter the title of the book to search: ";
-  std::cin >> title;
-  Book* book = library.search_book(title);
-  if (book != nullptr) {
-    std::cout << "Book found: " << book->get_name() << "\n";
-  } else {
-    std::cout << "Book not found.\n";
   }
 }
 
@@ -265,13 +329,6 @@ void handleReturnBook(Library& library, Patron& user) {
   }
 }
 
-// Generates some sort of report. (This might be an admin-only feature.)
-void handleGenerateReport(Library& library) {
-  // Placeholder: you might want to restrict this feature to admins only.
-  library.generate_report();
-  std::cout << "Report generated.\n";
-}
-
 // Allows the user to update their own information.
 void handleUpdateSelfInformation(Library& library, Patron& user) {
   std::string new_name;
@@ -285,7 +342,8 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
   // Update age
   std::cout << "Enter your new age: ";
   std::cin >> new_age;
-  user.set_age(new_age);  // Assuming set_age is a method in your Patron class
+  user.set_age(new_age);  // Assuming set_age is a method in your Patron
+  // class
 
   // Update the user information in the library database
   library.update_patron(user);
@@ -293,28 +351,27 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
   std::cout << "Information updated.\n";
 }
 
-
-void patronMainMenu(Library library, Patron user) {
+void patronMainMenu(Library* library, Patron user) {
   int choice;
   while (true) {
     displayPatronMainMenu();
     std::cin >> choice;
     switch (choice) {
       case 1:
-        handleSearchBook(library);
+        handleSearchBook(*library);
         break;
       case 2:
-        handleCheckOutBook(library, user);
+        handleCheckOutBook(*library, user);
         break;
       case 3:
-        handleReturnBook(library, user);
+        handleReturnBook(*library, user);
         break;
       case 4:
         handleGenerateReport(
-            library);  // If patrons are allowed to generate reports
+            *library);  // If patrons are allowed to generate reports
         break;
       case 5:
-        handleUpdateSelfInformation(library, user);
+        handleUpdateSelfInformation(*library, user);
         break;
       case 6:
         std::cout << "Exiting...\n";
@@ -345,9 +402,9 @@ int main() {
     std::cout << "Wrong login or password" << std::endl;
   }
   if (user.getIsAdmin()) {
-    adminMainMenu(library, user);
+    adminMainMenu(&library, user);
   } else {
-    patronMainMenu(library, user);
+    patronMainMenu(&library, user);
   }
   return 0;
 }

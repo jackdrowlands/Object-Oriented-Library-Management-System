@@ -54,7 +54,6 @@ bool Patron::getIsAdmin() { return isAdmin; }
 
 void Patron::set_details(std::string details) { this->details = details; }
 
-
 void Patron::addCheckedOutBook(int bookId) {
   checkedOutBooks.push_back(bookId);
 }
@@ -67,3 +66,5 @@ void Patron::removeCheckedOutBook(int bookId) {
     }
   }
 }
+
+void Patron::set_age(int age) { this->age = age; }

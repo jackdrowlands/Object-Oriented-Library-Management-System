@@ -8,6 +8,12 @@ Author::Author(int id, std::string name, std::string nationality,
   this->aliases = aliases;
   this->books = books;
 }
+Author::Author(int id, std::string name, std::string nationality,
+               std::vector<std::string> aliases)
+    : EntityWithBooks(id, name) {
+  this->nationality = nationality;
+  this->aliases = aliases;
+}
 // Add other method implementations here, if any
 
 // Setters and getters
