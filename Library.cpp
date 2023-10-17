@@ -455,3 +455,21 @@ Author* Library::search_author(std::string& name) {
   }
   return nullptr;
 }
+
+Patron* Library::userLoginPrompt() {
+  std::string login;
+  std::string password;
+  Patron* user;
+  while (true) {
+    std::cout << "Enter your login: ";
+    std::getline(std::cin, login);
+    std::cout << "Enter your password: ";
+    std::getline(std::cin, password);
+    user = userLogin(login, password);
+    if ((*user).get_id() != -1) {
+      break;
+    }
+    std::cout << "Wrong login or password" << std::endl;
+  }
+  return user;
+}

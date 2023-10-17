@@ -67,6 +67,8 @@ class Library {
   // update patron data
   void update_patron(Patron& updatedPatron);
 
+  Patron* userLoginPrompt();
+
  private:
   std::vector<Book> books;
   std::vector<Genre> genres;

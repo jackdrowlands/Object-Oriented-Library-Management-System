@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <sstream>
 #include <string>
 
@@ -18,45 +19,70 @@ void handleAddAuthor(Library& library, std::string name) {
 void handleAddAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
-  std::cin >> name;
+  std::cin.ignore();
+  std::getline(std::cin, name);
   handleAddAuthor(library, name);
-}
-
-void handleAddGenre(Library& library) {
-  int id = library.get_genres()->size() + 1;
-  std::cout << "Enter genre name: ";
-  std::string name;
-  std::cin >> name;
-  std::cout << "Is the genre fictional? (Y/N)";
-  std::string fictionalString;
-  std::cin >> fictionalString;
-  bool isFictional = (fictionalString == "Y" || fictionalString == "y");
-  std::cout << "Is the genre restricted? (Y/N)";
-  std::string restrictedString;
-  std::cin >> restrictedString;
-  bool isRestricted = (restrictedString == "Y" || restrictedString == "y");
-  Genre genre(id, name, isRestricted, isFictional);
-  library.add_genre(genre);
 }
 
 void handleAddGenre(Library& library, std::string name) {
   int id = library.get_genres()->size() + 1;
-  std::cout << "Is the genre fictional? (Y/N)";
-  std::string fictionalString;
-  std::cin >> fictionalString;
-  bool isFictional = (fictionalString == "Y");
-  std::cout << "Is the genre restricted? (Y/N)";
-  std::string restrictedString;
-  std::cin >> restrictedString;
-  bool isRestricted = (restrictedString == "Y");
+  bool isFictional;
+  while (true) {
+    std::cout << "Is the genre fictional? (Y/N)";
+    char input;
+    std::cin >> input;
+
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isFictional = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isFictional = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
+  bool isRestricted;
+  while (true) {
+    std::cout << "Is the genre restricted? (Y/N)";
+    char input;
+    std::cin >> input;
+
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isRestricted = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isRestricted = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
   Genre genre(id, name, isRestricted, isFictional);
   library.add_genre(genre);
+}
+
+void handleAddGenre(Library& library) {
+  std::cout << "Enter genre name: ";
+  std::string name;
+  std::cin.ignore();
+  std::getline(std::cin, name);
+  handleAddGenre(library, name);
 }
 
 void handleDeleteAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
-  std::cin >> name;
+  std::cin.ignore();
+  std::getline(std::cin, name);
   library.remove_author(name);
 }
 
@@ -92,11 +118,13 @@ void handleAddBook(Library& library) {
   bool isRestricted, isFictional;
 
   std::cout << "Enter the title of the book: ";
-  std::cin >> title;
+  std::cin.ignore();
+  std::getline(std::cin, title);
   book.set_name(title);
 
   std::cout << "Enter the author of the book: ";
-  std::cin >> author;
+  std::cin.ignore();
+  std::getline(std::cin, author);
   bool authorExists = false;
 
   std::vector<Author>* authors = library.get_authors();
@@ -112,7 +140,8 @@ void handleAddBook(Library& library) {
   book.setAuthor(author);
 
   std::cout << "Enter the genre of the book: ";
-  std::cin >> genre;
+  std::cin.ignore();
+  std::getline(std::cin, genre);
   bool genreExists = false;
 
   std::vector<Genre>* genres = library.get_genres();
@@ -127,14 +156,47 @@ void handleAddBook(Library& library) {
   }
   book.setGenre(genre);
 
-  std::cout << "Is the book restricted? (1 for yes, 0 for no): ";
-  std::cin >> isRestricted;
+  while (true) {
+    std::cout << "Is the book fictional? (Y/N)";
+    char input;
+    std::cin >> input;
+
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isFictional = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isFictional = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
+  while (true) {
+    std::cout << "Is the book restricted? (Y/N)";
+    char input;
+    std::cin >> input;
+
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isRestricted = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isRestricted = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
   book.setRestricted(isRestricted);
-
-  std::cout << "Is the book fictional? (1 for yes, 0 for no): ";
-  std::cin >> isFictional;
   book.setFictional(isFictional);
-
+  book.setAvailable(true);
   library.add_book(book);
   std::cout << "Book added.\n";
 }
@@ -143,7 +205,8 @@ void handleRemoveBook(Library& library) {
   Book book;
   std::string title;
   std::cout << "Enter the title of the book to remove: ";
-  std::cin >> title;
+  std::cin.ignore();
+  std::getline(std::cin, title);
   if (library.search_book(title) == nullptr) {
     std::cout << "Book not found.\n";
     return;
@@ -156,10 +219,10 @@ void handleRemoveBook(Library& library) {
 void handleUpdateBook(Library& library) {
   Book book;
   std::string title, newTitle, newAuthor, newGenre;
-  bool newIsRestricted, newIsFictional;
 
   std::cout << "Enter the title of the book to update: ";
-  std::cin >> title;
+  std::cin.ignore();
+  std::getline(std::cin, title);
   Book* existingBook = library.search_book(title);
   if (existingBook == nullptr) {
     std::cout << "Book not found.\n";
@@ -168,30 +231,69 @@ void handleUpdateBook(Library& library) {
 
   // Collect new information
   std::cout << "Enter the new title of the book: ";
-  std::cin >> newTitle;
+  std::cin.ignore();
+  std::getline(std::cin, newTitle);
   book.set_name(newTitle);
 
   std::cout << "Enter the new author of the book: ";
-  std::cin >> newAuthor;
+  std::cin.ignore();
+  std::getline(std::cin, newAuthor);
   book.setAuthor(newAuthor);
 
   std::cout << "Enter the new genre of the book: ";
-  std::cin >> newGenre;
+  std::cin.ignore();
+  std::getline(std::cin, newGenre);
   book.setGenre(newGenre);
 
-  std::cout << "Is the book restricted? (1 for yes, 0 for no): ";
-  std::cin >> newIsRestricted;
-  book.setRestricted(newIsRestricted);
+  bool isFictional;
+  while (true) {
+    std::cout << "Is the book fictional? (Y/N)";
+    char input;
+    std::cin >> input;
 
-  std::cout << "Is the book fictional? (1 for yes, 0 for no): ";
-  std::cin >> newIsFictional;
-  book.setFictional(newIsFictional);
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isFictional = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isFictional = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
+  bool isRestricted;
+  while (true) {
+    std::cout << "Is the book restricted? (Y/N)";
+    char input;
+    std::cin >> input;
+
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isRestricted = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isRestricted = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
+  book.setRestricted(isRestricted);
+  book.setFictional(isFictional);
 }
 
 void handleSearchBook(Library& library) {
   std::string title;
   std::cout << "Enter the title of the book to search: ";
-  std::cin >> title;
+  std::cin.ignore();
+  std::getline(std::cin, title);
   Book* book = library.search_book(title);
   if (book != nullptr) {
     book->displayDetails();
@@ -203,7 +305,8 @@ void handleSearchBook(Library& library) {
 void handleSearchGenre(Library& library) {
   std::string name;
   std::cout << "Enter the name of the genre to search: ";
-  std::cin >> name;
+  std::cin.ignore();
+  std::getline(std::cin, name);
   Genre* genre = library.search_genre(name);
   if (genre != nullptr) {
     genre->displayDetails();
@@ -215,7 +318,8 @@ void handleSearchGenre(Library& library) {
 void handleSearchAuthor(Library& library) {
   std::string name;
   std::cout << "Enter the name of the author to search: ";
-  std::cin >> name;
+  std::cin.ignore();
+  std::getline(std::cin, name);
   Author* author = library.search_author(name);
   if (author != nullptr) {
     author->displayDetails();
@@ -229,29 +333,55 @@ void handleGenerateReport(Library& library) { library.generate_report(); }
 void handleAddPatron(Library& library) {
   std::cout << "Enter patron name: ";
   std::string name;
-  std::cin >> name;
+  std::cin.ignore();
+  std::getline(std::cin, name);
   std::cout << "Enter patron details: ";
   std::string details;
-  std::cin >> details;
+  std::cin.ignore();
+  std::getline(std::cin, details);
   std::cout << "Enter patron password: ";
   std::string password;
-  std::cin >> password;
+  std::cin.ignore();
+  std::getline(std::cin, password);
   std::cout << "Enter patron age: ";
   int age;
-  std::cin >> age;
-  std::cout << "Are you an admin? (Y/N):  ";
-  std::string adminString;
-  std::cin >> adminString;
-  bool isAdmin = (adminString == "Y");
+  while (!(std::cin >> age)) {
+    std::cout << "Invalid input. Please enter a number.\n";
+    std::cin.clear();  // clear the error flag
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                    '\n');  // ignore the invalid input
+  }
+  bool isAdmin;
+  while (true) {
+    std::cout << "Is the user an Admin? (Y/N)";
+    char input;
+    std::cin >> input;
+
+    // Add input validation
+    if (input == 'Y' || input == 'y') {
+      isAdmin = true;
+      break;
+    } else if (input == 'N' || input == 'n') {
+      isAdmin = false;
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter Y or N.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
+  }
+  std::vector<BorrowedBook> history;
   Patron newPatron(library.get_patrons()->size() + 1, name, details, password,
-                   age, isAdmin, {});
+                   age, isAdmin, history);
   library.addPatron(library, newPatron);
 }
 
 void handleDeletePatron(Library& library) {
   std::string patronIdentifier;
   std::cout << "Enter the name or login of the patron to remove: ";
-  std::cin >> patronIdentifier;
+  std::cin.ignore();
+  std::getline(std::cin, patronIdentifier);
 
   // Locate patron to remove
   Patron* patronToRemove = library.findPatron(patronIdentifier);
@@ -267,7 +397,8 @@ void handleDeletePatron(Library& library) {
 void handleEditPatron(Library& library) {
   std::cout << "Enter the new name: ";
   std::string newName;
-  std::cin >> newName;
+  std::cin.ignore();
+  std::getline(std::cin, newName);
   library.updatePatronName(&user, newName);
   std::cout << "Name updated successfully.\n";
 }
@@ -277,7 +408,12 @@ void adminMainMenu(Library* library, Patron user) {
 
   while (true) {
     displayAdminMainMenu();
-    std::cin >> choice;
+    while (!(std::cin >> choice)) {
+      std::cout << "Invalid input. Please enter a number.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
     switch (choice) {
       case 1:
         handleAddBook(*library);
@@ -316,7 +452,8 @@ void adminMainMenu(Library* library, Patron user) {
 void handleCheckOutBook(Library& library, Patron& user) {
   std::string title;
   std::cout << "Enter the title of the book to check out: ";
-  std::cin >> title;
+  std::cin.ignore();
+  std::getline(std::cin, title);
   if (library.check_out_book(title, user)) {
     std::cout << "Successfully checked out the book.\n";
   } else {
@@ -328,7 +465,8 @@ void handleCheckOutBook(Library& library, Patron& user) {
 void handleReturnBook(Library& library, Patron& user) {
   std::string title;
   std::cout << "Enter the title of the book to return: ";
-  std::cin >> title;
+  std::cin.ignore();
+  std::getline(std::cin, title);
   if (library.return_book(title, user)) {
     std::cout << "Successfully returned the book.\n";
   } else {
@@ -343,12 +481,19 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
 
   // Update name
   std::cout << "Enter your new name: ";
-  std::cin >> new_name;
+  std::cin.ignore();
+  std::getline(std::cin, new_name);
   user.set_name(new_name);
 
   // Update age
   std::cout << "Enter your new age: ";
-  std::cin >> new_age;
+  while (!(std::cin >> new_age)) {
+    std::cout << "Invalid input. Please enter a number.\n";
+    std::cin.clear();  // clear the error flag
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                    '\n');  // ignore the invalid input
+  }
+
   user.set_age(new_age);  // Assuming set_age is a method in your Patron
   // class
 
@@ -362,7 +507,12 @@ void patronMainMenu(Library* library, Patron user) {
   int choice;
   while (true) {
     displayPatronMainMenu();
-    std::cin >> choice;
+    while (!(std::cin >> choice)) {
+      std::cout << "Invalid input. Please enter a number.\n";
+      std::cin.clear();  // clear the error flag
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                      '\n');  // ignore the invalid input
+    }
     switch (choice) {
       case 1:
         handleSearchBook(*library);
@@ -397,27 +547,35 @@ void patronMainMenu(Library* library, Patron user) {
 
 int main() {
   Library library;
-  std::vector<Patron> patrons = *library.get_patrons();
-  std::vector<Book> books = *library.get_books();
-  std::vector<Genre> genres = *library.get_genres();
-  std::vector<Author> authors = *library.get_authors();
-  std::string login;
-  std::string password;
+  Patron user;
+  std::cout << "Welcome to the Library Management System!\n";
   while (true) {
-    std::cout << "Enter your login: ";
-    std::cin >> login;
-    std::cout << "Enter your password: ";
-    std::cin >> password;
-    user = (*library.userLogin(login, password));
-    if (user.get_id() != -1) {
-      break;
+    user = *library.userLoginPrompt();
+    if (user.getIsAdmin()) {
+      adminMainMenu(&library, user);
+    } else {
+      patronMainMenu(&library, user);
     }
-    std::cout << "Wrong login or password" << std::endl;
-  }
-  if (user.getIsAdmin()) {
-    adminMainMenu(&library, user);
-  } else {
-    patronMainMenu(&library, user);
+    std::cout << "Logging out...\n";
+    std::cout << "Thank you for using the Library Management System!\n";
+    while (true) {
+      std::cout << "Would you like to log in again? (Y/N)";
+      char input;
+      std::cin >> input;
+
+      // Add input validation
+      if (input == 'Y' || input == 'y') {
+        break;
+      } else if (input == 'N' || input == 'n') {
+        return 0;
+        break;
+      } else {
+        std::cout << "Invalid input. Please enter Y or N.\n";
+        std::cin.clear();  // clear the error flag
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                        '\n');  // ignore the invalid input
+      }
+    }
   }
   return 0;
 }
