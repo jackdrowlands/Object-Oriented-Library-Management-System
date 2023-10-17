@@ -186,12 +186,12 @@ Library::Library() {
   }
 
   std::ifstream authorFile("author.csv");
-  // author has id, name, vector of books, nationality, and vector of aliases
+  // author has id, name, vector of books, nationality
   if (!authorFile.is_open()) {
     std::cout << "Generating author.csv...\n";
     std::ofstream authorFileOut("author.csv");
     authorFileOut << "1,J.R.R._Tolkien,The_Lord_of_the_Rings|J.R.R._Tolkien|"
-                     "Fantasy|1|1;,,English,\n";
+                     "Fantasy|1|1;,,English\n";
     authorFileOut.close();
     authorFile.open("author.csv");  // Re-open the file for reading
   } else {
@@ -200,24 +200,16 @@ Library::Library() {
   }
   while (std::getline(authorFile, line)) {
     std::stringstream ss(line);
-    std::string idString, name, booksString, nationality, aliasesString;
+    std::string idString, name, booksString, nationality;
     std::getline(ss, idString, ',');
     std::getline(ss, name, ',');
     std::getline(ss, booksString, ',');
     std::getline(ss, nationality, ',');
-    std::getline(ss, aliasesString, ',');
 
     int id = std::stoi(idString);
     std::vector<Book> books = parseBooks(booksString);
-    // Assuming aliases are semicolon-separated
-    std::vector<std::string> aliases;
-    std::stringstream ssAliases(aliasesString);
-    std::string alias;
-    while (std::getline(ssAliases, alias, ';')) {
-      aliases.push_back(alias);
-    }
 
-    Author author(id, name, nationality, aliases, books);
+    Author author(id, name, nationality, books);
     authors.push_back(author);
   }
 }
@@ -384,8 +376,7 @@ Library::~Library() {
   for (std::vector<Author>::size_type i = 0; i < authors.size(); i++) {
     authorFileOut << authors.at(i).get_id() << "," << authors.at(i).get_name()
                   << "," << authors.at(i).get_booksString() << ","
-                  << authors.at(i).getNationality() << ","
-                  << authors.at(i).getAliasesString() << ",\n";
+                  << authors.at(i).getNationality() << ",";
   }
   authorFileOut.close();
 }

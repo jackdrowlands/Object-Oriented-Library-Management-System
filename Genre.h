@@ -11,7 +11,6 @@
 
 class Genre : public EntityWithBooks {
  protected:
-  std::vector<Book> books;
   bool restricted;
   bool fictional;
 
@@ -26,7 +25,6 @@ class Genre : public EntityWithBooks {
   bool isFictional();
   bool getIsRestricted();
   bool getIsFictional();
-  void setBooks(std::vector<Book> books);
   void setRestricted(bool restricted);
   void setFictional(bool fictional);
 };

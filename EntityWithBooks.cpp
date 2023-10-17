@@ -24,3 +24,7 @@ EntityWithBooks::EntityWithBooks(int id, std::string name,
   this->books = books;
 }
 EntityWithBooks::EntityWithBooks(int id, std::string name) : Entity(id, name) {}
+
+// Setters and getters
+std::vector<Book> EntityWithBooks::getBooks() { return books; }
+void EntityWithBooks::setBooks(std::vector<Book> books) { this->books = books; }

@@ -7,43 +7,19 @@
 #include "Patron.h"
 
 Patron user;
-
-void handleAddAuthor(Library& library) {
-  int id = library.get_authors()->size() + 1;
-  std::cout << "Enter author name: ";
-  std::string name;
-  std::cin >> name;
-  std::cout << "Enter author nationality: ";
-  std::string nationality;
-  std::cin >> nationality;
-  std::cout << "Enter author aliases (Place a comma between each): ";
-  std::string aliases;
-  std::cin >> aliases;
-  std::vector<std::string> aliasesVector;
-  std::stringstream ss(aliases);
-  std::string alias;
-  while (getline(ss, alias, ',')) {
-    aliasesVector.push_back(alias);
-  }
-  Author author(id, name, nationality, aliasesVector);
-  library.add_author(author);
-}
 void handleAddAuthor(Library& library, std::string name) {
   int id = library.get_authors()->size() + 1;
   std::cout << "Enter author nationality: ";
   std::string nationality;
   std::cin >> nationality;
-  std::cout << "Enter author aliases (Place a comma between each): ";
-  std::string aliases;
-  std::cin >> aliases;
-  std::vector<std::string> aliasesVector;
-  std::stringstream ss(aliases);
-  std::string alias;
-  while (getline(ss, alias, ',')) {
-    aliasesVector.push_back(alias);
-  }
-  Author author(id, name, nationality, aliasesVector);
+  Author author(id, name, nationality);
   library.add_author(author);
+}
+void handleAddAuthor(Library& library) {
+  std::cout << "Enter author name: ";
+  std::string name;
+  std::cin >> name;
+  handleAddAuthor(library, name);
 }
 
 void handleAddGenre(Library& library) {
