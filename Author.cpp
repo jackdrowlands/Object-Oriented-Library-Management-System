@@ -14,11 +14,7 @@ Author::Author(int id, std::string name, std::string nationality)
   this->nationality = nationality;
 }
 
-// setters and getters
-int Author::getId() { return id; }
-void Author::setId(int id) { this->id = id; }
-std::string Author::getName() { return name; }
-void Author::setName(std::string name) { this->name = name; }
+// Setters and getters
 std::string Author::getNationality() { return nationality; }
 void Author::setNationality(std::string nationality) {
   this->nationality = nationality;

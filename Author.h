@@ -12,8 +12,6 @@
 class Author : public EntityWithBooks {
   // protected member variables are accessible in the class and its subclasses
  protected:
-  int id;
-  std::string name;
   std::string nationality;
 
   // public ones are accessible everywhere
@@ -22,12 +20,8 @@ class Author : public EntityWithBooks {
   Author(int id, std::string name, std::string nationality,
          std::vector<Book> books);
   Author(int id, std::string name, std::string nationality);
-  // add other public member function declarations here, if any
-  // setters and getters
-  int getId();
-  void setId(int id);
-  std::string getName();
-  void setName(std::string name);
+  // Add other public member function declarations here, if any
+  // Setters and getters
   std::string getNationality();
   void setNationality(std::string nationality);
   void displayDetails() override;
