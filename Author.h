@@ -10,10 +10,13 @@
 #include "EntityWithBooks.h"
 
 class Author : public EntityWithBooks {
+  // protected member variables are accessible in the class and its subclasses
  protected:
   std::string nationality;
 
+  // public ones are accessible everywhere
  public:
+  // constructors
   Author(int id, std::string name, std::string nationality,
          std::vector<Book> books);
   Author(int id, std::string name, std::string nationality);
@@ -24,4 +27,4 @@ class Author : public EntityWithBooks {
   void displayDetails() override;
 };
 
-#endif  // AUTHOR_H
+#endif 

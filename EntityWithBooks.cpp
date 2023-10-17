@@ -18,6 +18,7 @@ std::string EntityWithBooks::get_booksString() {
   return booksString;
 }
 
+// Constructors
 EntityWithBooks::EntityWithBooks(int id, std::string name,
                                  std::vector<Book> books)
     : Entity(id, name) {

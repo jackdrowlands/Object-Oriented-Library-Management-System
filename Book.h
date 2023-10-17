@@ -38,4 +38,4 @@ class Book : public Entity {
   bool available;
 };
 
-#endif  // BOOK_H
+#endif
