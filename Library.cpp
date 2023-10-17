@@ -472,10 +472,8 @@ Patron* Library::userLoginPrompt() {
   Patron* user;
   while (true) {
     std::cout << "Enter your login: ";
-    std::cin.ignore();
     std::getline(std::cin, login);
     std::cout << "Enter your password: ";
-    std::cin.ignore();
     std::getline(std::cin, password);
     user = userLogin(login, password);
     if ((*user).get_id() != -1) {

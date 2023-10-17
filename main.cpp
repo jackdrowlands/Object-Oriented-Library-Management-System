@@ -10,6 +10,14 @@
 // Global variables
 Patron user;
 
+bool isValidInt(const std::string& input) {
+  std::istringstream iss(input);
+  int x;
+  char extra;
+  if (!(iss >> x) || iss.get(extra)) return false;
+  return true;
+}
+
 // add author methods
 void handleAddAuthor(Library& library, std::string name) {
   int id = library.get_authors()->size() + 1;
@@ -19,7 +27,6 @@ void handleAddAuthor(Library& library, std::string name) {
   Author author(id, name, nationality);
   library.add_author(author);
 }
-
 void handleAddAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
@@ -207,7 +214,6 @@ void handleAddBook(Library& library) {
   std::cout << "Book added.\n";
 }
 
-// handles the remove book process
 void handleRemoveBook(Library& library) {
   Book book;
   std::string title;
@@ -295,7 +301,6 @@ void handleUpdateBook(Library& library) {
   book.setRestricted(isRestricted);
   book.setFictional(isFictional);
 }
-
 // search book
 void handleSearchBook(Library& library) {
   std::string title;
@@ -309,7 +314,6 @@ void handleSearchBook(Library& library) {
     std::cout << "Book not found.\n";
   }
 }
-
 // search genre
 void handleSearchGenre(Library& library) {
   std::string name;
@@ -415,8 +419,8 @@ void handleEditPatron(Library& library) {
 
 // switch case for admin menu
 void adminMainMenu(Library* library, Patron user) {
+  std::string input;
   int choice;
-
   while (true) {
     displayAdminMainMenu();
     while (!(std::cin >> choice)) {
@@ -425,6 +429,7 @@ void adminMainMenu(Library* library, Patron user) {
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
                       '\n');  // ignore the invalid input
     }
+    std::cin.ignore();
     switch (choice) {
       case 1:
         handleAddBook(*library);
@@ -504,8 +509,10 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
                     '\n');  // ignore the invalid input
   }
+  std::cin.ignore();
 
-  user.set_age(new_age);
+  user.set_age(new_age);  // Assuming set_age is a method in your Patron
+  // class
 
   // Update the user information in the library database
   library.update_patron(user);
@@ -524,6 +531,7 @@ void patronMainMenu(Library* library, Patron user) {
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
                       '\n');  // ignore the invalid input
     }
+    std::cin.ignore();
     switch (choice) {
       case 1:
         handleSearchBook(*library);
@@ -555,7 +563,6 @@ void patronMainMenu(Library* library, Patron user) {
   }
 }
 
-
 // main function
 int main() {
   Library library;
@@ -574,7 +581,7 @@ int main() {
       std::cout << "Would you like to log in again? (Y/N)";
       char input;
       std::cin >> input;
-
+      std::cin.ignore();
       // Add input validation
       if (input == 'Y' || input == 'y') {
         break;
