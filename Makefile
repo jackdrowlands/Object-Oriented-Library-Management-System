@@ -32,3 +32,15 @@ clean:
 # remove csv files aswells
 	rm -f $(OBJECTS) $(EXECUTABLE) *.csv
 
+# Unit test related
+TEST_SOURCES = Author.cpp Book.cpp Entity.cpp EntityWithBooks.cpp Genre.cpp Library.cpp Patron.cpp unit_tests.cpp
+TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
+TEST_EXECUTABLE = runUnitTests
+
+test: $(TEST_EXECUTABLE)
+
+$(TEST_EXECUTABLE): $(TEST_OBJECTS)
+	$(CXX) $(CXXFLAGS) $(TEST_OBJECTS) -o $(TEST_EXECUTABLE)
+
+unit_tests.o: unit_tests.cpp
+	$(CXX) $(CXXFLAGS) -c unit_tests.cpp -o unit_tests.o

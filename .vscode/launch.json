@@ -5,7 +5,7 @@
       "name": "Debug my_program",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/libraryManagementSystem",
+      "program": "${workspaceFolder}/runUnitTests",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

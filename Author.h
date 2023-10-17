@@ -11,8 +11,6 @@
 
 class Author : public EntityWithBooks {
  protected:
-  int id;
-  std::string name;
   std::string nationality;
 
  public:
@@ -21,10 +19,6 @@ class Author : public EntityWithBooks {
   Author(int id, std::string name, std::string nationality);
   // Add other public member function declarations here, if any
   // Setters and getters
-  int getId();
-  void setId(int id);
-  std::string getName();
-  void setName(std::string name);
   std::string getNationality();
   void setNationality(std::string nationality);
   void displayDetails() override;
