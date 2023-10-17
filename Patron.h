@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -32,11 +33,11 @@ class Patron : public Entity {
   Patron(int id, std::string name, std::string details, std::string password,
          int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
-  
 
   // getters and setters
   std::string getDetails();
   std::vector<BorrowedBook> getHistory();
+  std::vector<BorrowedBook>* getHistoryPointer();
   Patron();
   std::string getBrowsingHistoryString();
   bool getIsAdmin();
@@ -50,6 +51,8 @@ class Patron : public Entity {
 
   void addCheckedOutBook(int bookId);
   void removeCheckedOutBook(int bookId);
+
+  void displayDetails() override;
 };
 
-#endif  
+#endif

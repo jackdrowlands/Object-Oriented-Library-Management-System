@@ -92,6 +92,9 @@ Library::Library(std::vector<Book> books, std::vector<Genre> genres,
 
 // reads from csv files and populates the vectors
 Library::Library() {
+  std::string adminStr = "admin";
+  Patron admin = Patron(0, adminStr, adminStr, adminStr, 99, true, {});
+  patrons.push_back(admin);
   std::ifstream userFile("users.csv");
   if (!userFile.is_open()) {
     std::cout << "Generating users.csv...\n";
@@ -135,7 +138,7 @@ Library::Library() {
   if (!bookFile.is_open()) {
     std::cout << "Generating book.csv...\n";
     std::ofstream bookFileOut("book.csv");
-    bookFileOut << "The_Lord_of_the_Rings,J.R.R._Tolkien,Fantasy,1,1,\n";
+    bookFileOut << "The Lord of the Rings,J.R.R. Tolkien,Fantasy,1,1,\n";
     bookFileOut.close();
     bookFile.open("book.csv");  // Re-open the file for reading
   } else {
@@ -199,7 +202,7 @@ Library::Library() {
   if (!authorFile.is_open()) {
     std::cout << "Generating author.csv...\n";
     std::ofstream authorFileOut("author.csv");
-    authorFileOut << "1,J.R.R._Tolkien,The_Lord_of_the_Rings|J.R.R._Tolkien|"
+    authorFileOut << "1,J.R.R. Tolkien,The Lord of the Rings|J.R.R. Tolkien|"
                      "Fantasy|1|1;,,English\n";
     authorFileOut.close();
     authorFile.open("author.csv");  // Re-open the file for reading
@@ -234,6 +237,8 @@ Patron* Library::findPatron(std::string user) {
   std::vector<Patron>& patrons = *get_patrons();
   for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
     if (patrons[i].get_name() == user) {
+      // delete the patron from the vector
+      patrons.erase(patrons.begin() + patrons[i].get_id());
       return &(patrons[i]);
     }
   }
@@ -356,6 +361,18 @@ std::vector<BorrowedBook> Library::parseBrowsingHistory(
 
   return browsingHistory;
 }
+void Library::save_borrow() {
+  std::ofstream userFileOut("users.csv");
+  for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
+    userFileOut << patrons.at(i).get_id() << "," << patrons.at(i).get_details()
+                << "," << patrons.at(i).get_name() << ","
+                << patrons.at(i).get_password() << ","
+                << patrons.at(i).get_name() << "," << patrons.at(i).get_age()
+                << "," << patrons.at(i).getIsAdmin() << ","
+                << patrons.at(i).getBrowsingHistoryString() << ",\n";
+  }
+  userFileOut.close();
+}
 
 Library::~Library() {
   // write to file
@@ -410,7 +427,8 @@ bool Library::check_out_book(std::string title, Patron& patron) {
   int bookId = book->get_id();
 
   patron.addCheckedOutBook(bookId);
-
+  patrons.push_back(patron);
+  save_borrow();
   return true;
 }
 
@@ -467,6 +485,9 @@ Author* Library::search_author(std::string& name) {
 
 // user login prompts
 Patron* Library::userLoginPrompt() {
+  std::string adminStr = "admin";
+  Patron admin = Patron(0, adminStr, adminStr, adminStr, 99, true, {});
+  patrons.push_back(admin);
   std::string login;
   std::string password;
   Patron* user;

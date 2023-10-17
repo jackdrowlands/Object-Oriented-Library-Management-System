@@ -30,8 +30,6 @@ void test_Author_methods() {
   assert(author1.get_name() == "NewAuthor1");
   assert(author1.getNationality() == "NewNationality1");
 
-  // TODO: Add more test cases as needed
-
   std::cout << "All Author test cases passed." << std::endl;
 }
 
@@ -56,8 +54,6 @@ void test_Book_methods() {
   assert(book1.getAuthor() == "NewAuthor1");
   assert(book1.getGenre() == "NewGenre1");
   assert(book1.isAvailable() == false);
-
-  // TODO: Add more test cases as needed
 
   std::cout << "All Book test cases passed." << std::endl;
 }
@@ -85,8 +81,6 @@ void test_Patron_methods() {
   assert(patron1.checkLogin("Patron1", "Password1") == true);
   assert(patron1.checkLogin("WrongUser", "WrongPassword") == false);
 
-  // TODO: Add more test cases as needed
-
   std::cout << "All Patron test cases passed." << std::endl;
 }
 
@@ -102,19 +96,7 @@ void test_Library_methods() {
   std::string genre1 = "Genre1";
   Book book1(1, "Book1", author1, genre1, true);
   library.add_book(book1);
-  // TODO: Add a method in Library to get a book by ID or name and use it for
-  // assertion
-
-  // Test removing a book
   library.remove_book(book1);
-  // TODO: Add a method in Library to get a book by ID or name and use it for
-  // assertion to confirm removal
-
-  // TODO: Test check_out_book and return_book methods
-  // TODO: Test update_patron method
-
-  // TODO: Add more test cases as needed
-
   std::cout << "All Library test cases passed." << std::endl;
 }
 

@@ -21,7 +21,6 @@ Patron::Patron() : Entity() {
   this->isAdmin = false;
 }
 
-
 // checks login credentials
 bool Patron::checkLogin(std::string user, std::string password) {
   if (user == this->name && password == this->password) {
@@ -29,9 +28,6 @@ bool Patron::checkLogin(std::string user, std::string password) {
   }
   return false;
 }
-
-
-
 
 void Patron::addCheckedOutBook(int bookId) {
   // Get the current date
@@ -46,16 +42,15 @@ void Patron::addCheckedOutBook(int bookId) {
   book.isReturned = false;
 
   // Add the book to the list of checked-out books
-  getHistory().push_back(book);
+  (*getHistoryPointer()).push_back(book);
 }
-
 
 // removes checked out book methods
 void Patron::removeCheckedOutBook(int bookId) {
   for (std::vector<BorrowedBook>::size_type it = 0; it < getHistory().size();
        it++) {
     if (getHistory()[it].bookID == bookId) {
-      getHistory().erase(getHistory().begin() + it);
+      (*getHistoryPointer()).erase(getHistory().begin() + it);
       return;
     }
   }
@@ -77,18 +72,55 @@ void Patron::set_age(int age) { this->age = age; }
 // getter for details
 std::string Patron::getDetails() { return details; }
 
-
 // getter for history
 std::vector<BorrowedBook> Patron::getHistory() { return history; }
+
+std::vector<BorrowedBook>* Patron::getHistoryPointer() { return &history; }
 // gets browsing history
 std::string Patron::getBrowsingHistoryString() {
   std::string historyString = "";
-  for (std::vector<BorrowedBook>::size_type i = 0; i < history.size(); i++) {
+  for (std::vector<BorrowedBook>::size_type i = 0; i < getHistory().size();
+       i++) {
     historyString += std::to_string(history[i].bookID) + " " +
                      std::to_string(history[i].dateHired) + " " +
                      std::to_string(history[i].dateDue) + " " +
                      std::to_string(history[i].dateReturned) + " " +
-                     std::to_string(history[i].isReturned) + "\n";
+                     std::to_string(history[i].isReturned) + "|";
   }
   return historyString;
+}
+
+// displays details
+void Patron::displayDetails() {
+  std::cout << "Patron ID: " << get_id() << std::endl;
+  std::cout << "Patron Name: " << get_name() << std::endl;
+  std::cout << "Patron Details: " << getDetails() << std::endl;
+  std::cout << "Patron Age: " << get_age() << std::endl;
+  std::cout << "Patron Password: " << get_password() << std::endl;
+  std::string historyString = getBrowsingHistoryString();
+  // split the string by the | and loop through the lines
+  std::stringstream ss(historyString);
+  std::string history;
+  while (std::getline(ss, history, '|')) {
+    // split the string by the spaces
+    std::istringstream iss(history);
+    int id, dateHired, dateDue, dateReturned, isReturned;
+    iss >> id >> dateHired >> dateDue >> dateReturned >> isReturned;
+    std::cout << "Borrowed Book ID: " << id << std::endl;
+    // change the date to a readable format
+    time_t t = static_cast<time_t>(dateHired);
+    std::string dateHiredStr = std::ctime(&t);
+    std::cout << "Date Hired: " << dateHiredStr;
+    t = static_cast<time_t>(dateDue);
+    std::string dateDueStr = std::ctime(&t);
+    std::cout << "Date Due: " << dateDueStr;
+    if (isReturned == 1) {
+      t = static_cast<time_t>(dateReturned);
+      std::string dateReturnedStr = std::ctime(&t);
+      std::cout << "Date Returned: " << dateReturnedStr;
+    }
+    std::cout << "Is Returned: " << isReturned << std::endl;
+  }
+
+  std::cout << "Patron Is Admin: " << getIsAdmin() << std::endl;
 }

@@ -38,7 +38,7 @@ class Library {
   // General report for the library
   void generate_report();
 
-// constructor
+  // constructor
   Library(std::vector<Book> books, std::vector<Genre> genres,
           std::vector<Author> authors);
   std::vector<Book>* get_books();
@@ -67,8 +67,10 @@ class Library {
 
   // update patron data
   void update_patron(Patron& updatedPatron);
+  void save_borrow();
 
   Patron* userLoginPrompt();
+  Patron loggedInUser;
 
  private:
   std::vector<Book> books;

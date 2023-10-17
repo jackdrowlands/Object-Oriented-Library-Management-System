@@ -23,14 +23,13 @@ void handleAddAuthor(Library& library, std::string name) {
   int id = library.get_authors()->size() + 1;
   std::cout << "Enter author nationality: ";
   std::string nationality;
-  std::cin >> nationality;
+  std::getline(std::cin, nationality);
   Author author(id, name, nationality);
   library.add_author(author);
 }
 void handleAddAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
-  std::cin.ignore();
   std::getline(std::cin, name);
   handleAddAuthor(library, name);
 }
@@ -42,7 +41,7 @@ void handleAddGenre(Library& library, std::string name) {
     std::cout << "Is the genre fictional? (Y/N)";
     char input;
     std::cin >> input;
-
+    std::cin.ignore();
     // Add input validation
     if (input == 'Y' || input == 'y') {
       isFictional = true;
@@ -62,7 +61,7 @@ void handleAddGenre(Library& library, std::string name) {
     std::cout << "Is the genre restricted? (Y/N)";
     char input;
     std::cin >> input;
-
+    std::cin.ignore();
     // Add input validation
     if (input == 'Y' || input == 'y') {
       isRestricted = true;
@@ -84,7 +83,6 @@ void handleAddGenre(Library& library, std::string name) {
 void handleAddGenre(Library& library) {
   std::cout << "Enter genre name: ";
   std::string name;
-  std::cin.ignore();
   std::getline(std::cin, name);
   handleAddGenre(library, name);
 }
@@ -92,7 +90,6 @@ void handleAddGenre(Library& library) {
 void handleDeleteAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
-  std::cin.ignore();
   std::getline(std::cin, name);
   library.remove_author(name);
 }
@@ -131,12 +128,10 @@ void handleAddBook(Library& library) {
   bool isRestricted, isFictional;
 
   std::cout << "Enter the title of the book: ";
-  std::cin.ignore();
   std::getline(std::cin, title);
   book.set_name(title);
 
   std::cout << "Enter the author of the book: ";
-  std::cin.ignore();
   std::getline(std::cin, author);
   bool authorExists = false;
 
@@ -153,7 +148,6 @@ void handleAddBook(Library& library) {
   book.setAuthor(author);
 
   std::cout << "Enter the genre of the book: ";
-  std::cin.ignore();
   std::getline(std::cin, genre);
   bool genreExists = false;
 
@@ -173,7 +167,7 @@ void handleAddBook(Library& library) {
     std::cout << "Is the book fictional? (Y/N)";
     char input;
     std::cin >> input;
-
+    std::cin.ignore();
     // Add input validation
     if (input == 'Y' || input == 'y') {
       isFictional = true;
@@ -192,6 +186,7 @@ void handleAddBook(Library& library) {
     std::cout << "Is the book restricted? (Y/N)";
     char input;
     std::cin >> input;
+    std::cin.ignore();
 
     // Add input validation
     if (input == 'Y' || input == 'y') {
@@ -218,7 +213,6 @@ void handleRemoveBook(Library& library) {
   Book book;
   std::string title;
   std::cout << "Enter the title of the book to remove: ";
-  std::cin.ignore();
   std::getline(std::cin, title);
   if (library.search_book(title) == nullptr) {
     std::cout << "Book not found.\n";
@@ -234,7 +228,6 @@ void handleUpdateBook(Library& library) {
   std::string title, newTitle, newAuthor, newGenre;
 
   std::cout << "Enter the title of the book to update: ";
-  std::cin.ignore();
   std::getline(std::cin, title);
   Book* existingBook = library.search_book(title);
   if (existingBook == nullptr) {
@@ -244,17 +237,14 @@ void handleUpdateBook(Library& library) {
 
   // Collect new information
   std::cout << "Enter the new title of the book: ";
-  std::cin.ignore();
   std::getline(std::cin, newTitle);
   book.set_name(newTitle);
 
   std::cout << "Enter the new author of the book: ";
-  std::cin.ignore();
   std::getline(std::cin, newAuthor);
   book.setAuthor(newAuthor);
 
   std::cout << "Enter the new genre of the book: ";
-  std::cin.ignore();
   std::getline(std::cin, newGenre);
   book.setGenre(newGenre);
 
@@ -263,6 +253,7 @@ void handleUpdateBook(Library& library) {
     std::cout << "Is the book fictional? (Y/N)";
     char input;
     std::cin >> input;
+    std::cin.ignore();
 
     // Add input validation
     if (input == 'Y' || input == 'y') {
@@ -283,6 +274,7 @@ void handleUpdateBook(Library& library) {
     std::cout << "Is the book restricted? (Y/N)";
     char input;
     std::cin >> input;
+    std::cin.ignore();
 
     // Add input validation
     if (input == 'Y' || input == 'y') {
@@ -305,7 +297,6 @@ void handleUpdateBook(Library& library) {
 void handleSearchBook(Library& library) {
   std::string title;
   std::cout << "Enter the title of the book to search: ";
-  std::cin.ignore();
   std::getline(std::cin, title);
   Book* book = library.search_book(title);
   if (book != nullptr) {
@@ -318,7 +309,6 @@ void handleSearchBook(Library& library) {
 void handleSearchGenre(Library& library) {
   std::string name;
   std::cout << "Enter the name of the genre to search: ";
-  std::cin.ignore();
   std::getline(std::cin, name);
   Genre* genre = library.search_genre(name);
   if (genre != nullptr) {
@@ -332,7 +322,6 @@ void handleSearchGenre(Library& library) {
 void handleSearchAuthor(Library& library) {
   std::string name;
   std::cout << "Enter the name of the author to search: ";
-  std::cin.ignore();
   std::getline(std::cin, name);
   Author* author = library.search_author(name);
   if (author != nullptr) {
@@ -347,15 +336,12 @@ void handleGenerateReport(Library& library) { library.generate_report(); }
 void handleAddPatron(Library& library) {
   std::cout << "Enter patron name: ";
   std::string name;
-  std::cin.ignore();
   std::getline(std::cin, name);
   std::cout << "Enter patron details: ";
   std::string details;
-  std::cin.ignore();
   std::getline(std::cin, details);
   std::cout << "Enter patron password: ";
   std::string password;
-  std::cin.ignore();
   std::getline(std::cin, password);
   std::cout << "Enter patron age: ";
   int age;
@@ -389,12 +375,12 @@ void handleAddPatron(Library& library) {
   Patron newPatron(library.get_patrons()->size() + 1, name, details, password,
                    age, isAdmin, history);
   library.addPatron(library, newPatron);
+  library.save_borrow();
 }
 // delete patron methods
 void handleDeletePatron(Library& library) {
   std::string patronIdentifier;
   std::cout << "Enter the name or login of the patron to remove: ";
-  std::cin.ignore();
   std::getline(std::cin, patronIdentifier);
 
   // Locate patron to remove
@@ -406,19 +392,20 @@ void handleDeletePatron(Library& library) {
   } else {
     std::cout << "Patron not found. No patron has been removed.\n";
   }
+  library.save_borrow();
 }
 // edit patron methods
 void handleEditPatron(Library& library) {
   std::cout << "Enter the new name: ";
   std::string newName;
-  std::cin.ignore();
   std::getline(std::cin, newName);
   library.updatePatronName(&user, newName);
   std::cout << "Name updated successfully.\n";
+  library.save_borrow();
 }
 
 // switch case for admin menu
-void adminMainMenu(Library* library, Patron user) {
+void adminMainMenu(Library* library, Patron* user) {
   std::string input;
   int choice;
   while (true) {
@@ -468,26 +455,26 @@ void adminMainMenu(Library* library, Patron user) {
 void handleCheckOutBook(Library& library, Patron& user) {
   std::string title;
   std::cout << "Enter the title of the book to check out: ";
-  std::cin.ignore();
   std::getline(std::cin, title);
   if (library.check_out_book(title, user)) {
     std::cout << "Successfully checked out the book.\n";
   } else {
     std::cout << "Failed to check out the book.\n";
   }
+  library.save_borrow();
 }
 
 // Handles the book return process.
 void handleReturnBook(Library& library, Patron& user) {
   std::string title;
   std::cout << "Enter the title of the book to return: ";
-  std::cin.ignore();
   std::getline(std::cin, title);
   if (library.return_book(title, user)) {
     std::cout << "Successfully returned the book.\n";
   } else {
     std::cout << "Failed to return the book.\n";
   }
+  library.save_borrow();
 }
 
 // Allows the user to update their own information.
@@ -497,7 +484,6 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
 
   // Update name
   std::cout << "Enter your new name: ";
-  std::cin.ignore();
   std::getline(std::cin, new_name);
   user.set_name(new_name);
 
@@ -518,10 +504,13 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
   library.update_patron(user);
 
   std::cout << "Information updated.\n";
+  library.save_borrow();
 }
 
+void handleGenerateSelfReport(Patron user) { user.displayDetails(); }
+
 // switch case for patron menu
-void patronMainMenu(Library* library, Patron user) {
+void patronMainMenu(Library* library, Patron* user) {
   int choice;
   while (true) {
     displayPatronMainMenu();
@@ -537,10 +526,10 @@ void patronMainMenu(Library* library, Patron user) {
         handleSearchBook(*library);
         break;
       case 2:
-        handleCheckOutBook(*library, user);
+        handleCheckOutBook(*library, *user);
         break;
       case 3:
-        handleReturnBook(*library, user);
+        handleReturnBook(*library, *user);
         break;
       case 4:
         handleSearchAuthor(*library);
@@ -549,10 +538,10 @@ void patronMainMenu(Library* library, Patron user) {
         handleSearchGenre(*library);
         break;
       case 6:
-        handleGenerateReport(*library);
+        handleGenerateSelfReport(*user);
         break;
       case 7:
-        handleUpdateSelfInformation(*library, user);
+        handleUpdateSelfInformation(*library, *user);
         break;
       case 8:
         std::cout << "Exiting...\n";
@@ -567,13 +556,14 @@ void patronMainMenu(Library* library, Patron user) {
 int main() {
   Library library;
   Patron user;
+
   std::cout << "Welcome to the Library Management System!\n";
   while (true) {
     user = *library.userLoginPrompt();
     if (user.getIsAdmin()) {
-      adminMainMenu(&library, user);
+      adminMainMenu(&library, &user);
     } else {
-      patronMainMenu(&library, user);
+      patronMainMenu(&library, &user);
     }
     std::cout << "Logging out...\n";
     std::cout << "Thank you for using the Library Management System!\n";
