@@ -1,6 +1,6 @@
 #include "Book.h"
 
-// implementation of the ructor
+// implementation of the constructor
 Book::Book(int id, std::string name, std::string& author, std::string& genre,
            bool available)
     : Entity(id, name) {
@@ -21,21 +21,22 @@ Book::Book() : Entity() {
 // Setters and getters
 void Book::setAuthor(std::string author) { this->author = author; }
 std::string Book::getAuthor() { return author; }
+
 void Book::setGenre(std::string genre) { this->genre = genre; }
 std::string Book::getGenre() { return genre; }
+
 void Book::setAvailable(bool available) { this->available = available; }
 bool Book::isAvailable() { return available; }
-
-
-bool Book::isRestricted() { return restricted; }
-bool Book::isFictional() { return fictional; }
 
 void Book::setRestricted(bool restricted) { this->restricted = restricted; }
 void Book::setFictional(bool fictional) { this->fictional = fictional; }
 
 bool Book::getIsRestricted() { return restricted; }
-
 bool Book::getIsFictional() { return fictional; }
+
+// implementation of the restricted/fictional methods
+bool Book::isRestricted() { return restricted; }
+bool Book::isFictional() { return fictional; }
 
 // implementation of the displayDetails method
 void Book::displayDetails() {

@@ -7,7 +7,10 @@
 #include "Library.h"
 #include "Patron.h"
 
+// Global variables
 Patron user;
+
+// add author methods
 void handleAddAuthor(Library& library, std::string name) {
   int id = library.get_authors()->size() + 1;
   std::cout << "Enter author nationality: ";
@@ -16,6 +19,7 @@ void handleAddAuthor(Library& library, std::string name) {
   Author author(id, name, nationality);
   library.add_author(author);
 }
+
 void handleAddAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
@@ -23,7 +27,7 @@ void handleAddAuthor(Library& library) {
   std::getline(std::cin, name);
   handleAddAuthor(library, name);
 }
-
+// add genre methods
 void handleAddGenre(Library& library, std::string name) {
   int id = library.get_genres()->size() + 1;
   bool isFictional;
@@ -77,7 +81,7 @@ void handleAddGenre(Library& library) {
   std::getline(std::cin, name);
   handleAddGenre(library, name);
 }
-
+// delete author methods
 void handleDeleteAuthor(Library& library) {
   std::cout << "Enter author name: ";
   std::string name;
@@ -86,6 +90,7 @@ void handleDeleteAuthor(Library& library) {
   library.remove_author(name);
 }
 
+// displays admin menu
 void displayAdminMainMenu() {
   std::cout << "Library Management System\n";
   std::cout << "1. Add Book\n";
@@ -99,6 +104,7 @@ void displayAdminMainMenu() {
   std::cout << "9. Exit\n";
 }
 
+// displays patron menu
 void displayPatronMainMenu() {
   std::cout << "Library Management System\n";
   std::cout << "1. Search Book\n";
@@ -201,6 +207,7 @@ void handleAddBook(Library& library) {
   std::cout << "Book added.\n";
 }
 
+// handles the remove book process
 void handleRemoveBook(Library& library) {
   Book book;
   std::string title;
@@ -215,7 +222,7 @@ void handleRemoveBook(Library& library) {
   library.remove_book(book);
   std::cout << "Book removed.\n";
 }
-
+// updates book
 void handleUpdateBook(Library& library) {
   Book book;
   std::string title, newTitle, newAuthor, newGenre;
@@ -289,6 +296,7 @@ void handleUpdateBook(Library& library) {
   book.setFictional(isFictional);
 }
 
+// search book
 void handleSearchBook(Library& library) {
   std::string title;
   std::cout << "Enter the title of the book to search: ";
@@ -302,6 +310,7 @@ void handleSearchBook(Library& library) {
   }
 }
 
+// search genre
 void handleSearchGenre(Library& library) {
   std::string name;
   std::cout << "Enter the name of the genre to search: ";
@@ -315,6 +324,7 @@ void handleSearchGenre(Library& library) {
   }
 }
 
+// search author
 void handleSearchAuthor(Library& library) {
   std::string name;
   std::cout << "Enter the name of the author to search: ";
@@ -327,9 +337,9 @@ void handleSearchAuthor(Library& library) {
     std::cout << "Author not found.\n";
   }
 }
-
+// generate report
 void handleGenerateReport(Library& library) { library.generate_report(); }
-
+// add patron
 void handleAddPatron(Library& library) {
   std::cout << "Enter patron name: ";
   std::string name;
@@ -376,7 +386,7 @@ void handleAddPatron(Library& library) {
                    age, isAdmin, history);
   library.addPatron(library, newPatron);
 }
-
+// delete patron methods
 void handleDeletePatron(Library& library) {
   std::string patronIdentifier;
   std::cout << "Enter the name or login of the patron to remove: ";
@@ -393,7 +403,7 @@ void handleDeletePatron(Library& library) {
     std::cout << "Patron not found. No patron has been removed.\n";
   }
 }
-
+// edit patron methods
 void handleEditPatron(Library& library) {
   std::cout << "Enter the new name: ";
   std::string newName;
@@ -403,6 +413,7 @@ void handleEditPatron(Library& library) {
   std::cout << "Name updated successfully.\n";
 }
 
+// switch case for admin menu
 void adminMainMenu(Library* library, Patron user) {
   int choice;
 
@@ -494,8 +505,7 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
                     '\n');  // ignore the invalid input
   }
 
-  user.set_age(new_age);  // Assuming set_age is a method in your Patron
-  // class
+  user.set_age(new_age);
 
   // Update the user information in the library database
   library.update_patron(user);
@@ -503,6 +513,7 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
   std::cout << "Information updated.\n";
 }
 
+// switch case for patron menu
 void patronMainMenu(Library* library, Patron user) {
   int choice;
   while (true) {
@@ -530,8 +541,7 @@ void patronMainMenu(Library* library, Patron user) {
         handleSearchGenre(*library);
         break;
       case 6:
-        handleGenerateReport(
-            *library);  // If patrons are allowed to generate reports
+        handleGenerateReport(*library);
         break;
       case 7:
         handleUpdateSelfInformation(*library, user);
@@ -545,6 +555,8 @@ void patronMainMenu(Library* library, Patron user) {
   }
 }
 
+
+// main function
 int main() {
   Library library;
   Patron user;

@@ -1,4 +1,3 @@
-
 #ifndef GENRE_H
 #define GENRE_H
 
@@ -15,6 +14,7 @@ class Genre : public EntityWithBooks {
   bool fictional;
 
  public:
+ // constructors
   Genre(int id, std::string name, std::vector<Book> books, bool restricted,
         bool fictional);
   Genre(int id, std::string name, bool restricted, bool fictional);
@@ -23,10 +23,12 @@ class Genre : public EntityWithBooks {
   std::vector<Book> getBooks();
   bool isRestricted();
   bool isFictional();
+
   bool getIsRestricted();
   bool getIsFictional();
+
   void setRestricted(bool restricted);
   void setFictional(bool fictional);
 };
 
-#endif  // GENRE_H
+#endif 

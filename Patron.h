@@ -9,6 +9,7 @@
 #include "Book.h"
 #include "Entity.h"
 
+// struct for book with all details
 struct BorrowedBook {
   int bookID;
   int dateHired;
@@ -31,6 +32,9 @@ class Patron : public Entity {
   Patron(int id, std::string name, std::string details, std::string password,
          int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
+  
+
+  // getters and setters
   std::string getDetails();
   std::vector<BorrowedBook> getHistory();
   Patron();
@@ -48,4 +52,4 @@ class Patron : public Entity {
   void removeCheckedOutBook(int bookId);
 };
 
-#endif  // PATRON_H
+#endif  

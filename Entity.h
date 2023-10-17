@@ -14,11 +14,14 @@ class Entity {
   Entity();
   Entity(int id, std::string name);
 
+  // getters and setters
   int get_id();
   void set_id(int id);
+
   std::string get_name();
   void set_name(std::string name);
-
+  
+  // virtual function on displayDetails method
   virtual void displayDetails();
 };
 
