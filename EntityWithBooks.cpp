@@ -3,24 +3,29 @@
 // Get books string
 std::string EntityWithBooks::get_booksString() {
   std::string booksString = "";
-  for (int i = 0; i < books.size(); i++) {
+  for (std::vector<Book>::size_type i = 0; i < books.size(); i++) {
     booksString += books[i].get_name();
-    booksString += ";";
+    booksString += "|";
     booksString += books[i].getAuthor();
-    booksString += ";";
+    booksString += "|";
     booksString += books[i].getGenre();
-    booksString += ";";
+    booksString += "|";
     booksString += std::to_string(books[i].get_id());
-    booksString += ";";
+    booksString += "|";
     booksString += std::to_string(books[i].isAvailable());
-    booksString += ",";
+    booksString += ";";
   }
   return booksString;
 }
 
+// Constructors
 EntityWithBooks::EntityWithBooks(int id, std::string name,
                                  std::vector<Book> books)
     : Entity(id, name) {
   this->books = books;
 }
 EntityWithBooks::EntityWithBooks(int id, std::string name) : Entity(id, name) {}
+
+// Setters and getters
+std::vector<Book> EntityWithBooks::getBooks() { return books; }
+void EntityWithBooks::setBooks(std::vector<Book> books) { this->books = books; }

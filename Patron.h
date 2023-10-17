@@ -1,6 +1,7 @@
 #ifndef PATRON_H
 #define PATRON_H
 
+#include <ctime>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,6 +9,7 @@
 #include "Book.h"
 #include "Entity.h"
 
+// struct for book with all details
 struct BorrowedBook {
   int bookID;
   int dateHired;
@@ -30,6 +32,9 @@ class Patron : public Entity {
   Patron(int id, std::string name, std::string details, std::string password,
          int age, bool isAdmin, std::vector<BorrowedBook> history);
   bool checkLogin(std::string user, std::string password);
+  
+
+  // getters and setters
   std::string getDetails();
   std::vector<BorrowedBook> getHistory();
   Patron();
@@ -42,6 +47,9 @@ class Patron : public Entity {
   std::string get_details();
   int get_age();
   std::string get_password();
+
+  void addCheckedOutBook(int bookId);
+  void removeCheckedOutBook(int bookId);
 };
 
-#endif  // PATRON_H
+#endif  

@@ -10,6 +10,8 @@
 // define the Book class
 class Book : public Entity {
  public:
+  bool restricted;
+  bool fictional;
   Book(int id, std::string name, std::string& author, std::string& genre,
        bool available);
 
@@ -23,10 +25,17 @@ class Book : public Entity {
   bool isAvailable();
   void displayDetails() override;
 
+  bool isRestricted();
+  bool isFictional();
+  bool getIsRestricted();
+  bool getIsFictional();
+  void setRestricted(bool restricted);
+  void setFictional(bool fictional);
+
  private:
   std::string author;
   std::string genre;
   bool available;
 };
 
-#endif  // BOOK_H
+#endif

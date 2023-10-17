@@ -1,9 +1,10 @@
 #include "Library.h"
 
 // implementing methods for managing books
-
+// add book methods
 void Library::add_book(Book& book) { books.push_back(book); }
 
+// remove book methods
 void Library::remove_book(Book& book) {
   for (auto it = books.begin(); it != books.end(); ++it) {
     if (it->get_name() == book.get_name()) {
@@ -12,16 +13,17 @@ void Library::remove_book(Book& book) {
     }
   }
 }
-
+// update details of book methods
 void Library::update_book(Book& book) {
   for (auto& b : books) {
     if (b.get_name() == book.get_name()) {
-      b = book;  // assumes Book has an assignment operator
+      b = book;
       return;
     }
   }
 }
 
+// search for book methods using name
 Book* Library::search_book(std::string& title) {
   for (auto& book : books) {
     if (book.get_name() == title) {
@@ -31,6 +33,7 @@ Book* Library::search_book(std::string& title) {
   return nullptr;
 }
 
+// search for book methods using id
 Book* Library::search_book(int& id) {
   for (auto& book : books) {
     if (book.get_id() == id) {
@@ -40,6 +43,7 @@ Book* Library::search_book(int& id) {
   return nullptr;
 }
 
+// generate report methods
 void Library::generate_report() {
   std::cout << "Library Report" << std::endl;
   std::cout << "--------------" << std::endl;
@@ -49,9 +53,10 @@ void Library::generate_report() {
 }
 
 // implementing methods for managing genres
-
+// adding genre methods
 void Library::add_genre(Genre& genre) { genres.push_back(genre); }
 
+// remove genre methods
 void Library::remove_genre(std::string& name) {
   for (auto it = genres.begin(); it != genres.end(); ++it) {
     if (it->get_name() == name) {
@@ -60,13 +65,14 @@ void Library::remove_genre(std::string& name) {
     }
   }
 }
-
+// returns a pointer to the genre with the given name
 std::vector<Genre>* Library::get_genres() { return &genres; }
 
 // implementing methods for managing authors
-
+// adding author methods
 void Library::add_author(Author& author) { authors.push_back(author); }
 
+// remove author methods
 void Library::remove_author(std::string& name) {
   for (auto it = authors.begin(); it != authors.end(); ++it) {
     if (it->get_name() == name) {
@@ -76,12 +82,15 @@ void Library::remove_author(std::string& name) {
   }
 }
 
+// returns a pointer to the author with the given name
 std::vector<Author>* Library::get_authors() { return &authors; }
 
+// search for author methods using name
 Library::Library(std::vector<Book> books, std::vector<Genre> genres,
                  std::vector<Author> authors)
     : books(books), genres(genres), authors(authors) {}
 
+// reads from csv files and populates the vectors
 Library::Library() {
   std::ifstream userFile("users.csv");
   if (!userFile.is_open()) {
@@ -125,9 +134,9 @@ Library::Library() {
   // book has title, author, genre, ID, and availability
   if (!bookFile.is_open()) {
     std::cout << "Generating book.csv...\n";
-    std::ofstream bookFile("book.csv");
-    bookFile << "The Lord of the Rings,J.R.R. Tolkien,1,1,\n";
-    bookFile.close();
+    std::ofstream bookFileOut("book.csv");
+    bookFileOut << "The_Lord_of_the_Rings,J.R.R._Tolkien,Fantasy,1,1,\n";
+    bookFileOut.close();
     bookFile.open("book.csv");  // Re-open the file for reading
   } else {
     std::cout << "book.csv found.\n";
@@ -154,9 +163,9 @@ Library::Library() {
   // genre has ID, name, vector of books, restricted, and fictional
   if (!genreFile.is_open()) {
     std::cout << "Generating genre.csv...\n";
-    std::ofstream genreFile("genre.csv");
-    genreFile << "1,Fantasy,1,0,\n";
-    genreFile.close();
+    std::ofstream genreFileOut("genre.csv");
+    genreFileOut << "1,Fantasy,,1,0,\n";
+    genreFileOut.close();
     genreFile.open("genre.csv");  // Re-open the file for reading
   } else {
     std::cout << "genre.csv found.\n";
@@ -186,60 +195,41 @@ Library::Library() {
   }
 
   std::ifstream authorFile("author.csv");
-  // author has id, name, vector of books, nationality, and vector of aliases
+  // author has id, name, vector of books, nationality
   if (!authorFile.is_open()) {
     std::cout << "Generating author.csv...\n";
-    std::ofstream authorFile("author.csv");
-    authorFile << "1,J.R.R. Tolkien,1,English,\n";
-    authorFile.close();
+    std::ofstream authorFileOut("author.csv");
+    authorFileOut << "1,J.R.R._Tolkien,The_Lord_of_the_Rings|J.R.R._Tolkien|"
+                     "Fantasy|1|1;,,English\n";
+    authorFileOut.close();
     authorFile.open("author.csv");  // Re-open the file for reading
   } else {
     std::cout << "author.csv found.\n";
     // read from file
   }
-  std::getline(authorFile, line);
   while (std::getline(authorFile, line)) {
-    std::ifstream authorFile("author.csv");
-    if (!authorFile.is_open()) {
-      std::cout << "Generating author.csv...\n";
-      std::ofstream authorFile("author.csv");
-      authorFile << "1,J.R.R. Tolkien,1,English,\n";
-      authorFile.close();
-      authorFile.open("author.csv");
-    } else {
-      std::cout << "author.csv found.\n";
-    }
-    std::string line;
-    std::getline(authorFile, line);
-    while (std::getline(authorFile, line)) {
-      std::stringstream ss(line);
-      std::string idString, name, booksString, nationality, aliasesString;
-      std::getline(ss, idString, ',');
-      std::getline(ss, name, ',');
-      std::getline(ss, booksString, ',');
-      std::getline(ss, nationality, ',');
-      std::getline(ss, aliasesString, ',');
+    std::stringstream ss(line);
+    std::string idString, name, booksString, nationality;
+    std::getline(ss, idString, ',');
+    std::getline(ss, name, ',');
+    std::getline(ss, booksString, ',');
+    std::getline(ss, nationality, ',');
 
-      int id = std::stoi(idString);
-      std::vector<Book> books = parseBooks(booksString);
-      // Assuming aliases are semicolon-separated
-      std::vector<std::string> aliases;
-      std::stringstream ssAliases(aliasesString);
-      std::string alias;
-      while (std::getline(ssAliases, alias, ';')) {
-        aliases.push_back(alias);
-      }
+    int id = std::stoi(idString);
+    std::vector<Book> books = parseBooks(booksString);
 
-      Author author(id, name, nationality, aliases, books);
-      authors.push_back(author);
-    }
+    Author author(id, name, nationality, books);
+    authors.push_back(author);
   }
 }
 
+// getter function for books
 std::vector<Book>* Library::get_books() { return &books; }
 
+// getter function for patrons
 std::vector<Patron>* Library::get_patrons() { return &patrons; }
 
+// finds patrons methods
 Patron* Library::findPatron(std::string user) {
   std::vector<Patron>& patrons = *get_patrons();
   for (std::vector<Patron>::size_type i = 0; i < patrons.size(); i++) {
@@ -250,6 +240,7 @@ Patron* Library::findPatron(std::string user) {
   return nullptr;
 }
 
+// user login methods
 Patron* Library::userLogin(std::string user, std::string password) {
   Patron* patron = findPatron(user);
   if (patron != NULL && patron->checkLogin(user, password)) {
@@ -260,6 +251,7 @@ Patron* Library::userLogin(std::string user, std::string password) {
   return new Patron();
 }
 
+// get book by id methods
 Book* Library::getBookByID(int id) {
   std::vector<Book>& books = *get_books();
   for (std::vector<Book>::size_type i = 0; i < books.size(); i++) {
@@ -270,10 +262,12 @@ Book* Library::getBookByID(int id) {
   return new Book();
 }
 
+// get book by name methods
 void Library::addPatron(Library& library, Patron& patron) {
   library.patrons.push_back(patron);
 }
 
+// delete patron methods
 void Library::deletePatron(Library& library, Patron& patron) {
   for (auto it = library.patrons.begin(); it != library.patrons.end(); ++it) {
     if (it->get_name() == patron.get_name()) {
@@ -283,33 +277,34 @@ void Library::deletePatron(Library& library, Patron& patron) {
   }
 }
 
+// update patron methods
 void Library::updatePatronName(Patron* patron, std::string& newName) {
   (*patron).set_name(newName);
 }
 
+// update patron methods
 void Library::updatePatronDetails(Patron* patron, std::string& newDetails) {
   (*patron).set_details(newDetails);
 }
 
+// update patron methods
 void Library::updatePatronAge(Patron* patron, int newAge) {}
 
+// parse books methods
 std::vector<Book> Library::parseBooks(std::string& booksString) {
   std::vector<Book> books;
-  // Assuming booksString is a semicolon-delimited string of book ob
   std::stringstream ss(booksString);
   std::string bookStr;
   while (std::getline(ss, bookStr, ';')) {
     // make a new Book object
     Book book;
-    // Assuming bookStr is a comma-delimited string of
-    // title,author,genre,ID,isAvailable
     std::stringstream ssBook(bookStr);
     std::string title, author, genre, idString, isAvailableString;
-    std::getline(ssBook, title, ',');
-    std::getline(ssBook, author, ',');
-    std::getline(ssBook, genre, ',');
-    std::getline(ssBook, idString, ',');
-    std::getline(ssBook, isAvailableString, ',');
+    std::getline(ssBook, title, '|');
+    std::getline(ssBook, author, '|');
+    std::getline(ssBook, genre, '|');
+    std::getline(ssBook, idString, '|');
+    std::getline(ssBook, isAvailableString, '|');
     // Type conversion
     int id = std::stoi(idString);
     bool isAvailable = (isAvailableString == "1");
@@ -329,16 +324,12 @@ std::vector<Book> Library::parseBooks(std::string& booksString) {
 std::vector<BorrowedBook> Library::parseBrowsingHistory(
     std::string& browsingHistoryString) {
   std::vector<BorrowedBook> browsingHistory;
-  // Assuming browsingHistoryString is a semicolon-delimited string of
-  // BorrowedBook
   std::stringstream ss(browsingHistoryString);
   std::string borrowedBookStr;
 
   while (std::getline(ss, borrowedBookStr, ';')) {
     // make a new BorrowedBook object
     BorrowedBook borrowedBook;
-    // Assuming borrowedBookStr is a comma-delimited string of
-    // bookID,dateHired,dateDue,dateReturned,isReturned
     std::stringstream ssBorrowedBook(borrowedBookStr);
     std::string bookIDStr, dateHiredStr, dateDueStr, dateReturnedStr,
         isReturnedStr;
@@ -388,19 +379,109 @@ Library::~Library() {
   bookFileOut.close();
   std::ofstream genreFileOut("genre.csv");
   for (std::vector<Genre>::size_type i = 0; i < genres.size(); i++) {
-    genreFileOut << genres.at(i).get_name() << ","
-                 << genres.at(i).get_booksString() << ","
-                 << genres.at(i).get_id() << "," << genres.at(i).isRestricted()
-                 << "," << genres.at(i).isFictional() << ",\n";
+    genreFileOut << genres.at(i).get_id() << "," << genres.at(i).get_name()
+                 << "," << genres.at(i).get_booksString() << ","
+                 << genres.at(i).isRestricted() << ","
+                 << genres.at(i).isFictional() << ",\n";
   }
   genreFileOut.close();
   std::ofstream authorFileOut("author.csv");
   for (std::vector<Author>::size_type i = 0; i < authors.size(); i++) {
-    authorFileOut << authors.at(i).get_name() << ","
-                  << authors.at(i).get_booksString() << ","
-                  << authors.at(i).get_id() << ","
-                  << authors.at(i).getNationality() << ","
-                  << authors.at(i).getAliasesString() << ",\n";
+    authorFileOut << authors.at(i).get_id() << "," << authors.at(i).get_name()
+                  << "," << authors.at(i).get_booksString() << ","
+                  << authors.at(i).getNationality() << ",";
   }
   authorFileOut.close();
+}
+
+bool Library::check_out_book(std::string title, Patron& patron) {
+  Book* book = search_book(title);
+  if (book == nullptr) {
+    return false;  // Book does not exist
+  }
+
+  if (!book->isAvailable()) {
+    return false;  // Book is already checked out
+  }
+
+  book->setAvailable(false);
+
+  // Associate the book with the patron
+  int bookId = book->get_id();
+
+  patron.addCheckedOutBook(bookId);
+
+  return true;
+}
+
+bool Library::return_book(std::string title, Patron& patron) {
+  Book* book = search_book(title);
+  if (book == nullptr) {
+    return false;  // Book does not exist
+  }
+
+  if (book->isAvailable()) {
+    return false;  // Book was not checked out
+  }
+
+  book->setAvailable(true);
+
+  // Remove the association between the book and the patron
+  int bookId = book->get_id();
+  patron.removeCheckedOutBook(bookId);
+
+  return true;
+}
+
+// update patron methods
+void Library::update_patron(Patron& updatedPatron) {
+  for (Patron& patron : patrons) {
+    if (patron.get_id() == updatedPatron.get_id()) {
+      patron.set_name(updatedPatron.get_name());  // Update the name
+      patron.set_age(updatedPatron.get_age());
+      return;
+    }
+  }
+  std::cout << "Patron not found in library records.\n";
+}
+
+// search for genre methods using name
+Genre* Library::search_genre(std::string& name) {
+  for (auto& genre : genres) {
+    if (genre.get_name() == name) {
+      return static_cast<Genre*>(&genre);
+    }
+  }
+  return nullptr;
+}
+
+// search for author methods using name
+Author* Library::search_author(std::string& name) {
+  for (auto& author : authors) {
+    if (author.get_name() == name) {
+      return static_cast<Author*>(&author);
+    }
+  }
+  return nullptr;
+}
+
+// user login prompts
+Patron* Library::userLoginPrompt() {
+  std::string login;
+  std::string password;
+  Patron* user;
+  while (true) {
+    std::cout << "Enter your login: ";
+    std::cin.ignore();
+    std::getline(std::cin, login);
+    std::cout << "Enter your password: ";
+    std::cin.ignore();
+    std::getline(std::cin, password);
+    user = userLogin(login, password);
+    if ((*user).get_id() != -1) {
+      break;
+    }
+    std::cout << "Wrong login or password" << std::endl;
+  }
+  return user;
 }
