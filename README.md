@@ -46,13 +46,13 @@ Ensure you have a C++ compiler installed on your system. This project was develo
 ### Testing
 
 1. Compile the unit tests:
-```bash
-make test
-```
+   ```bash
+   make test
+   ```
 2. Run the unit tests:
-```bash
-./runUnitTests
-```
+   ```bash
+   ./runUnitTests
+   ```
 If successful, it will return "All unit tests passed."
 ## Usage
 
