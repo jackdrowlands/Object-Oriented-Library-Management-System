@@ -8,7 +8,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11 -g
 
 # Source Files
-SOURCES = Author.cpp Book.cpp Entity.cpp EntityWithBooks.cpp Genre.cpp Library.cpp Patron.cpp main.cpp 
+SOURCES = src/Author.cpp src/Book.cpp src/Entity.cpp src/EntityWithBooks.cpp src/Genre.cpp src/Library.cpp src/Patron.cpp src/main.cpp 
 
 # Object Files
 OBJECTS = $(SOURCES:.cpp=.o)
@@ -30,10 +30,10 @@ Library.o: Library.h
 
 clean:
 # remove csv files aswells
-	rm -f $(OBJECTS) $(EXECUTABLE) *.csv
+	rm -f $(OBJECTS) $(EXECUTABLE) *.csv runUnitTests src/unit_tests.o
 
 # Unit test related
-TEST_SOURCES = Author.cpp Book.cpp Entity.cpp EntityWithBooks.cpp Genre.cpp Library.cpp Patron.cpp unit_tests.cpp
+TEST_SOURCES = src/Author.cpp src/Book.cpp src/Entity.cpp src/EntityWithBooks.cpp src/Genre.cpp src/Library.cpp src/Patron.cpp src/unit_tests.cpp
 TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
 TEST_EXECUTABLE = runUnitTests
 
@@ -43,4 +43,4 @@ $(TEST_EXECUTABLE): $(TEST_OBJECTS)
 	$(CXX) $(CXXFLAGS) $(TEST_OBJECTS) -o $(TEST_EXECUTABLE)
 
 unit_tests.o: unit_tests.cpp
-	$(CXX) $(CXXFLAGS) -c unit_tests.cpp -o unit_tests.o
+	$(CXX) $(CXXFLAGS) -c src/unit_tests.cpp -o src/unit_tests.o
