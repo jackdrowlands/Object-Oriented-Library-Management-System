@@ -92,9 +92,6 @@ Library::Library(std::vector<Book> books, std::vector<Genre> genres,
 
 // reads from csv files and populates the vectors
 Library::Library() {
-  std::string adminStr = "admin";
-  Patron admin = Patron(0, adminStr, adminStr, adminStr, 99, true, {});
-  patrons.push_back(admin);
   std::ifstream userFile("users.csv");
   if (!userFile.is_open()) {
     std::cout << "Generating users.csv...\n";
@@ -332,7 +329,7 @@ std::vector<BorrowedBook> Library::parseBrowsingHistory(
   std::stringstream ss(browsingHistoryString);
   std::string borrowedBookStr;
 
-  while (std::getline(ss, borrowedBookStr, ';')) {
+  while (std::getline(ss, borrowedBookStr, '|')) {
     // make a new BorrowedBook object
     BorrowedBook borrowedBook;
     std::stringstream ssBorrowedBook(borrowedBookStr);

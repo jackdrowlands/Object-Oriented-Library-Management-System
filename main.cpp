@@ -405,7 +405,7 @@ void handleEditPatron(Library& library) {
 }
 
 // switch case for admin menu
-void adminMainMenu(Library* library, Patron* user) {
+void adminMainMenu(Library& library, Patron& user) {
   std::string input;
   int choice;
   while (true) {
@@ -419,28 +419,28 @@ void adminMainMenu(Library* library, Patron* user) {
     std::cin.ignore();
     switch (choice) {
       case 1:
-        handleAddBook(*library);
+        handleAddBook(library);
         break;
       case 2:
-        handleRemoveBook(*library);
+        handleRemoveBook(library);
         break;
       case 3:
-        handleUpdateBook(*library);
+        handleUpdateBook(library);
         break;
       case 4:
-        handleSearchBook(*library);
+        handleSearchBook(library);
         break;
       case 5:
-        handleGenerateReport(*library);
+        handleGenerateReport(library);
         break;
       case 6:
-        handleAddPatron(*library);
+        handleAddPatron(library);
         break;
       case 7:
-        handleDeletePatron(*library);
+        handleDeletePatron(library);
         break;
       case 8:
-        handleEditPatron(*library);
+        handleEditPatron(library);
         break;
       case 9:
         std::cout << "Exiting...\n";
@@ -510,7 +510,7 @@ void handleUpdateSelfInformation(Library& library, Patron& user) {
 void handleGenerateSelfReport(Patron user) { user.displayDetails(); }
 
 // switch case for patron menu
-void patronMainMenu(Library* library, Patron* user) {
+void patronMainMenu(Library& library, Patron& user) {
   int choice;
   while (true) {
     displayPatronMainMenu();
@@ -523,25 +523,25 @@ void patronMainMenu(Library* library, Patron* user) {
     std::cin.ignore();
     switch (choice) {
       case 1:
-        handleSearchBook(*library);
+        handleSearchBook(library);
         break;
       case 2:
-        handleCheckOutBook(*library, *user);
+        handleCheckOutBook(library, user);
         break;
       case 3:
-        handleReturnBook(*library, *user);
+        handleReturnBook(library, user);
         break;
       case 4:
-        handleSearchAuthor(*library);
+        handleSearchAuthor(library);
         break;
       case 5:
-        handleSearchGenre(*library);
+        handleSearchGenre(library);
         break;
       case 6:
-        handleGenerateSelfReport(*user);
+        handleGenerateSelfReport(user);
         break;
       case 7:
-        handleUpdateSelfInformation(*library, *user);
+        handleUpdateSelfInformation(library, user);
         break;
       case 8:
         std::cout << "Exiting...\n";
@@ -561,9 +561,9 @@ int main() {
   while (true) {
     user = *library.userLoginPrompt();
     if (user.getIsAdmin()) {
-      adminMainMenu(&library, &user);
+      adminMainMenu(library, user);
     } else {
-      patronMainMenu(&library, &user);
+      patronMainMenu(library, user);
     }
     std::cout << "Logging out...\n";
     std::cout << "Thank you for using the Library Management System!\n";

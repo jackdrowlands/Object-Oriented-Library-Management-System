@@ -70,7 +70,6 @@ class Library {
   void save_borrow();
 
   Patron* userLoginPrompt();
-  Patron loggedInUser;
 
  private:
   std::vector<Book> books;
