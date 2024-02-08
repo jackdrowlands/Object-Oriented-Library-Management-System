@@ -32,7 +32,7 @@ Ensure you have a C++ compiler installed on your system. This project was develo
 
 1. Clone the repository to your local machine:
    ```bash
-   git clone https://github.com/yourusername/oop-library-management-system.git
+   git clone git@github.com:jackdrowlands/Object-Oriented-Library-Management-System.git
    ```
 2. Navigate to the cloned repository's directory.
 3. Compile the source code:
